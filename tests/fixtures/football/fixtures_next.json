@@ -1,0 +1,30 @@
+{
+  "get": "fixtures",
+  "parameters": {"team": "611", "next": "5"},
+  "errors": [],
+  "results": 3,
+  "paging": {"current": 1, "total": 1},
+  "response": [
+    {
+      "fixture": {"id": 1300101, "referee": null, "timezone": "UTC", "date": "2026-10-18T16:00:00+00:00", "timestamp": 1792252800, "periods": {"first": null, "second": null}, "venue": {"id": 1546, "name": "Ülker Stadyumu", "city": "Istanbul"}, "status": {"long": "Not Started", "short": "NS", "elapsed": null, "extra": null}},
+      "league": {"id": 203, "name": "Süper Lig", "country": "Turkey", "logo": "https://media.api-sports.io/football/leagues/203.png", "flag": "https://media.api-sports.io/flags/tr.svg", "season": 2026, "round": "Regular Season - 9", "standings": true},
+      "teams": {"home": {"id": 611, "name": "Fenerbahce", "logo": "https://media.api-sports.io/football/teams/611.png", "winner": null}, "away": {"id": 645, "name": "Galatasaray", "logo": "https://media.api-sports.io/football/teams/645.png", "winner": null}},
+      "goals": {"home": null, "away": null},
+      "score": {"halftime": {"home": null, "away": null}, "fulltime": {"home": null, "away": null}, "extratime": {"home": null, "away": null}, "penalty": {"home": null, "away": null}}
+    },
+    {
+      "fixture": {"id": 1400250, "referee": null, "timezone": "UTC", "date": "2026-10-21T19:00:00+00:00", "timestamp": 1792522800, "periods": {"first": null, "second": null}, "venue": {"id": 556, "name": "Old Trafford", "city": "Manchester"}, "status": {"long": "Not Started", "short": "NS", "elapsed": null, "extra": null}},
+      "league": {"id": 2, "name": "UEFA Champions League", "country": "World", "logo": "https://media.api-sports.io/football/leagues/2.png", "flag": null, "season": 2026, "round": "League Stage - 3", "standings": true},
+      "teams": {"home": {"id": 33, "name": "Manchester United", "logo": "https://media.api-sports.io/football/teams/33.png", "winner": null}, "away": {"id": 611, "name": "Fenerbahce", "logo": "https://media.api-sports.io/football/teams/611.png", "winner": null}},
+      "goals": {"home": null, "away": null},
+      "score": {"halftime": {"home": null, "away": null}, "fulltime": {"home": null, "away": null}, "extratime": {"home": null, "away": null}, "penalty": {"home": null, "away": null}}
+    },
+    {
+      "fixture": {"id": 1300118, "referee": null, "timezone": "UTC", "date": "2026-10-25T14:00:00+00:00", "timestamp": 1792850400, "periods": {"first": null, "second": null}, "venue": {"id": null, "name": null, "city": null}, "status": {"long": "Time to be defined", "short": "TBD", "elapsed": null, "extra": null}},
+      "league": {"id": 203, "name": "Süper Lig", "country": "Turkey", "logo": "https://media.api-sports.io/football/leagues/203.png", "flag": "https://media.api-sports.io/flags/tr.svg", "season": 2026, "round": "Regular Season - 10", "standings": true},
+      "teams": {"home": {"id": 998, "name": "Trabzonspor", "logo": "https://media.api-sports.io/football/teams/998.png", "winner": null}, "away": {"id": 611, "name": "Fenerbahce", "logo": "https://media.api-sports.io/football/teams/611.png", "winner": null}},
+      "goals": {"home": null, "away": null},
+      "score": {"halftime": {"home": null, "away": null}, "fulltime": {"home": null, "away": null}, "extratime": {"home": null, "away": null}, "penalty": {"home": null, "away": null}}
+    }
+  ]
+}

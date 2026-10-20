@@ -1,0 +1,31 @@
+<div class="drawer-head">
+  <h2>{{ T.SAVE_IN_PROGRESS if not job.finished else (T.STEP_DONE if job.success else T.STEP_DONE) }}</h2>
+  {% if job.finished %}<button type="button" class="btn btn-small" x-on:click="hide" hx-get="/cart" hx-target="#drawer-body" hx-swap="innerHTML">{{ T.BTN_CANCEL }}</button>{% endif %}
+</div>
+<div class="progress" {% if not job.finished and not job.waiting_for %}hx-get="/cart/apply/status" hx-trigger="every 1s" hx-target="#drawer-body" hx-swap="innerHTML"{% endif %}>
+  <ol class="steps">
+    {% for step in job.steps %}
+    <li class="step step-{{ step.state }}">
+      <span class="step-mark">{% if step.state == 'done' %}✓{% elif step.state == 'failed' %}✕{% elif step.state == 'running' %}…{% else %}·{% endif %}</span>
+      <span class="step-label">{{ step.label }}</span>
+      {% if step.message %}<span class="muted small">{{ step.message }}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+  {% if job.waiting_for %}
+  <div class="wait-box">
+    <p>{{ T.RESTART_WAIT.format(service=T.SERVICE_LABEL.format(service=job.waiting_for)) }}</p>
+    <div class="drawer-actions">
+      <button type="button" class="btn" hx-post="/cart/apply/wait" hx-target="#drawer-body" hx-swap="innerHTML">{{ T.BTN_WAIT }}</button>
+      <button type="button" class="btn btn-primary" hx-post="/cart/apply/force" hx-target="#drawer-body" hx-swap="innerHTML">{{ T.BTN_RESTART_NOW }}</button>
+    </div>
+  </div>
+  {% endif %}
+  {% if job.finished %}
+  <p class="result {% if job.success %}result-ok{% else %}result-bad{% endif %}">{{ job.result_text }}</p>
+  {% if not job.success %}
+  <div class="drawer-actions"><button type="button" class="btn" hx-get="/cart" hx-target="#drawer-body" hx-swap="innerHTML">{{ T.BTN_REVIEW }}</button></div>
+  {% endif %}
+  {% endif %}
+</div>
+{% if job.finished %}{% include "partials/save_button.html" %}{% endif %}

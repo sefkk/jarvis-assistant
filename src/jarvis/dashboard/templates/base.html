@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="htmx-config" content='{"allowEval": false, "selfRequestsOnly": true, "includeIndicatorStyles": false, "historyEnabled": false, "allowScriptTags": false}'>
+  <meta name="csrf-token" content="{{ csrf }}">
+  <meta name="lock-seconds" content="{{ lock_seconds }}">
+  <meta name="unlock-mode" content="{{ unlock_mode }}">
+  <title>{% block title %}{{ T.APP_TITLE }}{% endblock %}</title>
+  <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ asset('tokens.css') }}">
+  <link rel="stylesheet" href="{{ asset('app.css') }}">
+  <script src="{{ asset('theme.js') }}"></script>
+  <script src="{{ asset('vendor/htmx.min.js') }}" defer></script>
+  <script src="{{ asset('app.js') }}" defer></script>
+  <script src="{{ asset('vendor/alpine-csp.min.js') }}" defer></script>
+</head>
+<body>
+<div id="loading-bar" class="loading-bar" role="progressbar" aria-label="{{ T.LOADING }}" hidden></div>
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="/"><img class="brand-mark" src="{{ asset('favicon.svg') }}" alt=""><span>{{ T.APP_TITLE }}</span></a>
+    <nav class="nav">
+      {% for key, path, label in nav %}
+      <a href="{{ path }}" class="nav-item{% if key == active %} active{% endif %}"{% if key == active %} aria-current="page"{% endif %}>{{ icon(nav_icons[key]) }}<span>{{ label }}</span></a>
+      {% endfor %}
+    </nav>
+    <div class="theme-toggle segmented" role="group" aria-label="{{ T.THEME }}">
+      <button type="button" class="seg-btn" data-theme-choice="system" title="{{ T.THEME_SYSTEM }}" aria-label="{{ T.THEME_SYSTEM }}">{{ icon('sun-moon') }}</button>
+      <button type="button" class="seg-btn" data-theme-choice="light" title="{{ T.THEME_LIGHT }}" aria-label="{{ T.THEME_LIGHT }}">{{ icon('sun') }}</button>
+      <button type="button" class="seg-btn" data-theme-choice="dark" title="{{ T.THEME_DARK }}" aria-label="{{ T.THEME_DARK }}">{{ icon('moon') }}</button>
+    </div>
+  </aside>
+  <main class="main">
+    {% block strip %}{% endblock %}
+    <section class="content">
+      {% block content %}{% endblock %}
+    </section>
+  </main>
+</div>
+<div x-data="drawer" x-bind:class="shellClass">
+  {% include "partials/save_button.html" %}
+  <div class="drawer-backdrop" x-show="open" x-on:click="hide"></div>
+  <aside class="drawer" x-show="open" x-bind:aria-hidden="hiddenAttr" aria-label="{{ T.DRAWER_TITLE.format(n='') | trim }}">
+    <div id="drawer-body" class="drawer-body"><div class="drawer-loading"><div class="skeleton-lines" aria-busy="true"><span class="sr-only">{{ T.LOADING }}</span><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton"></span></div></div></div>
+  </aside>
+</div>
+<dialog id="confirm-dialog" class="confirm">
+  <p id="confirm-text">{{ T.CONFIRM_QUESTION }}</p>
+  <div class="confirm-actions">
+    <button type="button" class="btn" data-confirm="no">{{ T.BTN_CANCEL }}</button>
+    <button type="button" class="btn btn-primary" data-confirm="yes">{{ T.BTN_CONFIRM }}</button>
+  </div>
+</dialog>
+<div id="expire-banner" class="expire-banner" role="status" hidden>
+  {{ icon('clock') }}
+  <span>{{ T.SESSION_EXPIRING }}</span>
+  <button type="button" class="btn btn-small btn-primary" data-stay>{{ T.BTN_STAY_SIGNED_IN }}</button>
+</div>
+<div id="lock-panel" class="lock-panel" hidden>
+  <div class="lock-card">
+  <span class="lock-icon">{{ icon('lock') }}</span>
+  <h1>{{ T.SESSION_LOCKED }}</h1>
+  <p>{{ T.SESSION_LOCKED_AFTER.format(n=lock_minutes) }}</p>
+  <p class="lock-error text-bad" hidden>{{ T.UNLOCK_FAILED }}</p>
+  <button type="button" class="btn btn-primary btn-big" data-unlock>{% if unlock_mode == 'touch_id' %}{{ T.BTN_UNLOCK_TOUCH_ID }}{% else %}{{ T.BTN_CONTINUE }}{% endif %}</button>
+  </div>
+</div>
+<div id="toast" class="toast" role="alert" hidden>
+  {{ icon('triangle-alert') }}
+  <span>{{ T.ERROR_GENERIC }}</span>
+  <button type="button" class="btn btn-small" data-reload>{{ T.BTN_TRY_AGAIN }}</button>
+</div>
+</body>
+</html>

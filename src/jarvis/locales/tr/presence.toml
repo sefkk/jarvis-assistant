@@ -1,0 +1,57 @@
+# Kim evde: bildirimler, `jarvis presence setup` ve `jarvis presence status`.
+
+[notify]
+arrived = "{name} eve geldi"
+left = "{name} evden çıktı"
+
+[setup]
+title = "Jarvis kim evde kurulumu"
+title_hint = "(evde, ev Wi-Fi'ına bağlıyken çalıştır)"
+no_gateway = "Varsayılan ağ geçidi bulunamadı. Önce ev ağına bağlan, sonra `jarvis presence setup` komutunu yeniden çalıştır."
+gateway = "Ağ geçidi: {ip}, arayüz {interface}, MAC {mac} ({vendor})"
+is_home_network = "Bu ev ağın mı?"
+no_home = "Ev ağı kaydedilmedi; hiçbir şey yazılmadı. Kurulumu evdeyken yeniden çalıştır."
+scanning = "Cihazlar aranıyor (birkaç saniye sürer)..."
+no_devices = "Bu ağda cihaz bulunamadı. Telefonların uyanık ve Wi-Fi'a bağlı olduğundan emin ol, sonra yeniden dene."
+saved_home = "Ev ağı {path} dosyasına kaydedildi."
+table_title = "Bu ağdaki cihazlar"
+columns = ["#", "IP", "MAC", "Üretici", "Cihaz adı", "Kişi"]
+iphone_hint = "İpucu: iPhone, Apple olarak ya da özel Wi-Fi adresi açıksa 'Private/randomized address' olarak görünür."
+ask_phone = "Telefonun hangi numara? (geçmek için Enter)"
+ask_name = "Adın"
+ask_more = "Başka birinin cihazını ekleyelim mi?"
+ask_their_name = "Adı"
+ask_numbers = "Cihaz numara(lar)ı, örn. 2 ya da 2,5"
+skipped = "Atlandı (bir ad ve en az bir cihaz numarası gerekli)."
+iphone_reminder = "Hatırlatma: iPhone her ağ için ayrı bir özel Wi-Fi adresi kullanır. Jarvis onu ancak bu adres sabitse tanıyabilir: telefonda Ayarlar > Wi-Fi > bu ağın yanındaki (i) > Özel Wi-Fi Adresi'ni aç ve Sabit'i seç (Döndürülen değil; Kapalı da olur). Döndürülen seçiliyken adres değişir ve telefon hiç tanınmaz. Evdekiler, telefonlarının evde olup olmadığının tespit edildiğini bilmeli (MANUAL_STEPS.md)."
+wrote = "{path} yazıldı."
+wrote_backup = "{path} yazıldı (yedek: {backup})."
+summary = "Ev ağı: {count} ağ geçidi MAC adresi; kişiler: {people}."
+nobody = "yok"
+scans = "Taramalar zamanlayıcı ajanında çalışır (`jarvis scheduler install`); sonucu `jarvis presence status` gösterir."
+
+[status]
+home_network = "Ev ağı: {count} ağ geçidi MAC adresi"
+home_network_missing = "Ev ağı: ayarlanmadı, `jarvis presence setup` komutunu çalıştır"
+last_scan = "Son tarama: {when} ({number}. tarama); Mac ev ağında: {at_home}"
+last_scan_never = "Son tarama: henüz yok; taramaları zamanlayıcı ajanı yapar (`jarvis scheduler install`) ya da bir kez `jarvis presence scan` çalıştır"
+remote_allowed = "Uzaktan: Telegram'dan izinli (allow_remote = true)"
+remote_self = "Uzaktan: Telegram'dan yalnızca am_i_home (allow_remote_self = true)"
+remote_blocked = "Uzaktan: Telegram'dan kapalı (allow_remote = false)"
+automations = "Otomasyonlar: {names}"
+automations_none = "Otomasyonlar: hiçbiri açık değil"
+people_none = "Kişiler: ayarlanmadı (`jarvis presence setup` çalıştır)"
+me = " (ben)"
+no_history = " [geçmiş yok]"
+person = "- {name}: {state}{since}; son görülme {last_seen}"
+person_unknown = "- {name}: bilinmiyor (henüz taranmadı)"
+since = ", {when} itibarıyla"
+never = "hiç"
+yes = "evet"
+no = "hayır"
+scan_done = "Tarama bitti: {count} olay"
+
+[status.state]
+home = "evde"
+away = "dışarıda"
+unknown = "bilinmiyor"

@@ -1,0 +1,143 @@
+# Her araç için kullanıcının söyleyebileceği örnek cümleler; HELPFILE.md'de gösterilir (scripts/gen_helpfile.py).
+# Araç adı başına bir anahtar, 1-3 kısa cümle. Bir aracın örneği yoksa tests/unit/test_helpfile.py başarısız olur.
+
+[tools]
+# Alarmlar
+set_alarm = ["Yarın beni 7'de uyandır", "Hafta içi 6.30'a alarm kur"]
+list_alarms = ["Hangi alarmlarım var?", "Yarın için alarm kurulu mu?"]
+cancel_alarm = ["7.30 alarmını iptal et", "Bütün alarmları sil"]
+snooze_alarm = ["Ertele", "On dakika daha"]
+stop_alarm = ["Alarmı kapat", "Tamam, kalktım"]
+
+# Takvim
+agenda = ["Bugün neyim var?", "Bu hafta takvimimde ne var?"]
+apple_list_events = ["Yarın iCloud takvimimde ne var?"]
+apple_create_event = ["Cuma saat 10'a dişçi randevusunu takvime ekle"]
+apple_delete_event = ["Dişçi randevusunu takvimden sil"]
+google_list_events = ["Gelecek hafta Google Takvim'imde ne var?"]
+google_create_event = ["Yarın 15.00'te Alex ile görüşmeyi Google Takvim'e ekle"]
+google_update_event = ["Alex ile görüşmeyi 16.00'ya al"]
+google_delete_event = ["Yarınki toplantıyı Google Takvim'den sil"]
+
+# Anımsatıcılar
+list_reminders = ["Yapılacaklar listemde ne var?", "Bugün hangi hatırlatmalarım var?"]
+create_reminder = ["Yarın 9'da Ada'yı aramamı hatırlat", "Alışveriş listesine süt ekle"]
+complete_reminder = ["'Ada'yı ara' hatırlatmasını tamamlandı yap"]
+
+# Günlük özet
+daily_brief = ["Günlük özetimi ver", "Yarın neler var?"]
+set_brief_schedule = ["Sabah özetini 7.30'a al", "Hafta sonu özet gönderme"]
+
+# Pano
+get_clipboard = ["Az önce ne kopyaladım?", "Panodaki metni çevir"]
+set_clipboard = ["Bunu panoya kopyala"]
+
+# Görev devri
+delegate = ["2000 euronun altındaki en iyi elektrikli bisikletleri araştırıp karşılaştır", "Son 30 e-postamı özetle"]
+
+# Geliştirici
+git_status = ["Jarvis deposunun git durumu ne?"]
+list_repos = ["Hangi git depolarım var?"]
+open_project = ["Jarvis projesini editörde aç"]
+
+# Dosyalar
+search_files = ["Geçen yılki vergi PDF'imi bul", "Bütçe adlı dosya nerede?"]
+read_file = ["Masaüstündeki notes.txt dosyasını oku"]
+write_file = ["Bu listeyi masaüstüne metin dosyası olarak kaydet"]
+
+# Futbol
+team_fixtures = ["Sıradaki maç ne zaman?"]
+team_results = ["Son maç kaç kaç bitti?"]
+match_details = ["O maçta golleri kim attı?"]
+league_standings = ["Puan durumunu göster"]
+
+# E-posta
+gmail_search_threads = ["Alex'ten yeni e-posta var mı?", "Postalarımda uçuş rezervasyonunu ara"]
+gmail_read_thread = ["O e-postayı bana oku"]
+gmail_create_draft = ["Saat 6'da orada olacağımı söyleyen bir yanıt taslağı yaz"]
+
+# Tablolar
+find_spreadsheet = ["Bütçe tablomu bul"]
+list_sheets = ["Bütçe tablosunda hangi sayfalar var?"]
+read_range = ["Bütçe tablosunun ilk on satırını oku"]
+query_sheet = ["Mart'ta yemeğe ne kadar harcadım?", "100'ün üstündeki harcamaları topla"]
+append_rows = ["Bütçe tablosuna satır ekle: kahve, 4,50, bugün"]
+update_range = ["Bütçe tablosunda B2 hücresini 120 yap"]
+create_spreadsheet = ["Gezi Planı adında yeni bir tablo oluştur"]
+
+# Sesli dinleme
+pause_listening = ["Sesi kapat", "Bir saat dinlemeyi durdur"]
+
+# Haritalar
+search_places = ["Yakınımda eczane bul", "Yakında iyi bir kahveci var mı?"]
+place_details = ["Orası şu an açık mı?", "Telefon numaraları ne?"]
+travel_time = ["Havalimanına arabayla ne kadar sürer?", "9'da işte olmak için ne zaman çıkmalıyım?"]
+geocode = ["Galata Kulesi'nin koordinatları ne?"]
+open_in_maps = ["Havalimanına yol tarifini Haritalar'da göster"]
+
+# Hafıza
+remember = ["Kız kardeşimin adının Ada olduğunu hatırla", "Fıstık alerjim olduğunu unutma"]
+forget = ["Eski işimle ilgili bildiklerini unut"]
+list_memory = ["Benim hakkımda neler hatırlıyorsun?"]
+
+# İnternet
+internet_test = ["İnternetim çalışıyor mu?", "Hız testi yap"]
+internet_history = ["Bu hafta internetim nasıldı?"]
+
+# Mac güç
+mac_status = ["Pil ne durumda?", "Mac kilitli mi?"]
+lock_screen = ["Ekranı kilitle"]
+sleep_mac = ["Mac'i uyut"]
+schedule_sleep = ["Mac'i saat 23.00'te uyut"]
+cancel_scheduled_sleep = ["Uykuyu iptal et", "Bilgisayarı uyutma"]
+
+# Evdekiler
+am_i_home = ["Evde miyim?"]
+who_is_home = ["Evde kim var?"]
+is_home = ["Alex evde mi?"]
+presence_history = ["Alex bugün eve ne zaman geldi?"]
+list_network_devices = ["Ağımda hangi cihazlar var?"]
+
+# Ekran
+capture_screen = ["Ekranımda ne var?", "Bu penceredeki hatayı oku"]
+
+# Kabuk
+run_shell = ["Diskte ne kadar yer kaldı?", "İndirilenler klasöründe ls çalıştır"]
+
+# Kestirmeler
+list_shortcuts = ["Hangi kestirmeleri çalıştırabilirsin?"]
+run_shortcut = ["Rahatsız Etme'yi aç", "Akşam sahnemi çalıştır"]
+
+# Spotify
+play = ["Müziği devam ettir", "Çal"]
+pause = ["Müziği durdur"]
+next = ["Sonraki şarkı", "Bu şarkıyı geç"]
+previous = ["Önceki şarkı"]
+now_playing = ["Bu hangi şarkı?"]
+search_and_play = ["Spotify'da biraz caz çal", "Tarkan'ın son albümünü çal"]
+
+# Sistem
+get_time = ["Saat kaç?", "Bugün ayın kaçı?"]
+open_app = ["Safari'yi aç"]
+quit_app = ["Mail'i kapat"]
+set_volume = ["Sesi 30'a ayarla", "Sesi kıs"]
+
+# Zamanlayıcılar
+set_timer = ["10 dakikalık zamanlayıcı kur", "Akşam 5'te çamaşırları almam için bildirim gönder"]
+list_timers = ["Hangi zamanlayıcılar çalışıyor?"]
+cancel_timer = ["Makarna zamanlayıcısını iptal et"]
+start_pomodoro = ["Pomodoro başlat"]
+stop_pomodoro = ["Pomodoroyu durdur"]
+
+# Antrenman
+log_training = ["27 dakikada 5 km koştum", "Spor salonu: 60 kiloyla 3 set 10 squat kaydet"]
+training_summary = ["Bu ay nasıl antrenman yaptım?"]
+list_workouts = ["Geçen haftaki antrenmanlarımı göster"]
+delete_workout = ["Dünkü koşuyu kayıttan sil"]
+
+# Hava durumu
+get_weather = ["Hava nasıl?", "Yarın Kadıköy'de yağmur yağacak mı?"]
+
+# Web
+web_search = ["Şehir müzesinin çalışma saatlerini internette ara", "Seçimle ilgili son haberler neler?"]
+fetch_page = ["Bu sayfayı benim için oku: https://example.com/article"]

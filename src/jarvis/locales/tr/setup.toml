@@ -1,0 +1,92 @@
+# `jarvis setup`, ilk kurulum sihirbazı.
+
+title = "Jarvis kurulumu"
+intro = "Birkaç soru, sonra Jarvis hazır. Köşeli parantezdeki değeri korumak için Enter'a bas. `jarvis setup` komutunu istediğin zaman yeniden çalıştırabilirsin; dosyalarının üzerine asla yazmaz."
+done = "Kurulum bitti. Sohbeti `jarvis` ile başlat."
+doctor = "Sağlık kontrolü (`jarvis doctor`):"
+
+[language]
+saved = "Dil {language} olarak ayarlandı."
+
+[files]
+heading = "Dosyalar"
+created = "oluşturuldu"
+updated = "eksik ayarlar eklendi (yedek data/backups/ altında)"
+kept = "korundu"
+
+[profile]
+heading = "Seninle ilgili"
+name = "Adın"
+address_as = "Jarvis sana nasıl hitap etsin"
+location = "Nerede yaşıyorsun (şehir, ülke)"
+kept = "Profilin ({path}) zaten var ve olduğu gibi kalıyor; istediğin zaman düzenleyebilirsin."
+
+[key]
+heading = "Anthropic API anahtarı"
+present = "Anahtar Zinciri'nde zaten bir Anthropic API anahtarı var."
+replace = "Değiştirilsin mi"
+where = "https://platform.claude.com/settings/keys adresinde bir anahtar oluştur ve buraya yapıştır. Yapıştırırken hiçbir şey görünmez; bu normal."
+prompt = "Anthropic API anahtarı (atlamak için Enter)"
+skipped = "Anahtar kaydedilmedi. Sonra `jarvis key set anthropic_api_key` ile kaydet; Jarvis anahtar olmadan cevap veremez."
+stored = "macOS Anahtar Zinciri'ne kaydedildi."
+
+[budget]
+question = "Günlük API bütçesi, USD (yalnızca bilgi için: günün maliyeti buna ulaşınca Jarvis haber verir ve cevap vermeye devam eder; 0 = yok)"
+not_a_number = "Bir sayı gir, örneğin 3 veya 1,5."
+negative = "Bütçe negatif olamaz; 0 sınırı kapatır."
+
+[integrations]
+heading = "İsteğe bağlı özellikler"
+intro = "Her biri bağımsızdır ve sen kurana kadar kapalıdır. Atlamak için Enter'a bas; `jarvis setup` bir dahaki sefere yine sorar, ayrıntılar MANUAL_STEPS.md'de."
+ask = "Şimdi kurulsun mu"
+nothing_stored = "Hiçbir şey kaydedilmedi."
+stored = "{name} macOS Anahtar Zinciri'ne kaydedildi."
+failed = "Olmadı: {error}. Atlandı; sonra yeniden deneyebilirsin."
+
+[integrations.google]
+title = "Google (Takvim, Gmail taslakları, E-Tablolar)"
+what = "Google Cloud Console'dan kendi OAuth istemci dosyan gerekir (docs/integrations/google.md)."
+client_secret = "İndirdiğin client_secret_….json dosyasının yolu (atlamak için Enter)"
+done = "Google girişi tamam; belirteç Anahtar Zinciri'nde."
+next = "Dene: bugün Google takvimimde ne var."
+
+[integrations.apple]
+title = "Apple Takvim ve Anımsatıcılar"
+what = "Kurulacak bir şey yok: Jarvis onları ilk okuduğunda macOS izin ister."
+next = "Sohbette sor: bugün takvimimde ne var. macOS sorduğunda Tam Erişime İzin Ver'e tıkla."
+
+[integrations.spotify]
+title = "Spotify"
+what = "https://developer.spotify.com/dashboard adresinde ücretsiz bir uygulama gerekir (Client ID ve Client Secret)."
+client_id = "Spotify Client ID"
+client_secret = "Spotify Client Secret"
+next = "Sohbette söyle: biraz caz çal. macOS terminalin Spotify'ı kontrol etmesine izin isteyince İzin Ver'e tıkla."
+
+[integrations.telegram]
+title = "Telegram (telefonundaki Jarvis)"
+what = "Telegram'da @BotFather'dan bir bot gerekir (docs/integrations/telegram.md)."
+token = "BotFather'ın verdiği bot belirteci"
+next = "Sonra: `jarvis telegram whoami`, iki kimliği ve `enabled = true` satırını config.toml'da [telegram] altına yaz, ardından `jarvis telegram install`."
+
+[integrations.elevenlabs]
+title = "ElevenLabs (doğal ses)"
+what = "Olmadan Jarvis Mac'in kendi sesiyle konuşur. https://elevenlabs.io adresinden bir API anahtarı gerekir."
+key = "ElevenLabs API anahtarı"
+next = "`jarvis voice list-voices` ile bir ses seç ve kimliğini config.toml'da voice.elevenlabs_voice_id satırına yaz."
+
+[integrations.maps]
+title = "Google Haritalar (yerler ve yol süreleri)"
+what = "Faturalandırması açık bir Google Maps Platform anahtarı gerekir (docs/integrations/maps.md)."
+key = "Google Maps API anahtarı"
+next = "Sohbette sor: yakında açık eczane var mı."
+
+[integrations.voice]
+title = "Ses (\"Hey Jarvis\")"
+what = "Mac'te uyandırma sözcüğünü dinler ve sesli cevap verir. Kurulumun ses eklentisi gerekir."
+missing = "Ses paketleri kurulu değil: ses eklentisiyle yeniden kur (README, Hızlı başlangıç) ve `jarvis setup` komutunu yeniden çalıştır."
+next = "Ses açık. `jarvis voice run` ile ya da arka planda `jarvis voice install` ile başlat."
+
+[integrations.shortcuts]
+title = "Apple Kestirmeler"
+what = "Jarvis, config.toml'da [[shortcuts.allowed]] altına yazdığın Kestirmeleri çalıştırabilir (docs/integrations/shortcuts.md)."
+next = "`jarvis shortcuts list` bu Mac'teki Kestirmeleri gösterir; bir adı config.toml'a kopyala."

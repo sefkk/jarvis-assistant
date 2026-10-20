@@ -1,0 +1,13 @@
+# `jarvis uninstall`.
+
+title = "Removing Jarvis from this Mac"
+agents_removed = "Background services removed: {names}."
+no_agents = "No background service was installed."
+secrets_found = "In the Keychain: {names}."
+secrets_ask = "Delete these Keychain entries"
+secrets_removed = "Deleted from the Keychain: {names}."
+data_found = "Your local data: {paths} (profile, memory, transcripts, logs, settings)."
+data_ask = "Delete it for good"
+data_removed = "Local data deleted."
+kept = "Kept."
+finish = "To finish: `uv tool uninstall jarvis` removes the command, then delete the folder {home}."

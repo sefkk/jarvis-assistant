@@ -1,0 +1,26 @@
+<div class="card" id="health" hx-get="/partials/health" hx-trigger="every {{ refresh_s }}s" hx-swap="outerHTML">
+  <div class="card-head">
+    <h2>{{ T.SECTION_HEALTH }}
+      {% if health.failed %}<span class="badge badge-failed">{{ health.failed }} {{ T.HEALTH_FAILED | lower }}</span>{% endif %}
+      {% if health.warnings %}<span class="badge badge-warning">{{ health.warnings }} {{ T.HEALTH_WARNING | lower }}</span>{% endif %}
+      {% if health.checking %}<span class="badge badge-checking">{{ T.HEALTH_CHECKING }}</span>{% endif %}
+    </h2>
+    <div class="card-tools">
+      {% if health.last_check %}<span class="muted">{{ T.LABEL_LAST_CHECK.format(time=health.last_check | local_time_s) }}</span>{% endif %}
+      <button type="button" class="btn btn-small" hx-post="/partials/health/run" hx-target="#health" hx-swap="outerHTML" {% if health.checking %}disabled{% endif %}>{{ T.BTN_RUN_FULL_CHECK }}</button>
+    </div>
+  </div>
+  {% if health.items %}
+  <ul class="checklist">
+    {% for item in health.items %}
+    <li class="check check-{{ item.state | replace('…', '') | lower }}">
+      <span class="badge badge-{{ item.state | replace('…', '') | lower }}">{{ item.state }}</span>
+      <span class="check-name">{{ item.name }}</span>
+      <span class="check-detail">{{ item.detail }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="skeleton-lines" aria-busy="true"><span class="sr-only">{{ T.LOADING }}</span><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton"></span></div>
+  {% endif %}
+</div>

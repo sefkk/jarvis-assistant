@@ -1,0 +1,35 @@
+# `jarvis location`: the Current Location in the terminal.
+
+[age]
+just_now = "just now"
+minutes = "{n} min ago"
+hours = "{n} h ago"
+days = "{n} days ago"
+
+[last_known]
+text = "{label} (last known location, {age}, source: {source})"
+address_unknown = "address unknown"
+
+[status]
+disabled = "Location detection is off (location.enabled = false)."
+mac_unknown = "Mac location: unknown (not detected yet; `jarvis location refresh`)."
+mac = "Mac location: {label}{extra}"
+mac_stale = "Mac location (stale): {label}{extra}"
+approximate = " (approximate, IP-based; may be wrong behind a VPN)"
+details = "  coordinates: {coordinates}  source: {source}  updated: {updated} ({age})"
+profile_line = "  profile.md line ({precision}): {line}"
+telegram = "Location shared on Telegram: {coordinates} ({age}); used on remote turns"
+telegram_none = "Location shared on Telegram: none (remote turns never use the Mac's location)"
+last_error = "Last error{when}: {error}"
+settings = "Settings: at most {max_age} min old, timeout {timeout} s, precision {precision}, history {history}, source order: Shortcut \"{shortcut}\" > CoreLocationCLI > IP{ip_off}"
+on = "on"
+off = "off"
+ip_off = " (off)"
+
+[refresh]
+skipped = "Not refreshed: {reason}"
+done = "Location refreshed, source: {source}"
+tried = "; tried first: {tried}"
+no_profile = "profile.md is missing or could not be written; the Current Location block was not added (`jarvis setup`)."
+failed = "Could not get the location: {error}"
+kept = "Keeping the last known location: {place}"

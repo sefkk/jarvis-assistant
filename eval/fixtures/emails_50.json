@@ -1,0 +1,402 @@
+[
+  {
+    "id": "t1000",
+    "from": "GitHub <noreply@github.example>",
+    "subject": "Your weekly digest",
+    "date": "2026-10-14 06:00",
+    "snippet": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın.",
+    "body": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın."
+  },
+  {
+    "id": "t1001",
+    "from": "Dr. Elif Şahin <elif.sahin@clinic.example>",
+    "subject": "Randevu hatırlatması: Perşembe 14:30",
+    "date": "2026-10-14 03:00",
+    "snippet": "Merhaba Kerem, Perşembe günü saat 14:30'daki kontrol randevunuzu hatırlatmak ist",
+    "body": "Merhaba Kerem, Perşembe günü saat 14:30'daki kontrol randevunuzu hatırlatmak istedim. Gelemeyecekseniz lütfen bir gün önceden haber verin."
+  },
+  {
+    "id": "t1002",
+    "from": "Medium Daily Digest <noreply@medium.example>",
+    "subject": "Your weekly digest",
+    "date": "2026-10-13 22:00",
+    "snippet": "Thanks for your purchase. Total: 249,90 TL.",
+    "body": "Thanks for your purchase. Total: 249,90 TL."
+  },
+  {
+    "id": "t1003",
+    "from": "Trendyol <info@trendyol.example>",
+    "subject": "Your order has shipped",
+    "date": "2026-10-13 15:00",
+    "snippet": "Your personalized stories are ready.",
+    "body": "Your personalized stories are ready."
+  },
+  {
+    "id": "t1004",
+    "from": "Trendyol <info@trendyol.example>",
+    "subject": "We miss you!",
+    "date": "2026-10-13 13:00",
+    "snippet": "Sepetinizdeki ürünler tükenmeden tamamlayın.",
+    "body": "Sepetinizdeki ürünler tükenmeden tamamlayın."
+  },
+  {
+    "id": "t1005",
+    "from": "Burak Öz <burak.oz@workplace.example>",
+    "subject": "Q4 planning: your section is due Friday",
+    "date": "2026-10-13 06:00",
+    "snippet": "Hi Kerem, reminder that the Q4 planning doc needs your section (infrastructure c",
+    "body": "Hi Kerem, reminder that the Q4 planning doc needs your section (infrastructure costs) by Friday EOD. Ping me if you need the template."
+  },
+  {
+    "id": "t1006",
+    "from": "Site Yönetimi <yonetim@site.example>",
+    "subject": "Su kesintisi: Çarşamba 09:00-13:00",
+    "date": "2026-10-13 02:00",
+    "snippet": "Sayın site sakinleri, Çarşamba günü 09:00-13:00 arasında bakım nedeniyle su kesi",
+    "body": "Sayın site sakinleri, Çarşamba günü 09:00-13:00 arasında bakım nedeniyle su kesintisi olacaktır."
+  },
+  {
+    "id": "t1007",
+    "from": "Turkish Airlines <noreply@thy.example>",
+    "subject": "Your flight TK1234 is confirmed",
+    "date": "2026-10-12 21:00",
+    "snippet": "Your booking IST-BER on 28 Oct, 07:45 is confirmed. Online check-in opens 24 hou",
+    "body": "Your booking IST-BER on 28 Oct, 07:45 is confirmed. Online check-in opens 24 hours before departure."
+  },
+  {
+    "id": "t1008",
+    "from": "Ayşe Demir <ayse.demir@example.com>",
+    "subject": "Annemin doğum günü için plan",
+    "date": "2026-10-12 15:00",
+    "snippet": "Kerem, cumartesi annemin doğum günü için restoran rezervasyonu yaptım, 19:30. He",
+    "body": "Kerem, cumartesi annemin doğum günü için restoran rezervasyonu yaptım, 19:30. Hediye konusunu konuşalım, beni ara."
+  },
+  {
+    "id": "t1009",
+    "from": "GitHub <noreply@github.example>",
+    "subject": "Kampanya: 2 al 1 öde",
+    "date": "2026-10-12 12:00",
+    "snippet": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın.",
+    "body": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın."
+  },
+  {
+    "id": "t1010",
+    "from": "LinkedIn <messages-noreply@linkedin.example>",
+    "subject": "Discover Weekly is updated",
+    "date": "2026-10-12 05:00",
+    "snippet": "Here is what happened this week. Click to read more.",
+    "body": "Here is what happened this week. Click to read more."
+  },
+  {
+    "id": "t1011",
+    "from": "Medium Daily Digest <noreply@medium.example>",
+    "subject": "Your receipt",
+    "date": "2026-10-11 23:00",
+    "snippet": "Unlock premium to see who viewed you.",
+    "body": "Unlock premium to see who viewed you."
+  },
+  {
+    "id": "t1012",
+    "from": "Medium Daily Digest <noreply@medium.example>",
+    "subject": "Verify your email address",
+    "date": "2026-10-11 21:00",
+    "snippet": "Sepetinizdeki ürünler tükenmeden tamamlayın.",
+    "body": "Sepetinizdeki ürünler tükenmeden tamamlayın."
+  },
+  {
+    "id": "t1013",
+    "from": "Spotify <no-reply@spotify.example>",
+    "subject": "New sign-in to your account",
+    "date": "2026-10-11 15:00",
+    "snippet": "Here is what happened this week. Click to read more.",
+    "body": "Here is what happened this week. Click to read more."
+  },
+  {
+    "id": "t1014",
+    "from": "Mert Kaya <mert@kaya-studio.example>",
+    "subject": "Invoice #2026-087 for the logo work",
+    "date": "2026-10-11 10:00",
+    "snippet": "Hi, attached is the invoice for the logo and brand guide (€1,200). Due in 14 day",
+    "body": "Hi, attached is the invoice for the logo and brand guide (€1,200). Due in 14 days. Thanks for the great collaboration!"
+  },
+  {
+    "id": "t1015",
+    "from": "Can Yılmaz <can@yilmaz.example>",
+    "subject": "Futbol: Salı akşamı halı saha",
+    "date": "2026-10-11 04:00",
+    "snippet": "Salı 21:00 halı saha, 2 kişi eksiğiz. Geliyor musun? Cevap bekliyorum.",
+    "body": "Salı 21:00 halı saha, 2 kişi eksiğiz. Geliyor musun? Cevap bekliyorum."
+  },
+  {
+    "id": "t1016",
+    "from": "Trendyol <info@trendyol.example>",
+    "subject": "Your receipt",
+    "date": "2026-10-11 01:00",
+    "snippet": "Unlock premium to see who viewed you.",
+    "body": "Unlock premium to see who viewed you."
+  },
+  {
+    "id": "t1017",
+    "from": "Zeynep Arslan <zeynep@arslan.example>",
+    "subject": "Re: Kitap kulübü - bu ayın kitabı",
+    "date": "2026-10-10 18:00",
+    "snippet": "Bu ay 'Tutunamayanlar' okuyoruz, buluşma 25 Ekim pazar 16:00 bizde. Şarap getiri",
+    "body": "Bu ay 'Tutunamayanlar' okuyoruz, buluşma 25 Ekim pazar 16:00 bizde. Şarap getirirsen süper olur :)"
+  },
+  {
+    "id": "t1018",
+    "from": "Spotify <no-reply@spotify.example>",
+    "subject": "Webinar: AI in 2026",
+    "date": "2026-10-10 12:00",
+    "snippet": "If this was you, no action is needed.",
+    "body": "If this was you, no action is needed."
+  },
+  {
+    "id": "t1019",
+    "from": "LinkedIn <messages-noreply@linkedin.example>",
+    "subject": "Someone viewed your profile",
+    "date": "2026-10-10 08:00",
+    "snippet": "Your personalized stories are ready.",
+    "body": "Your personalized stories are ready."
+  },
+  {
+    "id": "t1020",
+    "from": "Medium Daily Digest <noreply@medium.example>",
+    "subject": "Sepetinizde ürün kaldı",
+    "date": "2026-10-10 05:00",
+    "snippet": "Thanks for your purchase. Total: 249,90 TL.",
+    "body": "Thanks for your purchase. Total: 249,90 TL."
+  },
+  {
+    "id": "t1021",
+    "from": "Apple <no_reply@apple.example>",
+    "subject": "Kampanya: 2 al 1 öde",
+    "date": "2026-10-09 23:00",
+    "snippet": "Your personalized stories are ready.",
+    "body": "Your personalized stories are ready."
+  },
+  {
+    "id": "t1022",
+    "from": "Spotify <no-reply@spotify.example>",
+    "subject": "Flash sale ends tonight",
+    "date": "2026-10-09 18:00",
+    "snippet": "Here is what happened this week. Click to read more.",
+    "body": "Here is what happened this week. Click to read more."
+  },
+  {
+    "id": "t1023",
+    "from": "GitHub <noreply@github.example>",
+    "subject": "Flash sale ends tonight",
+    "date": "2026-10-09 13:00",
+    "snippet": "Unlock premium to see who viewed you.",
+    "body": "Unlock premium to see who viewed you."
+  },
+  {
+    "id": "t1024",
+    "from": "GitHub <noreply@github.example>",
+    "subject": "Someone viewed your profile",
+    "date": "2026-10-09 07:00",
+    "snippet": "Sepetinizdeki ürünler tükenmeden tamamlayın.",
+    "body": "Sepetinizdeki ürünler tükenmeden tamamlayın."
+  },
+  {
+    "id": "t1025",
+    "from": "Spotify <no-reply@spotify.example>",
+    "subject": "Survey: 2 minutes of your time",
+    "date": "2026-10-09 03:00",
+    "snippet": "Unlock premium to see who viewed you.",
+    "body": "Unlock premium to see who viewed you."
+  },
+  {
+    "id": "t1026",
+    "from": "Trendyol <info@trendyol.example>",
+    "subject": "Discover Weekly is updated",
+    "date": "2026-10-08 20:00",
+    "snippet": "If this was you, no action is needed.",
+    "body": "If this was you, no action is needed."
+  },
+  {
+    "id": "t1027",
+    "from": "Spotify <no-reply@spotify.example>",
+    "subject": "Discover Weekly is updated",
+    "date": "2026-10-08 17:00",
+    "snippet": "Unlock premium to see who viewed you.",
+    "body": "Unlock premium to see who viewed you."
+  },
+  {
+    "id": "t1028",
+    "from": "LinkedIn <messages-noreply@linkedin.example>",
+    "subject": "Your monthly statement is ready",
+    "date": "2026-10-08 10:00",
+    "snippet": "If this was you, no action is needed.",
+    "body": "If this was you, no action is needed."
+  },
+  {
+    "id": "t1029",
+    "from": "GitHub <noreply@github.example>",
+    "subject": "Hafta sonuna özel %40 indirim",
+    "date": "2026-10-08 05:00",
+    "snippet": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın.",
+    "body": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın."
+  },
+  {
+    "id": "t1030",
+    "from": "Spotify <no-reply@spotify.example>",
+    "subject": "Sepetinizde ürün kaldı",
+    "date": "2026-10-08 02:00",
+    "snippet": "Unlock premium to see who viewed you.",
+    "body": "Unlock premium to see who viewed you."
+  },
+  {
+    "id": "t1031",
+    "from": "Apple <no_reply@apple.example>",
+    "subject": "Kampanya: 2 al 1 öde",
+    "date": "2026-10-07 22:00",
+    "snippet": "View your statement in the app.",
+    "body": "View your statement in the app."
+  },
+  {
+    "id": "t1032",
+    "from": "Medium Daily Digest <noreply@medium.example>",
+    "subject": "Your weekly digest",
+    "date": "2026-10-07 15:00",
+    "snippet": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın.",
+    "body": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın."
+  },
+  {
+    "id": "t1033",
+    "from": "Spotify <no-reply@spotify.example>",
+    "subject": "Flash sale ends tonight",
+    "date": "2026-10-07 10:00",
+    "snippet": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın.",
+    "body": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın."
+  },
+  {
+    "id": "t1034",
+    "from": "Deniz Kurt <deniz@kurt.example>",
+    "subject": "Apartment lease renewal",
+    "date": "2026-10-07 05:00",
+    "snippet": "Hi Kerem, your lease ends on 30 November. Let me know by 1 November whether you ",
+    "body": "Hi Kerem, your lease ends on 30 November. Let me know by 1 November whether you want to renew for another year (rent unchanged)."
+  },
+  {
+    "id": "t1035",
+    "from": "Trendyol <info@trendyol.example>",
+    "subject": "Your order has shipped",
+    "date": "2026-10-06 23:00",
+    "snippet": "Here is what happened this week. Click to read more.",
+    "body": "Here is what happened this week. Click to read more."
+  },
+  {
+    "id": "t1036",
+    "from": "Medium Daily Digest <noreply@medium.example>",
+    "subject": "Sepetinizde ürün kaldı",
+    "date": "2026-10-06 19:00",
+    "snippet": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın.",
+    "body": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın."
+  },
+  {
+    "id": "t1037",
+    "from": "Spotify <no-reply@spotify.example>",
+    "subject": "Someone viewed your profile",
+    "date": "2026-10-06 14:00",
+    "snippet": "If this was you, no action is needed.",
+    "body": "If this was you, no action is needed."
+  },
+  {
+    "id": "t1038",
+    "from": "Trendyol <info@trendyol.example>",
+    "subject": "Your weekly digest",
+    "date": "2026-10-06 09:00",
+    "snippet": "Sepetinizdeki ürünler tükenmeden tamamlayın.",
+    "body": "Sepetinizdeki ürünler tükenmeden tamamlayın."
+  },
+  {
+    "id": "t1039",
+    "from": "GitHub <noreply@github.example>",
+    "subject": "Your receipt",
+    "date": "2026-10-06 03:00",
+    "snippet": "Sepetinizdeki ürünler tükenmeden tamamlayın.",
+    "body": "Sepetinizdeki ürünler tükenmeden tamamlayın."
+  },
+  {
+    "id": "t1040",
+    "from": "GitHub <noreply@github.example>",
+    "subject": "[jarvis] Security alert: dependency update needed",
+    "date": "2026-10-05 23:00",
+    "snippet": "A vulnerability was found in a dependency of example/jarvis. Update httpx to the l",
+    "body": "A vulnerability was found in a dependency of example/jarvis. Update httpx to the latest version."
+  },
+  {
+    "id": "t1041",
+    "from": "GitHub <noreply@github.example>",
+    "subject": "Your monthly statement is ready",
+    "date": "2026-10-05 19:00",
+    "snippet": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın.",
+    "body": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın."
+  },
+  {
+    "id": "t1042",
+    "from": "Spotify <no-reply@spotify.example>",
+    "subject": "Survey: 2 minutes of your time",
+    "date": "2026-10-05 15:00",
+    "snippet": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın.",
+    "body": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın."
+  },
+  {
+    "id": "t1043",
+    "from": "Trendyol <info@trendyol.example>",
+    "subject": "Survey: 2 minutes of your time",
+    "date": "2026-10-05 09:00",
+    "snippet": "If this was you, no action is needed.",
+    "body": "If this was you, no action is needed."
+  },
+  {
+    "id": "t1044",
+    "from": "Medium Daily Digest <noreply@medium.example>",
+    "subject": "We miss you!",
+    "date": "2026-10-05 03:00",
+    "snippet": "Thanks for your purchase. Total: 249,90 TL.",
+    "body": "Thanks for your purchase. Total: 249,90 TL."
+  },
+  {
+    "id": "t1045",
+    "from": "Spotify <no-reply@spotify.example>",
+    "subject": "Verify your email address",
+    "date": "2026-10-04 23:00",
+    "snippet": "Unlock premium to see who viewed you.",
+    "body": "Unlock premium to see who viewed you."
+  },
+  {
+    "id": "t1046",
+    "from": "Apple <no_reply@apple.example>",
+    "subject": "Your order has shipped",
+    "date": "2026-10-04 17:00",
+    "snippet": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın.",
+    "body": "Bu hafta sonuna özel kampanyalarımızı kaçırmayın."
+  },
+  {
+    "id": "t1047",
+    "from": "Trendyol <info@trendyol.example>",
+    "subject": "New sign-in to your account",
+    "date": "2026-10-04 13:00",
+    "snippet": "Sepetinizdeki ürünler tükenmeden tamamlayın.",
+    "body": "Sepetinizdeki ürünler tükenmeden tamamlayın."
+  },
+  {
+    "id": "t1048",
+    "from": "Medium Daily Digest <noreply@medium.example>",
+    "subject": "Your monthly statement is ready",
+    "date": "2026-10-04 09:00",
+    "snippet": "Thanks for your purchase. Total: 249,90 TL.",
+    "body": "Thanks for your purchase. Total: 249,90 TL."
+  },
+  {
+    "id": "t1049",
+    "from": "GitHub <noreply@github.example>",
+    "subject": "Hafta sonuna özel %40 indirim",
+    "date": "2026-10-04 04:00",
+    "snippet": "Thanks for your purchase. Total: 249,90 TL.",
+    "body": "Thanks for your purchase. Total: 249,90 TL."
+  }
+]

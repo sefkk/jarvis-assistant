@@ -1,0 +1,19 @@
+<div class="card" id="today-recent"{% if refresh_recent is defined %} hx-swap-oob="true"{% endif %}>
+  <div class="card-head"><h2>{{ T.TODAY_RECENT }}</h2></div>
+  {% if today.recent %}
+  <table class="table table-rows">
+    <tbody>
+    {% for turn in today.recent %}
+    <tr class="{% if turn.error %}row-error{% endif %}">
+      <td class="cell-time"><a href="/logs/turns/{{ turn.id }}">{{ turn.started_at | local_time }}</a></td>
+      <td class="cell-channel">{{ turn.channel | channel }}</td>
+      <td class="cell-text"><a href="/logs/turns/{{ turn.id }}">{{ turn.user_input | preview }}</a></td>
+      <td class="cell-meta num">{{ turn.total_ms | ms }}{% if turn.tainted %} <span class="badge badge-warning">tainted</span>{% endif %}{% if turn.error %} <span class="badge badge-failed">error</span>{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="empty">{{ T.EMPTY }}</p>
+  {% endif %}
+</div>

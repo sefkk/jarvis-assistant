@@ -1,0 +1,40 @@
+<div id="requests">
+  {% set dir_next = 'asc' if requests.direction == 'desc' else 'desc' %}
+  {% macro sort_link(key, label) -%}
+    <a hx-get="/analytics/requests?{{ qs }}&sort={{ key }}&dir={{ dir_next if requests.sort == key else 'desc' }}" hx-target="#requests" hx-swap="outerHTML" href="/analytics?{{ qs }}&sort={{ key }}&dir={{ dir_next if requests.sort == key else 'desc' }}" class="sort{% if requests.sort == key %} active{% endif %}">{{ label }}{% if requests.sort == key %} {{ '▲' if requests.direction == 'asc' else '▼' }}{% endif %}</a>
+  {%- endmacro %}
+  {% if requests.rows %}
+  <table class="table table-head requests">
+    <thead><tr>
+      <th>{{ sort_link('time', T.REQ_TIME) }}</th><th>{{ T.REQ_CHANNEL }}</th><th>{{ T.REQ_REQUEST }}</th>
+      <th class="num">{{ sort_link('latency', T.REQ_LATENCY) }}</th><th>{{ T.REQ_STAGES }}</th><th>{{ T.REQ_TOOLS }}</th>
+      <th class="num">{{ sort_link('tokens', T.REQ_TOKENS) }}</th><th class="num">{{ sort_link('cost', T.REQ_COST) }}</th><th>{{ T.REQ_FLAGS }}</th>
+    </tr></thead>
+    <tbody>
+    {% for r in requests.rows %}
+    <tr class="{% if 'error' in r.flags %}row-error{% endif %}">
+      <td class="cell-time"><a href="/logs/turns/{{ r.turn_id }}" title="{{ r.started_at | local_time('%Y-%m-%d %H:%M:%S') }}">{{ r.started_at | local_time('%m-%d %H:%M') }}</a></td>
+      <td class="cell-channel">{{ r.channel_label }}</td>
+      <td class="cell-text"><a href="/logs/turns/{{ r.turn_id }}">{{ r.request | preview(70) }}</a></td>
+      <td class="num">{{ r.total_ms | ms }}</td>
+      <td class="cell-stages"><div class="waterfall" title="{% for s in r.segments %}{{ s.label }} {{ s.ms }} ms{% if not loop.last %} · {% endif %}{% endfor %}">
+        {% for s in r.segments %}<span class="seg seg-{{ s.key }}" data-pct="{{ s.pct }}"></span>{% endfor %}</div></td>
+      <td class="cell-tools">{% for tool in r.tools %}<span class="chip">{{ tool }}</span>{% endfor %}</td>
+      <td class="num">{{ r.tokens }}</td>
+      <td class="num">{{ r.cost | money }}</td>
+      <td class="cell-flags">{% for flag in r.flags %}<span class="badge badge-{% if flag == 'error' %}failed{% elif flag in ('tainted', 'retried') %}warning{% elif flag == 'denied' %}stopped{% else %}ok{% endif %}">{{ flag }}</span>{% endfor %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% if requests.pages > 1 %}
+  <div class="pager">
+    {% if requests.page > 1 %}<a class="btn btn-small" hx-get="/analytics/requests?{{ qs }}&sort={{ requests.sort }}&dir={{ requests.direction }}&page={{ requests.page - 1 }}" hx-target="#requests" hx-swap="outerHTML" href="/analytics?{{ qs }}&sort={{ requests.sort }}&dir={{ requests.direction }}&page={{ requests.page - 1 }}">{{ T.PAGE_PREVIOUS }}</a>{% endif %}
+    <span class="muted">{{ T.PAGE_OF.format(page=requests.page, pages=requests.pages) }}</span>
+    {% if requests.page < requests.pages %}<a class="btn btn-small" hx-get="/analytics/requests?{{ qs }}&sort={{ requests.sort }}&dir={{ requests.direction }}&page={{ requests.page + 1 }}" hx-target="#requests" hx-swap="outerHTML" href="/analytics?{{ qs }}&sort={{ requests.sort }}&dir={{ requests.direction }}&page={{ requests.page + 1 }}">{{ T.PAGE_NEXT }}</a>{% endif %}
+  </div>
+  {% endif %}
+  {% else %}
+  <p class="empty">{{ T.NO_DATA }}</p>
+  {% endif %}
+</div>

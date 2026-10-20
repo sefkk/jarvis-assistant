@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}{{ T.NAV_LOGS }} · {{ T.APP_TITLE }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ T.NAV_LOGS }}</h1>
+
+<form class="filters card" method="get" action="/logs">
+  {% include "partials/range_filter.html" %}
+  <label>{{ T.FILTER_CHANNEL }}
+    <select name="channel">
+      <option value="">{{ T.ALL_CHANNELS }}</option>
+      {% for ch in channels %}<option value="{{ ch }}" {% if f.channel == ch %}selected{% endif %}>{{ ch | channel }}</option>{% endfor %}
+    </select>
+  </label>
+  <label class="grow">{{ T.BTN_SEARCH }}
+    <input type="search" name="q" value="{{ query }}" placeholder="{{ T.LOGS_SEARCH }}" maxlength="200">
+  </label>
+  <button type="submit" class="btn btn-primary">{{ T.BTN_APPLY }}</button>
+  {% if query %}<a class="btn" href="/logs?{{ qs }}">{{ T.BTN_CLEAR }}</a>{% endif %}
+</form>
+
+{% if query %}
+<div class="card">
+  <div class="card-head"><h2>{{ T.LOGS_SEARCH_RESULTS }}</h2><span class="muted">{{ T.LOGS_MATCHES.format(n=results.total) }}</span></div>
+  {% if results.rows %}
+  <table class="table table-head">
+    <thead><tr><th>{{ T.LOGS_DATE }}</th><th>{{ T.AUDIT_CHANNEL }}</th><th>{{ T.TURN_YOU_SAID }}</th><th>{{ T.LOGS_REPLY }}</th><th class="num">{{ T.LOGS_LATENCY }}</th></tr></thead>
+    <tbody>
+    {% for r in results.rows %}
+    <tr class="{% if r.error %}row-error{% endif %}">
+      <td class="cell-time"><a href="/logs/turns/{{ r.turn_id }}">{{ r.started_at | local_time('%Y-%m-%d %H:%M') }}</a></td>
+      <td class="cell-channel">{{ r.channel_label }}</td>
+      <td class="cell-text"><a href="/logs/turns/{{ r.turn_id }}">{{ r.input }}</a></td>
+      <td class="cell-text muted">{{ r.reply }}</td>
+      <td class="num">{{ r.total_ms | ms }}{% if r.tainted %} <span class="badge badge-warning">{{ T.TURN_TAINTED | lower }}</span>{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% with page=results.page, pages=results.pages, base='/logs?' ~ qs ~ '&q=' ~ (query | urlencode) %}{% include "partials/pager.html" %}{% endwith %}
+  {% else %}<p class="empty">{{ T.NO_DATA }}</p>{% endif %}
+</div>
+{% else %}
+<div class="card">
+  <div class="card-head"><h2>{{ T.LOGS_SESSIONS }}</h2><span class="muted">{{ sessions.total }}</span></div>
+  {% if sessions.rows %}
+  <table class="table table-head">
+    <thead><tr><th>{{ T.LOGS_DATE }}</th><th>{{ T.AUDIT_CHANNEL }}</th><th>{{ T.LOGS_SESSION }}</th><th class="num">{{ T.LOGS_TURNS }}</th><th class="num">{{ T.LOGS_COST }}</th><th class="num">{{ T.LOGS_ERRORS }}</th></tr></thead>
+    <tbody>
+    {% for s in sessions.rows %}
+    <tr class="{% if s.errors %}row-error{% endif %}">
+      <td class="cell-time"><a href="/logs/sessions/{{ s.id }}">{{ s.started_at | local_time('%Y-%m-%d %H:%M') }}</a></td>
+      <td class="cell-channel">{{ s.channel_label }}</td>
+      <td class="cell-text"><a href="/logs/sessions/{{ s.id }}">{{ s.first_input | preview(90) if s.first_input else s.id }}</a> <span class="muted small">{{ s.model }}</span></td>
+      <td class="num">{{ s.turns }}</td>
+      <td class="num">{{ s.cost | money }}</td>
+      <td class="num {% if s.errors %}text-bad{% endif %}">{{ s.errors }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% with page=sessions.page, pages=sessions.pages, base='/logs?' ~ qs %}{% include "partials/pager.html" %}{% endwith %}
+  {% else %}<p class="empty">{{ T.EMPTY }}</p>{% endif %}
+</div>
+{% endif %}
+<script src="{{ asset('analytics.js') }}" defer></script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ T.NAV_OVERVIEW }} · {{ T.APP_TITLE }}{% endblock %}
+{% block strip %}{% include "partials/strip.html" %}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ T.NAV_OVERVIEW }}</h1>
+{% include "partials/today.html" %}
+<div class="grid grid-overview">
+  <div class="col">
+    {% include "partials/health.html" %}
+    {% include "partials/services.html" %}
+  </div>
+  <div class="col">
+    <div class="card" id="voice">
+      <div class="card-head"><h2>{{ icon('mic') }}{{ T.SECTION_VOICE }}</h2></div>
+      {% include "partials/voice_state.html" %}
+      <details class="menu">
+        <summary class="btn">{{ T.PAUSE_FOR }}</summary>
+        <form class="menu-body" hx-post="/voice/pause" hx-target="#voice-state" hx-swap="outerHTML" hx-confirm="{{ T.CONFIRM_QUESTION }}">
+          <button type="submit" class="btn" name="preset" value="15">{{ T.PAUSE_15_MIN }}</button>
+          <button type="submit" class="btn" name="preset" value="60">{{ T.PAUSE_1_HOUR }}</button>
+          <label class="inline">
+            <input type="number" name="minutes" min="1" max="1440" placeholder="{{ T.PAUSE_MINUTES }}">
+            <button type="submit" class="btn" name="preset" value="custom">{{ T.PAUSE_CUSTOM }}</button>
+          </label>
+        </form>
+      </details>
+    </div>
+    {% include "partials/location.html" %}
+    {% include "partials/actions.html" %}
+    {% include "partials/today_recent.html" %}
+  </div>
+</div>
+{% endblock %}

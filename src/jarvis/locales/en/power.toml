@@ -1,0 +1,57 @@
+# Mac power: the sleep countdown and its warning, the scheduled sleep's notices, the status lines (`mac_status`,
+# Telegram's /status).
+
+[sleep]
+warning = "Putting the Mac to sleep in {seconds} seconds. Once it is asleep you can't wake me from Telegram."
+cancel_hint = "Say \"cancel\" or \"stop\" to call it off."
+cancelled = "OK, sleep cancelled; the Mac stays on."
+scheduled_cancelled = "OK, I cancelled the sleep scheduled for {at}; the Mac stays on."
+notice = "The Mac goes to sleep in 1 minute ({at}). Type or say \"cancel\" to call it off."
+now = "The Mac is going to sleep now. You can't reach it from Telegram until it wakes up."
+skipped = "Scheduled sleep ({at}) missed: the scheduler was late, so the Mac was not put to sleep."
+label = "Mac sleep"
+notice_label = "Mac sleep notice"
+confirm_now = "pmset sleepnow (in {seconds} seconds; \"cancel\" calls it off)"
+confirm_scheduled = "The Mac sleeps at {at}; a heads-up comes on the Mac and Telegram 1 minute before"
+
+# lock_screen's result, which Telegram's /lock also shows.
+[lock]
+already = "The screen is already locked."
+display_sleep = "The display is off (a sleep that asks for the password); the lock framework was not found, so display sleep was used."
+unverified = "The lock command was sent; the lock state could not be verified."
+locked = "The screen is locked."
+
+# Whole-message words that cancel a pending sleep. Every language's words work at any time.
+[words]
+cancel = ["cancel", "cancel it", "stop", "abort", "no", "don't sleep", "dont sleep"]
+
+[status]
+power = "Power: {power}{battery}"
+ac = "plugged in"
+battery_power = "on battery"
+unknown = "unknown"
+battery = ", battery {percent}%"
+battery_state = " ({state})"
+until_full = ", {time} until full"
+until_empty = ", {time} left"
+on_battery = "On battery for: {duration} (since {since})"
+on_battery_unknown = "On battery for: unknown"
+idle = "Last used: {duration} ago (keyboard/mouse)"
+locked = "Screen: locked"
+unlocked = "Screen: not locked"
+uptime = "Up for: {duration}"
+blockers = "Preventing sleep: {blockers}"
+errors = "Could not read: {errors}"
+
+[status.state]
+charging = "charging"
+discharging = "discharging"
+charged = "fully charged"
+not_charging = "not charging"
+finishing = "almost full"
+
+[duration]
+days = "{days} d {hours} h"
+hours = "{hours} h {minutes} min"
+minutes = "{minutes} min {seconds} s"
+seconds = "{seconds} s"

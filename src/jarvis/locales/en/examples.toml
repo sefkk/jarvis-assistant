@@ -1,0 +1,143 @@
+# Example phrases a user might say for each tool, shown in HELPFILE.md (scripts/gen_helpfile.py).
+# One key per tool name, 1-3 short phrases. tests/unit/test_helpfile.py fails when a tool has none.
+
+[tools]
+# Alarms
+set_alarm = ["Wake me up at 7 tomorrow", "Set an alarm for 6:30 on weekdays"]
+list_alarms = ["Which alarms do I have?", "Is an alarm set for tomorrow?"]
+cancel_alarm = ["Cancel the 7:30 alarm", "Remove all my alarms"]
+snooze_alarm = ["Snooze", "Ten more minutes"]
+stop_alarm = ["Turn off the alarm", "OK, I'm up"]
+
+# Calendar
+agenda = ["What do I have today?", "What's on my calendar this week?"]
+apple_list_events = ["Show my iCloud calendar for tomorrow"]
+apple_create_event = ["Add dentist on Friday at 10 to my calendar"]
+apple_delete_event = ["Delete the dentist appointment from my calendar"]
+google_list_events = ["What's in my Google Calendar next week?"]
+google_create_event = ["Put a call with Alex on my Google Calendar tomorrow at 3 pm"]
+google_update_event = ["Move the call with Alex to 4 pm"]
+google_delete_event = ["Delete tomorrow's meeting from Google Calendar"]
+
+# Reminders
+list_reminders = ["What's on my to-do list?", "Which reminders are due today?"]
+create_reminder = ["Remind me to call Ada tomorrow at 9", "Add milk to my shopping list"]
+complete_reminder = ["Mark 'call Ada' as done"]
+
+# Daily brief
+daily_brief = ["Give me my daily brief", "What does tomorrow look like?"]
+set_brief_schedule = ["Move the morning brief to 7:30", "No brief on weekends"]
+
+# Clipboard
+get_clipboard = ["What did I just copy?", "Translate what's on my clipboard"]
+set_clipboard = ["Copy that to the clipboard"]
+
+# Delegate
+delegate = ["Research the best e-bikes under 2000 euros and compare them", "Summarize my last 30 emails"]
+
+# Developer
+git_status = ["What's the git status of my jarvis repo?"]
+list_repos = ["Which git repositories do I have?"]
+open_project = ["Open the jarvis project in the editor"]
+
+# Files
+search_files = ["Find my tax PDF from last year", "Where is the file called budget?"]
+read_file = ["Read notes.txt on my Desktop"]
+write_file = ["Save this list as a text file on my Desktop"]
+
+# Football
+team_fixtures = ["When is the next match?"]
+team_results = ["How did the last match end?"]
+match_details = ["Who scored in that match?"]
+league_standings = ["Show the league table"]
+
+# Mail
+gmail_search_threads = ["Any new emails from Alex?", "Search my mail for the flight booking"]
+gmail_read_thread = ["Read me that email"]
+gmail_create_draft = ["Draft a reply saying I'll be there at 6"]
+
+# Sheets
+find_spreadsheet = ["Find my budget spreadsheet"]
+list_sheets = ["Which tabs does the budget sheet have?"]
+read_range = ["Read the first ten rows of the budget sheet"]
+query_sheet = ["How much did I spend on food in March?", "Sum the expenses over 100"]
+append_rows = ["Add a row to the budget sheet: coffee, 4.50, today"]
+update_range = ["Change cell B2 in the budget sheet to 120"]
+create_spreadsheet = ["Create a new spreadsheet called Trip Plan"]
+
+# Voice listening
+pause_listening = ["Stop listening", "Stop listening for an hour"]
+
+# Maps
+search_places = ["Find a pharmacy near me", "Good coffee shops nearby?"]
+place_details = ["Is that place open now?", "What's their phone number?"]
+travel_time = ["How long to the airport by car?", "When should I leave to be at work by 9?"]
+geocode = ["What are the coordinates of the Eiffel Tower?"]
+open_in_maps = ["Show directions to the airport in Maps"]
+
+# Memory
+remember = ["Remember that my sister's name is Ada", "Remember I'm allergic to peanuts"]
+forget = ["Forget what you know about my old job"]
+list_memory = ["What do you remember about me?"]
+
+# Internet
+internet_test = ["Is my internet working?", "Run a speed test"]
+internet_history = ["How was my internet this week?"]
+
+# Mac power
+mac_status = ["How's the battery?", "Is the Mac locked?"]
+lock_screen = ["Lock the screen"]
+sleep_mac = ["Put the Mac to sleep"]
+schedule_sleep = ["Put the Mac to sleep at 11 pm"]
+cancel_scheduled_sleep = ["Cancel the sleep", "Don't let the Mac sleep"]
+
+# Presence
+am_i_home = ["Am I home?"]
+who_is_home = ["Who is home?"]
+is_home = ["Is Alex home?"]
+presence_history = ["When did Alex get home today?"]
+list_network_devices = ["Which devices are on my network?"]
+
+# Screen
+capture_screen = ["What's on my screen?", "Read the error in this window"]
+
+# Shell
+run_shell = ["How much disk space is left?", "Run ls in my Downloads folder"]
+
+# Shortcuts
+list_shortcuts = ["Which shortcuts can you run?"]
+run_shortcut = ["Turn on Do Not Disturb", "Run my evening scene"]
+
+# Spotify
+play = ["Resume the music", "Play"]
+pause = ["Pause the music"]
+next = ["Next song", "Skip this track"]
+previous = ["Previous song"]
+now_playing = ["What song is this?"]
+search_and_play = ["Play some jazz on Spotify", "Play the latest album by Coldplay"]
+
+# System
+get_time = ["What time is it?", "What's the date today?"]
+open_app = ["Open Safari"]
+quit_app = ["Quit Mail"]
+set_volume = ["Set the volume to 30", "Turn the volume down"]
+
+# Timers
+set_timer = ["Set a timer for 10 minutes", "Notify me at 5 pm to take the laundry out"]
+list_timers = ["Which timers are running?"]
+cancel_timer = ["Cancel the pasta timer"]
+start_pomodoro = ["Start a pomodoro"]
+stop_pomodoro = ["Stop the pomodoro"]
+
+# Training
+log_training = ["I ran 5 km in 27 minutes", "Log gym: 3 sets of 10 squats at 60 kg"]
+training_summary = ["How did I train this month?"]
+list_workouts = ["Show my workouts from last week"]
+delete_workout = ["Delete yesterday's run from the log"]
+
+# Weather
+get_weather = ["What's the weather like?", "Will it rain in Berlin tomorrow?"]
+
+# Web
+web_search = ["Search the web for the opening hours of the city museum", "What's the latest news on the election?"]
+fetch_page = ["Read this page for me: https://example.com/article"]

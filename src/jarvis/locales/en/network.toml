@@ -1,0 +1,13 @@
+# Notifications from the periodic internet check.
+
+down = "Internet connection lost: {cause}"
+up = "Internet is back"
+
+[cause]
+offline = "Wi-Fi connection or router problem"
+gateway_unreachable = "Wi-Fi connection or router problem"
+no_internet = "The router is not connected to the internet / internet provider problem"
+dns = "DNS problem"
+weak_wifi = "Weak Wi-Fi signal, move closer to the router"
+slow = "The connection works but is slow"
+ok = "The connection is normal"

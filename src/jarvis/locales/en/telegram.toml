@@ -1,0 +1,113 @@
+# The Telegram bot: messages to the phone, buttons, and the `jarvis telegram` CLI lines.
+
+[bot]
+greeting = "Hi, Jarvis here. Type or send a voice message; /help shows what I can do."
+unsupported = "For now I only understand text and voice messages."
+new_session = "New session started."
+turn_error = "ℹ️ Something went wrong in this turn ({error}). Details are in the log on the Mac."
+stopped = "Stopped. To turn me back on: /start here and `jarvis telegram enable` on the Mac."
+reenable_requested = "Got the request to turn back on. I'll carry on once `jarvis telegram enable` runs on the Mac."
+
+# {team} is football.team from the config.
+[help]
+text = """What I can do from the phone:
+• Calendar (agenda, creating events - with confirmation)
+• Reminders
+• Gmail: search, read, drafts (with confirmation)
+• Weather, web search and reading pages
+• {team}: matches, standings
+• Daily brief, timers, pomodoro
+• Training log, memory
+• Voice messages: I first write what I understood, then answer
+• Location: share your location from the phone (/location) and weather and travel times are worked out from there; the Mac's location is never used when you ask from the phone
+• If the Mac is left on: /status (battery, idle time, screen lock), /lock (lock the screen), /sleep (with confirmation; say "cancel" before it sleeps to call it off), "put the Mac to sleep at 23:00" (warns a minute before). No shutdown or restart.
+• Alarms: "set an alarm for 7 tomorrow morning" rings on the Mac, and a reminder plus a Telegram message reach the phone; /stop_alarm stops a ringing alarm, /snooze [min] snoozes it (typing "ok", "stop" or "snooze" works too)
+• Morning brief: arrives by itself every morning (spoken when you're at the Mac, here otherwise); /brief sends it now; "move the morning brief to 7:30", "no brief on weekends", "turn the brief off" change it
+
+Commands: /start, /help, /new (new session), /location (share-location button), /mute [60m] and /unmute (pause / resume voice listening on the Mac), /status, /lock, /sleep [seconds], /stop_alarm, /snooze [min], /brief (today's brief), /stop (emergency off)
+Shell, file, app, screen and clipboard tools are off from the phone."""
+
+[confirm]
+title = "⚠️ Confirmation needed"
+tool = "Tool: {tool} (risk: {risk})"
+untrusted = "This action was triggered after reading untrusted content."
+command = "Command:\n{command}"
+args = "Arguments:\n{args}"
+args_above = "Arguments: in full in the message(s) above."
+args_full = "Arguments (in full):\n{args}"
+approve = "Approve"
+decline = "Decline"
+forbidden = "This tool can't run from the phone, only on the Mac."
+timeout = "Time ran out and Approve wasn't pressed on the phone, so I didn't do it."
+declined = "You pressed Decline on the phone, so I didn't do it."
+outcome_timeout = "⏱️ Time's up; declined."
+outcome_stopped = "⛔ Stopped; declined."
+outcome_approved = "✅ Approved"
+outcome_declined = "❌ Declined"
+outcome_chosen = "✅ Chosen: {label}"
+callback_invalid = "This confirmation is invalid or has expired."
+callback_ok = "OK"
+
+[location]
+request = "📍 To share your location, tap the button below (or paperclip > Location). When you ask from the phone, weather and travel times use the location you shared, not the Mac's."
+button = "📍 Share my location"
+saved = "📍 Location received ({when}). Remote turns use it for a while; share it again when it gets old."
+invalid = "Couldn't read the location (invalid coordinates)."
+forwarded = "A forwarded location may be someone else's; share your own (/location)."
+
+[mute]
+usage = "I didn't get the duration. For example: /mute, /mute 60m, /mute 1h30m"
+paused_for = "🔇 Listening on the Mac is paused for {duration}; it comes back on by itself at {until}. /unmute for sooner."
+paused = "🔇 Listening on the Mac is paused. /unmute, `jarvis voice resume` or the hotkey turns it back on."
+resumed = "🎙️ Listening on the Mac is back on."
+already_on = "Listening was already on."
+minutes = "{minutes} min"
+hours = "{hours} h"
+hours_minutes = "{hours} h {minutes} min"
+
+[power]
+sleep_usage = "Usage: /sleep or /sleep 30 (seconds until it sleeps, 3-120)."
+denied = "{command}: not done, no confirmation came."
+not_remote = "/{command} is off from the phone: add \"power.{tool}\" to telegram.remote_allowed_tools in config.toml."
+bad_arg = "/{command} couldn't run (invalid argument)."
+failed = "/{command} failed: {error}"
+crashed = "Something went wrong during /{command} ({error}). Details are in the log on the Mac."
+
+[alarm]
+snooze_usage = "Usage: /snooze or /snooze 15 (minutes to snooze, 1-60)."
+stop_no_answer = "The stop request went out, but the scheduler didn't answer."
+snooze_no_answer = "The snooze request went out, but the scheduler didn't answer."
+
+[voice]
+too_long = "That voice message is too long ({seconds} s). {limit} minutes at most."
+too_big = "That voice message is too big (20 MB at most)."
+download_failed = "I couldn't download the voice message."
+failed = "I couldn't decode the voice message ({error})."
+empty = "I couldn't make out the voice message."
+heard = "🎙️ I heard: {text}"
+
+# `jarvis telegram run | whoami | set-token`.
+[cli]
+enable_not_stopped = "The Telegram bot is not stopped; nothing to do."
+enable_needs_start = "The bot is stopped but /start has not been sent from the allowed Telegram account yet. Send /start to the bot first, then run `jarvis telegram enable` again."
+enabled = "Telegram bot re-enabled. The running bot picks this up with its next message."
+disabled = "Telegram is disabled: set `enabled = true` under [telegram] in config.toml first."
+no_ids = "telegram.allowed_user_id / allowed_chat_id are not set; run `jarvis telegram whoami` and put the ids in config.toml."
+no_token = "No Telegram bot token in the Keychain; run `jarvis telegram set-token`."
+running = "Jarvis Telegram bot running (Ctrl-C to stop)."
+running_stopped = "Jarvis Telegram bot running (Ctrl-C to stop). The kill switch is engaged: ignoring messages."
+whoami_no_token = "No Telegram bot token in the Keychain; run `jarvis telegram set-token` first."
+get_me_failed = "getMe failed: {error}"
+bot = "Bot: @{username} (id {id}, name {name})"
+waiting = "Send any message to the bot from your phone now; waiting up to {seconds} s..."
+get_updates_failed = "getUpdates failed: {error}"
+first_message = "First message from user id {user_id} (@{username}) in chat {chat_id} ({chat_type})."
+setup_reply = "Jarvis setup: user id {user_id}, chat id {chat_id}"
+reply_failed = "(could not reply: {error})"
+not_private = "(not a private chat: not replying; the bot must be used from a private chat)"
+put_ids = "Put these in config.toml: telegram.allowed_user_id and telegram.allowed_chat_id, then set enabled = true."
+no_message = "No message arrived in time."
+token_prompt = "Telegram bot token (from BotFather): "
+no_token_entered = "No token entered; nothing stored."
+token_odd = "Warning: that does not look like a bot token (expected <digits>:<35 characters>); storing it anyway."
+token_stored = "Stored in the Keychain as {name}. Next: `jarvis telegram whoami`."

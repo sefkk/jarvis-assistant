@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ T.LOGS_SESSION }} · {{ T.APP_TITLE }}{% endblock %}
+{% block content %}
+<p class="crumbs"><a href="/logs">{{ T.NAV_LOGS }}</a> › {{ T.LOGS_SESSION }} <code>{{ s.id }}</code></p>
+<h1 class="page-title">{{ s.started_at | local_time('%Y-%m-%d %H:%M') }} · {{ s.channel_label }}</h1>
+<div class="card">
+  <div class="card-head">
+    <div class="meta-row">
+      <span><span class="muted">{{ T.LOGS_STARTED }}:</span> {{ s.started_at | local_time('%H:%M:%S') }}</span>
+      <span><span class="muted">{{ T.LOGS_ENDED }}:</span> {{ s.ended_at | local_time('%H:%M:%S') if s.ended_at else '–' }}</span>
+      <span><span class="muted">{{ T.LOGS_MODELS }}:</span> <code>{{ s.model_main }}</code> / <code>{{ s.model_delegate }}</code></span>
+      <span><span class="muted">{{ T.LOGS_TURNS }}:</span> {{ s.total }}</span>
+      <span><span class="muted">{{ T.LOGS_COST }}:</span> {{ s.cost | money }}</span>
+    </div>
+    <a class="btn btn-small" href="/logs/sessions/{{ s.id }}/export.md">{{ T.BTN_EXPORT_MARKDOWN }}</a>
+  </div>
+  {% if s.turns %}
+  <table class="table table-head">
+    <thead><tr><th>{{ T.AUDIT_TIME }}</th><th>{{ T.TURN_YOU_SAID }}</th><th>{{ T.LOGS_REPLY }}</th><th>{{ T.REQ_TOOLS }}</th><th class="num">{{ T.LOGS_LATENCY }}</th><th class="num">{{ T.LOGS_COST }}</th><th>{{ T.REQ_FLAGS }}</th></tr></thead>
+    <tbody>
+    {% for t in s.turns %}
+    <tr class="{% if t.error %}row-error{% endif %}">
+      <td class="cell-time"><a href="/logs/turns/{{ t.id }}">{{ t.started_at | local_time('%H:%M:%S') }}</a></td>
+      <td class="cell-text"><a href="/logs/turns/{{ t.id }}">{{ t.user_input | preview(90) }}</a></td>
+      <td class="cell-text muted">{{ t.reply | preview(120) if t.reply else T.TURN_NO_REPLY }}</td>
+      <td class="cell-tools">{% for tool in t.tools %}<span class="chip">{{ tool }}</span>{% endfor %}</td>
+      <td class="num">{{ t.total_ms | ms }}</td>
+      <td class="num">{{ t.cost | money }}</td>
+      <td class="cell-flags">{% if t.error %}<span class="badge badge-failed">{{ T.FLAG_ERROR }}</span>{% endif %}{% if t.tainted %}<span class="badge badge-warning">{{ T.FLAG_TAINTED }}</span>{% endif %}{% if t.denied %}<span class="badge badge-stopped">{{ T.FLAG_DENIED }}</span>{% endif %}{% if t.confirmations %}<span class="badge badge-ok">{{ T.FLAG_CONFIRMED }}</span>{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% with page=s.page, pages=s.pages, base='/logs/sessions/' ~ s.id ~ '?' %}{% include "partials/pager.html" %}{% endwith %}
+  {% else %}<p class="empty">{{ T.EMPTY }}</p>{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,133 @@
+# The voice service: spoken system sentences, notifications, the resume dialog and the `jarvis voice` commands.
+
+# Short system sentences, spoken in the language of the turn (cacheable by the cloud voice).
+[speech]
+table = "I left the table in a notification."
+list = "I left the list in a notification."
+details = "I left the details in a notification."
+error = "Something went wrong; the details are in the log."
+choice = "There is a choice dialog on the screen."
+elevenlabs_budget = "The ElevenLabs monthly limit is reached, switching to the system voice."
+
+# What the service heard, on the foreground terminal and in the optional notification.
+[transcript]
+heard = "🎙️ Heard: {text}"
+alarm = "🎙️ Heard while the alarm rang: {text}  -> {action}"
+confirm_stopped = "🎙️ Stopped listening for the answer (the decision came another way)"
+confirm_answer = "🎙️ Confirmation answer: {cleaned} (raw: {raw})"
+
+# Pausing and resuming the microphone.
+[pause]
+notification = "🔇 Jarvis is not listening"
+notification_for = "🔇 Jarvis is not listening ({label})"
+resumed = "🎙️ Jarvis is listening again"
+ack = "Okay, I stopped listening."
+ack_for = "Okay, not listening for {label}."
+resume_question = "Listening is paused. Should I start listening again?"
+resume_yes = "Yes"
+resume_no = "No"
+# Durations in notifications and replies.
+minutes_short = "{minutes} min"
+hours_short = "{hours} h"
+hours_minutes_short = "{hours} h {minutes} min"
+# Durations read aloud.
+hour_one = "{count} hour"
+hours = "{count} hours"
+minute_one = "{count} minute"
+minutes = "{count} minutes"
+
+# `jarvis voice run` and `jarvis voice calibrate`.
+[service]
+use_voice_off = "Set `use_voice = true` under [general] in config.toml first."
+missing_packages = "Missing voice packages ({packages}): reinstall with the voice extra: `uv tool install --editable '.[voice]' --python 3.12` (or `uv sync --extra voice` in a development checkout)."
+needs_macos = "`{tool}` not found; the voice service needs macOS."
+mic_denied = "Microphone access is denied for this process; see docs/troubleshooting.md (voice)."
+input_monitoring = "Input Monitoring is not granted: the wake word works, the hotkey does not (see docs/integrations/voice.md)."
+already_running = "Another `jarvis voice` is already running (see {lock}). Two services would both hear you and keep two separate conversations; stop the other one first (`jarvis voice uninstall` or Ctrl-C)."
+starting = "Jarvis voice service starting."
+starting_foreground = "Jarvis voice service starting (foreground: every state change is printed; Ctrl-C to stop)."
+calibrate_intro = "Listening for {seconds} s. Say \"Hey Jarvis\" a few times at your normal distance; the threshold is {threshold}."
+calibrate_detection = "  <-- detection"
+calibrate_peak = "Peak score {peak}. A good threshold sits below your typical peaks and above the background noise."
+cancelled = "Cancelled."
+
+# `jarvis voice say`.
+[say]
+usage = "usage: jarvis voice say \"<text>\" [--dry-run] [--language tr|en]"
+nothing = "Nothing to say after cleaning (only markdown, code or symbols)."
+timeout = "Timed out waiting for the speech to finish."
+spoken_by = "  spoken by {voice}"
+
+# `jarvis voice debug-record`.
+[debug]
+input_device = "Input device: {device}"
+stream = "Stream: {rate} Hz, mono, int16, {frame}-sample frames (PortAudio resamples from the device rate)"
+vad = "VAD: threshold {threshold}, end after {silence} ms of silence, max {max} s, no-speech timeout {timeout} s"
+stt = "Speech to text: {engine}"
+stt_ready = "Speech to text ready in {ms} ms"
+stt_not_ready = " (the chosen engine is not ready: {error})"
+speak_now = "Speak now (the recording ends by itself after the silence)."
+saved = "Saved: {path}"
+recording = "Recording: {ms} ms, {samples} samples at {rate} Hz, ended by {reason}"
+speech = "Speech (VAD): {start} ms to {end}; {start} ms of lead-in kept before it, {tail} ms of tail after it"
+speech_end = "{ms} ms"
+speech_to_end = "the end"
+speech_never = "Speech (VAD): never started"
+levels_file = "Levels (whole file): peak {peak} dBFS, RMS {rms} dBFS, clipped samples {clipped} ({pct}%)"
+levels_speech = "Levels (speech part): peak {peak} dBFS, RMS {rms} dBFS"
+verdict_silence = "Verdict: no speech detected (the levels above are the room's noise floor)"
+verdict = "Verdict: {verdicts}"
+transcript = "Transcript [{detail}]: {text}"
+confidence = "confidence {value}"
+fallback = "The chosen engine failed, Whisper answered: {error}"
+filtered = "Filtered: the service would drop this transcript (empty or on the hallucination list)."
+skipped = "Transcript: skipped, the VAD saw no speech."
+listen_with = "Listen with: afplay {path}"
+
+# `jarvis voice test-stt`.
+[stt_test]
+intro = "{count} sentences. For each one: press Enter, wait for the sound, read the sentence, stop; the recording ends after {silence} ms of silence. Ctrl-C aborts."
+enter = "Enter to record: "
+nothing_heard = "  nothing heard, again"
+recorded = "  recorded {seconds} s"
+session_saved = "Session saved: {path}"
+downloading = "Downloading {model} ..."
+downloaded = "  done in {seconds} s"
+sentence_failed = "  sentence {index}: {error}"
+skipped = "{label}: skipped, {reason}"
+running = "{label} ..."
+failed = "  failed: {error}"
+scores = "  words {words} %, names {names} %, {ms} ms per sentence"
+no_key = "No ElevenLabs key in the Keychain (`jarvis voice set-elevenlabs-key`): the cloud options are skipped."
+cloud_warning = "--cloud: the recordings will be sent to ElevenLabs (paid, the audio leaves the Mac)."
+results_saved = "Results saved: {path}"
+
+# `jarvis voice set-elevenlabs-key` and `jarvis voice list-voices`.
+[elevenlabs]
+no_key = "No ElevenLabs API key in the Keychain. Run `jarvis voice set-elevenlabs-key` first."
+list_failed = "Could not list the voices: {error}"
+no_voices = "The account has no voices. Add one in the ElevenLabs voice library, then run this again."
+voices = "{count} voice(s). Copy the voice_id into config.toml: [voice] elevenlabs_voice_id = \"<voice_id>\""
+key_prompt = "ElevenLabs API key: "
+key_empty = "No key entered; nothing stored."
+key_prefix = "Warning: ElevenLabs keys usually start with sk_; storing it anyway."
+key_stored = "Stored in the Keychain as {name}. Next: `jarvis voice list-voices`, then set elevenlabs_voice_id in config.toml and run `jarvis doctor`."
+
+# The headers of the files the user may edit under data/.
+[files]
+corrections = """# Speech corrections
+#
+# Learned from "no, I said X" / "hayır, X dedim": the left side is what the recognizer heard, the right side
+# what you meant. Jarvis replaces the left side in every later transcript. Edit or delete lines freely; one
+# per line as "- heard {arrow} meant". Lines starting with # are ignored.
+
+"""
+vocabulary = """# Speech vocabulary
+#
+# Names, places, artists and words Jarvis should expect when you speak: one per line, at most five words,
+# for example "- Ada Lovelace". They are given to the speech recognizer as hints. Lines starting with # are
+# ignored. Terms collected automatically (Spotify, Maps, calendar, profile, Shortcuts) are in
+# vocabulary.auto.md; add them here only to put them first.
+
+"""
+vocabulary_auto = "# Speech vocabulary collected by Jarvis (rewritten automatically; edit vocabulary.md instead)"

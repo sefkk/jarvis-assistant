@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="csrf-token" content="{{ csrf }}">
+  <meta name="lock-seconds" content="{{ lock_seconds }}">
+  <meta name="unlock-mode" content="{{ unlock_mode }}">
+  <title>{{ T.SESSION_LOCKED }} · {{ T.APP_TITLE }}</title>
+  <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ asset('tokens.css') }}">
+  <link rel="stylesheet" href="{{ asset('app.css') }}">
+  <script src="{{ asset('theme.js') }}"></script>
+  <script src="{{ asset('app.js') }}" defer></script>
+</head>
+<body class="locked locked-page">
+  <div id="lock-panel" class="lock-panel">
+    <div class="lock-card">
+    <span class="lock-icon">{{ icon('lock') }}</span>
+    <h1>{{ T.SESSION_LOCKED }}</h1>
+    <p>{{ T.SESSION_LOCKED_AFTER.format(n=lock_minutes) }}</p>
+    <p class="lock-error text-bad" hidden>{{ T.UNLOCK_FAILED }}</p>
+    <button type="button" class="btn btn-primary btn-big" data-unlock>{% if unlock_mode == 'touch_id' %}{{ T.BTN_UNLOCK_TOUCH_ID }}{% else %}{{ T.BTN_CONTINUE }}{% endif %}</button>
+    </div>
+  </div>
+</body>
+</html>

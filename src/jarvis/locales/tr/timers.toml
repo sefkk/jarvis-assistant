@@ -1,0 +1,14 @@
+# Zamanlayıcı: zamanlayıcı ve pomodoro bildirimleri, kurulu olmayan zamanlayıcı uyarısı, ayar yenileme bildirimi.
+
+late = " (gecikmeli)"
+scheduler_missing = "Uyarı: arka plan zamanlayıcısı kurulu değil, bu yüzden bu zamanlayıcı kendiliğinden çalmaz. Bir kez `jarvis scheduler install` çalıştır (yeniden başlatmadan sonra da çalışır)."
+
+[pomodoro]
+break = "Mola zamanı"
+long_break = "Uzun mola"
+focus = "Odak zamanı, {cycle}/{cycles}"
+done = "Pomodoro tamamlandı"
+
+[config]
+title = "Jarvis ayarları"
+invalid = "config.toml değişti ama geçerli değil; son geçerli ayarlarla devam ediyorum.\n{reason}"

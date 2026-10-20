@@ -1,0 +1,13 @@
+<div id="voice-state" class="voice-state" hx-get="/partials/voice" hx-trigger="every {{ refresh_s }}s" hx-swap="outerHTML">
+  <p class="voice-label {% if voice.off %}is-off{% elif voice.paused %}is-paused{% else %}is-listening{% endif %}">{{ voice.state }}</p>
+  <p class="muted small">{{ voice.detail }}</p>
+  {% if flash %}<p class="flash">{{ flash }}</p>{% endif %}
+  {% if flash_error %}<p class="flash flash-error">{{ flash_error }}</p>{% endif %}
+  <div class="actions">
+    {% if voice.paused %}
+    <button type="button" class="btn btn-primary btn-big" hx-post="/voice/resume" hx-target="#voice-state" hx-swap="outerHTML" hx-confirm="{{ T.CONFIRM_QUESTION }}">{{ T.BTN_RESUME }}</button>
+    {% else %}
+    <button type="button" class="btn btn-primary btn-big" hx-post="/voice/pause" hx-target="#voice-state" hx-swap="outerHTML" hx-confirm="{{ T.CONFIRM_QUESTION }}">{{ T.BTN_PAUSE }}</button>
+    {% endif %}
+  </div>
+</div>

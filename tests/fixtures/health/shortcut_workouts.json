@@ -1,0 +1,34 @@
+{
+  "format": "jarvis-shortcut",
+  "version": 1,
+  "workouts": [
+    {
+      "id": "A1B2C3D4-0001-4000-8000-000000000001",
+      "type": "Running",
+      "start": "2026-10-10T18:30:00+03:00",
+      "end": "2026-10-10T19:00:00+03:00",
+      "duration": "0:30:00",
+      "distance": {"qty": 5.2, "units": "km"},
+      "energy": {"qty": 410, "units": "kcal"},
+      "avgHeartRate": 152,
+      "maxHeartRate": 178,
+      "source": "Apple Watch"
+    },
+    {
+      "type": "Traditional Strength Training",
+      "startDate": "2026-10-11T07:00:00+03:00",
+      "endDate": "2026-10-11T07:45:00+03:00",
+      "duration": "45 min",
+      "activeEnergy": "300 kcal",
+      "heartRate": 120,
+      "notes": "upper body ​<script>alert(1)</script>"
+    },
+    {
+      "workoutType": "Walking",
+      "start": "2026-10-12 09:00:00 +0300",
+      "duration": 1800,
+      "distance": 2500,
+      "source": "iPhone"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+<div class="card" id="services" hx-get="/partials/services" hx-trigger="every {{ refresh_s }}s" hx-swap="outerHTML">
+  <div class="card-head"><h2>{{ T.SECTION_SERVICES }}</h2></div>
+  <table class="table">
+    <tbody>
+    {% for s in services %}
+    <tr>
+      <td class="cell-name"><span class="dot dot-{{ s.state | lower }}"></span>{{ s.label }}</td>
+      <td><span class="badge badge-{{ s.state | lower }}">{{ s.state }}</span></td>
+      <td class="cell-meta">
+        <div><span class="muted">{{ T.LABEL_UPTIME }}:</span> {{ s.uptime_s | duration if s.uptime_s is not none else '–' }}</div>
+        <div><span class="muted">{{ T.LABEL_CONFIG_VERSION }}:</span> {% if s.config_version %}<code>{{ s.config_version }}</code> <span class="muted">{{ s.config_note }}</span>{% elif s.config_note %}<span class="muted">{{ s.config_note }}</span>{% else %}–{% endif %}</div>
+        <div class="muted small">{{ s.detail }}</div>
+      </td>
+      <td class="cell-action">
+        <button type="button" class="btn btn-small" hx-post="/services/{{ s.name }}/restart" hx-target="#services" hx-swap="outerHTML" hx-confirm="{{ T.CONFIRM_QUESTION }}" {% if not s.installed or s.state == T.STATE_RESTARTING %}disabled{% endif %}>{{ T.BTN_RESTART }}</button>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

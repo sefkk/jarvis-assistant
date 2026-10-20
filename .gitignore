@@ -1,0 +1,43 @@
+# your own settings and secrets: `jarvis setup` creates them from the .example files
+/config.toml
+/config.toml.bak
+/config.local.toml
+/config.local.toml.bak
+.env
+client_secret*.json
+*.token.json
+
+# local state: profile, memory, transcripts, logs, recordings, backups, downloaded models
+data/
+logs/
+*.db
+*.db-wal
+*.db-shm
+*.wav
+eval/recordings/
+
+# your own cue and alarm sounds (sounds/README.md); only the README is shared
+sounds/*
+!sounds/README.md
+
+# spec and prompt files are never committed
+JARVIS_*.md
+specs/
+
+# personal notes next to the shared ones
+MANUAL_STEPS.local.md
+CLAUDE.local.md
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+
+# os and editors
+.DS_Store
+.claude/

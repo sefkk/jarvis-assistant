@@ -1,0 +1,141 @@
+# Terminal sohbeti ve genel komut satırı.
+
+[greeting]
+morning = "Günaydın{name}, dinliyorum."
+day = "İyi günler{name}, dinliyorum."
+evening = "İyi akşamlar{name}, dinliyorum."
+
+[goodbye]
+text = "Görüşürüz{name}."
+
+[first_run]
+missing = "Jarvis henüz kurulmadı: {what} eksik."
+hint = "Oluşturmak için `jarvis setup` komutunu çalıştır."
+ask = "`jarvis setup` şimdi başlasın mı?"
+
+[notice]
+# Cevabın yanındaki kısa satırlar (terminal, Telegram).
+reply_restarted = "(cevap baştan başladı)"
+retry_timeout = "API zaman aşımı: {phase} sınırı ({limit} s) aşıldı, {delay} sn sonra yeniden deneniyor ({attempt}/{max})..."
+retry_error = "API hatası ({detail}), {delay} sn sonra yeniden deneniyor ({attempt}/{max})..."
+refusal = "Model bu isteği reddetti (güvenlik reddi)."
+cut_off = "Cevap max_output_tokens sınırında kesildi."
+cut_off_tool = "Cevap, bir araç çağrısı tamamlanamadan max_output_tokens sınırında kesildi."
+iteration_cap = "Durdum: bu tur için {max} araç çağrısı sınırına ulaşıldı."
+compacting = "Önceki konuşma özetleniyor..."
+turn_crashed = "Hata: bu turda bir şeyler ters gitti ({error}). Ayrıntılar log dosyasında."
+
+[common]
+error = "Hata:"
+config_error = "Ayar hatası:"
+warning = "uyarı:"
+interrupted = "kesildi"
+yes = "evet"
+no = "hayır"
+agent_status = "ajan kurulu: {installed}, çalışıyor: {running}"
+scheduler_status = "kurulu: {installed}, çalışıyor: {running}"
+
+[chat]
+no_api_key = "API anahtarı olmadan başlayamam."
+no_profile = "Henüz profil yok."
+no_profile_hint = "Jarvis adını ve tercihlerini bilsin diye `jarvis setup` komutunu çalıştır."
+warmup_failed = "ısınma başarısız: {error}"
+
+[key]
+prompt = "{name} için değer: "
+empty = "Hiçbir şey kaydedilmedi (boş değer)."
+stored = "{name} macOS Keychain'e kaydedildi (servis '{service}')."
+removed = "{name} Keychain'den silindi (varsa)."
+
+[google]
+login_done = "Google girişi tamam. Token macOS Keychain'e kaydedildi."
+missing_scopes = "şu izinler verilmedi: {scopes}. Girişi yeniden yap ve bütün kutuları işaretle."
+scopes = "İzinler: takvim etkinlikleri, Gmail okuma, Gmail taslakları (gönderme yok), Sheets, Drive meta verileri (tabloları adıyla bulmak için)."
+logout = "Google token'ı Keychain'den silindi."
+
+[report]
+session = "{id}  {started}  {model}  {turns} tur"
+no_sessions = "Oturum yok."
+wrote = "{path} yazıldı"
+
+[memory]
+removed = "{count} not silindi."
+no_match = "Bu metni içeren not yok."
+empty = "Hafıza boş ({path})."
+summary = "{count} not, {size} / {max} bayt, {path} içinde"
+
+[health]
+sync = "Health eşitleme: {result}"
+sync_skipped = "Health eşitleme atlandı: {error}"
+not_found = "bulunamadı: {path}"
+importing = "{path} içe aktarılıyor (akış halinde; büyük bir dışa aktarım biraz sürer)..."
+input = "girdi"
+file_failed = "{name}: başarısız ({error})"
+file_ok = "{name}: {format}, {new} yeni, {dup} tekrar"
+file_skipped = ", {count} atlandı"
+unknown_error = "bilinmeyen hata"
+synced = "{processed} dosya içe aktarıldı, {failed} başarısız, {new} yeni antrenman, {dup} tekrar"
+inbox_bad = "health_inbox ayarı hatalı: {error}"
+inbox_missing = "Health gelen kutusu bulunamadı: {path}"
+inbox_unreadable = "gelen kutusu listelenemedi: {error}"
+
+[scheduler]
+fired = "{count} zamanlayıcı tetiklendi."
+running = "Jarvis zamanlayıcısı çalışıyor (durdurmak için Ctrl-C)."
+installed = "{path} kuruldu. Zamanlayıcılar artık komut satırı kapalıyken de çalışır."
+removed = "Zamanlayıcı ajanı kaldırıldı."
+
+[brief]
+not_spoken = "seslendirilmedi: {reason}. --send telegram dene ya da `jarvis voice resume` / Rahatsız Etme'yi kapat."
+voice_requested = "sesli brifing istendi: ses servisi boşa çıkar çıkmaz (beş dakika içinde) okuyacak."
+sent_telegram = "Telegram'a gönderildi"
+schedule_written = "brief.schedule.enabled = {value} {file} dosyasına yazıldı; çalışan zamanlayıcı bir sonraki kontrolde uygular."
+schedule = "sabah brifingi: {text}"
+scheduler_down = "uyarı: zamanlayıcı ajanı çalışmıyor ({detail}); `jarvis scheduler install` yapılana kadar hiçbir şey gönderilmez."
+
+[telegram]
+installed = "{path} kuruldu. Bot artık arka planda çalışıyor."
+removed = "Telegram ajanı kaldırıldı."
+token_stored = "Bot token'ı macOS Keychain'e kaydedildi."
+kill_stopped = "acil durdurma: DURDURULDU"
+kill_reenable_requested = " (telefondan yeniden açma istendi; `jarvis telegram enable` çalıştır)"
+kill_send_start = " (telefondan /start gönder, sonra `jarvis telegram enable` çalıştır)"
+kill_active = "acil durdurma: kapalı (bot mesajları işliyor)"
+
+[voice]
+needs_use_voice = "önce config.toml'da [general] altında `use_voice = true` yap; yoksa ajan hemen kapanır"
+installed = "{path} kuruldu. Ses servisi artık oturum açılışında başlar."
+permissions = "launchd altında Mikrofon ve Girdi İzleme izinleri {python} için verilir (docs/integrations/voice.md)."
+removed = "Ses ajanı kaldırıldı."
+bad_duration = "{value} süresi okunamadı; 60m, 1h, 1h30m ya da dakika sayısı kullan"
+paused_for = "Sesli dinleme {duration} duraklatıldı, {until} saatine kadar."
+paused = "Sesli dinleme yeniden açılana kadar duraklatıldı."
+paused_detail = "Servis çalışmaya devam eder, mikrofonu bırakır ve uyandırma kelimesini duymaz. Geri açmak için `jarvis voice resume`, Telegram'da /unmute ya da kısayol tuşunu basılı tutup çıkan pencereyi yanıtla."
+not_running = "Not: ses ajanı şu an çalışmıyor; duraklatılmış olarak başlayacak."
+resumed = "Sesli dinleme yeniden açıldı."
+not_paused = "Sesli dinleme duraklatılmamıştı."
+listening = "dinleme: {state}"
+
+[alarms]
+no_answer = "çalan alarm cevap vermedi; `jarvis scheduler run` çalışıyor mu?"
+already_ringing = "zaten çalan bir alarm var"
+sound = "ses: {sound}"
+test_info = "çalarken sistem ses seviyesi -> {volume} (sonra geri yüklenir); en fazla {seconds} sn; ekranda {stop} / {snooze} ya da başka bir terminalden `jarvis alarms stop` / `jarvis alarms snooze`"
+result = "sonuç: {outcome} ({by}), {loops} tur, ses seviyesi geri yüklendi: {restored}"
+
+[dashboard]
+stopped = "Panel durduruldu."
+
+[network]
+running = "Tanılama ve networkQuality hız testi çalışıyor (yaklaşık 20 sn, veri kullanır)..."
+
+[calendar]
+no_filters = "Takvim filtresi ayarlı değil. config.toml'a bir [[calendar.filters]] bloğu ekle."
+counts = "  önümüzdeki {days} gün: {shown} gösteriliyor, {hidden} gizli"
+shown = "    gösterilen: {event}"
+hidden = "    gizlenen: {event}"
+not_counted = "{name} takvimi sayılmadı: {reason}"
+
+[budget]
+warning = "Bütçe uyarısı: bugün ${budget} bütçenin ${spent} kadarı kullanıldı ({percent})."
+exceeded = "Günlük bütçe aşıldı: bugün ${budget} bütçenin ${spent} kadarı kullanıldı ({percent}). Jarvis cevap vermeye devam ediyor; bu yalnızca bilgin olsun diye."

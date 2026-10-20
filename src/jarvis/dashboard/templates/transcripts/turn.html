@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}{{ T.TURN_DETAIL }} · {{ T.APP_TITLE }}{% endblock %}
+{% block content %}
+{% set turn = d.turn %}
+<p class="crumbs"><a href="/logs">{{ T.NAV_LOGS }}</a> › <a href="/logs/sessions/{{ turn.session_id }}">{{ T.LOGS_SESSION }} <code>{{ turn.session_id }}</code></a> › <code>{{ turn.id }}</code></p>
+<h1 class="page-title">{{ T.TURN_DETAIL }} · {{ turn.started_at | local_time('%Y-%m-%d %H:%M:%S') }} · {{ turn.channel_label }}</h1>
+
+<div class="grid grid-turn">
+  <div class="col">
+    <div class="card transcript">
+      {% if not d.has_transcript %}<p class="muted small">{{ T.TURN_TRANSCRIPT_OFF }}</p>{% endif %}
+      {% if turn.raw_transcript and turn.raw_transcript != turn.user_input %}
+      <div class="bubble bubble-heard"><div class="bubble-label">{{ T.TURN_HEARD }}</div><pre class="prose">{{ turn.raw_transcript }}</pre></div>
+      {% endif %}
+      {% for e in d.events %}
+        {% if e.kind == 'user' %}
+        <div class="bubble bubble-user"><div class="bubble-label">{{ T.TURN_YOU_SAID }}</div><pre class="prose">{{ e.text }}</pre></div>
+        {% elif e.kind == 'untrusted' %}
+        <details class="bubble bubble-untrusted"><summary class="bubble-label">{{ T.TURN_UNTRUSTED_PART }}</summary><pre class="prose">{{ e.text }}</pre></details>
+        {% elif e.kind == 'thinking' %}
+        <details class="bubble bubble-thinking"><summary class="bubble-label toggle"><span class="when-closed">{{ T.TURN_SHOW_THINKING }}</span><span class="when-open">{{ T.TURN_HIDE_THINKING }}</span></summary><pre class="prose">{{ e.text }}</pre></details>
+        {% elif e.kind == 'text' %}
+        <div class="bubble bubble-jarvis"><div class="bubble-label">{{ T.TURN_REPLIED }}</div><pre class="prose">{{ e.text }}</pre></div>
+        {% elif e.kind == 'server_tool' %}
+        <div class="bubble bubble-tool"><div class="bubble-label">{{ T.TURN_TOOL_CALLS }} · server</div><pre class="prose small">{{ e.text }}</pre></div>
+        {% elif e.kind == 'tool' %}
+        {% set tool = e.tool %}
+        <div class="bubble bubble-tool">
+          <div class="bubble-label tool-head"><code>{{ tool.name }}</code>{% if tool.is_delegate %} <span class="badge">{{ T.TURN_DELEGATE }}</span>{% endif %}
+            <span class="badge badge-{{ tool.decision_class }}">{{ tool.decision_label }}</span>
+            {% if tool.risk %}<span class="muted small">{{ tool.risk }}</span>{% endif %}
+            {% if tool.duration_ms is not none %}<span class="muted small">{{ T.TURN_DURATION }}: {{ tool.duration_ms | ms }}</span>{% endif %}</div>
+          <div class="tool-body">
+            <div><span class="muted small">{{ T.TURN_ARGUMENTS }}</span><pre class="code">{{ tool.args }}</pre></div>
+            {% if tool.error %}<div><span class="muted small">{{ T.TURN_ERROR }}</span><pre class="code text-bad">{{ tool.error }}</pre></div>{% endif %}
+            {% if tool.result or tool.images %}
+            <div><span class="muted small">{{ T.TURN_RESULT }}{% if tool.images %} · {{ T.TURN_IMAGE }} × {{ tool.images }}{% endif %}</span>
+              {% if tool.result_long %}
+              <details class="result"><summary class="toggle small"><span class="when-closed">{{ T.TURN_SHOW_FULL }}</span><span class="when-open">{{ T.TURN_HIDE_FULL }}</span></summary><pre class="code {% if tool.is_error %}text-bad{% endif %}">{{ tool.result }}</pre></details>
+              <pre class="code preview-only {% if tool.is_error %}text-bad{% endif %}">{{ tool.result_preview }}</pre>
+              {% else %}
+              <pre class="code {% if tool.is_error %}text-bad{% endif %}">{{ tool.result }}</pre>
+              {% endif %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+      {% if turn.error %}
+      <div class="bubble bubble-error"><div class="bubble-label">{{ T.TURN_ERROR }}</div><pre class="prose">{{ turn.error }}</pre></div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-head"><h2>{{ T.TURN_TIMELINE }}</h2><span class="muted">{{ turn.total_ms | ms }}</span></div>
+      {% if d.timeline %}
+      <table class="table timeline">
+        <tbody>
+        {% for t in d.timeline %}
+        <tr><td class="cell-name"><code>{{ t.stage }}</code></td><td class="cell-bar"><div class="waterfall wide"><span class="seg seg-{{ t.cls }}" data-pct="{{ t.pct }}"></span></div></td><td class="num">{{ t.ms | ms }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% else %}<p class="empty">{{ T.EMPTY }}</p>{% endif %}
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>{{ T.TURN_API_CALLS }}</h2><span class="muted">{{ d.cost | money }}</span></div>
+      {% if d.api_calls %}
+      <div class="table-scroll">
+      <table class="table table-head small-table">
+        <thead><tr><th>{{ T.TURN_ATTEMPT }}</th><th>{{ T.TURN_MODEL }}</th><th>{{ T.TURN_STATUS }}</th><th class="num">{{ T.LOGS_TOKENS }}</th><th class="num">{{ T.LOGS_COST }}</th><th class="num">{{ T.TURN_DURATION }}</th><th class="num">{{ T.TURN_TTFT }}</th></tr></thead>
+        <tbody>
+        {% for c in d.api_calls %}
+        <tr class="{% if c.status != 'ok' %}row-error{% endif %}">
+          <td>{{ c.attempt }}{% if c.is_delegate %} <span class="badge">{{ T.TURN_DELEGATE }}</span>{% endif %}</td>
+          <td><code>{{ c.model }}</code></td>
+          <td>{% if c.status == 'ok' %}<span class="badge badge-ok">ok</span>{% else %}<span class="badge badge-failed">{{ c.status }}</span>{% endif %}
+            {% if c.request_id %}<div class="muted small">{{ T.TURN_REQUEST_ID }}: <code>{{ c.request_id }}</code></div>{% endif %}</td>
+          <td class="num small" title="input {{ c.input_tokens }} · cache read {{ c.cache_read_tokens }} · cache write {{ c.cache_write_tokens }} · output {{ c.output_tokens }}">{{ (c.input_tokens or 0) + (c.cache_read_tokens or 0) + (c.cache_write_tokens or 0) }} → {{ c.output_tokens or 0 }}</td>
+          <td class="num">{{ c.cost_usd | money }}</td>
+          <td class="num">{{ c.duration_ms | ms }}</td>
+          <td class="num">{{ c.ttft_ms | ms }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      {% set tk = d.tokens %}
+      <p class="muted small">{{ T.LOGS_TOKENS }}: input {{ tk.input_tokens }} · cache read {{ tk.cache_read_tokens }} · cache write {{ tk.cache_write_tokens }} · output {{ tk.output_tokens }}</p>
+      {% else %}<p class="empty">{{ T.EMPTY }}</p>{% endif %}
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>{{ T.TURN_TAINTED }} · {{ T.TURN_CONFIRMATIONS }}</h2></div>
+      <div class="meta-col">
+        <div><span class="muted">{{ T.TURN_TAINTED }}:</span> {% if turn.tainted %}<span class="badge badge-warning">{{ T.YES }}</span>{% else %}{{ T.NO }}{% endif %}</div>
+        {% if d.taint_sources %}<div><span class="muted">{{ T.TURN_TAINT_SOURCES }}:</span> {% for src in d.taint_sources %}<code>{{ src }}</code> {% endfor %}</div>{% endif %}
+        {% if d.confirmations %}
+        <div><span class="muted">{{ T.TURN_CONFIRMATIONS }}:</span>
+          <ul class="plain">{% for c in d.confirmations %}<li><code>{{ c.name }}</code> <span class="badge badge-{{ c.decision_class }}">{{ c.decision_label }}</span>{% if c.error %} <span class="muted small">{{ c.error | preview(160) }}</span>{% endif %}</li>{% endfor %}</ul>
+        </div>
+        {% else %}<div><span class="muted">{{ T.TURN_CONFIRMATIONS }}:</span> {{ T.NO }}</div>{% endif %}
+        {% if d.thinking_count %}<div><span class="muted">{{ T.TURN_THINKING }}:</span> {{ d.thinking_count }}</div>{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{{ asset('analytics.js') }}" defer></script>
+{% endblock %}

@@ -1,0 +1,22 @@
+# What the user is told when the Anthropic API call fails after every retry.
+
+# One or two sentences on screen (terminal, Telegram).
+[api]
+timeout_connect = "Error (timeout): could not connect to the Anthropic API; no connection within {connect} s in {attempts} attempt(s). Check your network."
+timeout_first_token = "Error (timeout): connected, but the API sent nothing for {read} s ({attempts} attempt(s))."
+timeout_stall = "Error (timeout): the reply stalled, no data for {read} s ({attempts} attempt(s))."
+timeout = "Error (timeout): the API request timed out ({attempts} attempt(s))."
+network = "Error (network): the Anthropic API could not be reached ({attempts} attempt(s)). Check your internet connection."
+overload = "Error (API busy): the Anthropic API is overloaded (status {status}); no reply in {attempts} attempt(s). Try again in a moment."
+auth = "Error (auth): the API key was rejected (status {status}). Renew it with `jarvis key set anthropic_api_key`."
+api = "Error (API): the request failed ({detail}; {attempts} attempt(s))."
+unknown = "unknown error"
+request_id = "Request id: {request_id}."
+
+# One short sentence for the voice service.
+[spoken]
+timeout = "I could not reach the server; please try again in a moment."
+network = "There seems to be no internet connection."
+overload = "The Anthropic servers are very busy right now; please try again shortly."
+auth = "The API key was rejected; the details are in the log."
+api = "Something went wrong; the details are in the log."

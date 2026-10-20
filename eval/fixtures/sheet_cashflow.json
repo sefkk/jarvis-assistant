@@ -1,0 +1,23 @@
+{
+  "title": "Nakit Akışı",
+  "tab": "Sayfa1",
+  "id": "1NakitAkisiFixtureSpreadsheetId00000000000",
+  "_comment": "Synthetic cash-flow tab shaped like the real incident: row 1 empty, header on row 2 with an empty first cell (the date column has no name), ragged rows, and a balance column (Bakiye) right before the income column (Gelir). Dates are offsets from the real today ({\"days\": N}) because the model is told the real date. Cells: null = empty, {\"text\", \"value\"} = a number displayed Turkish style.",
+  "rows": [
+    [],
+    [null, "Bakiye", "Gelir", "Nereden", "Gider", "Nereye"],
+    [{"days": -2}, 5000, 22000, "fon", 25000, "kredi kartı"],
+    [{"days": -1}, 2000],
+    [{"days": 0}, 2000, null, null, 2000, "market"],
+    [{"days": 1}, 0],
+    [{"days": 2}, 0],
+    [{"days": 3}, 0],
+    [{"days": 4}, 0, 30000, "fon"],
+    [{"days": 5}, 30000, 20000, "fon"],
+    [{"days": 6}, 50000],
+    [{"days": 7}, 50000, null, null, 12000, "harcama düzeltme"],
+    [{"days": 12}, 38000, {"text": "75.000", "value": 75000}, "fon"],
+    [{"days": 17}, 113000, 138000, "maaş"],
+    [{"days": 33}, 251000, 70000, "fon", 52000, "taksit"]
+  ]
+}

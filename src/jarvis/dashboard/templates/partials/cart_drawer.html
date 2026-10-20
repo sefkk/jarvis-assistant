@@ -1,0 +1,46 @@
+<div class="drawer-head">
+  <h2>{{ T.DRAWER_TITLE.format(n=items | length) }}</h2>
+  <button type="button" class="btn btn-ghost btn-small" x-on:click="hide">{{ T.BTN_CANCEL }}</button>
+</div>
+{% if not items %}
+<p class="empty">{{ T.NO_CHANGES }}</p>
+{% else %}
+{% set has_errors = (items | selectattr('error') | list | length) > 0 or general %}
+<div class="drawer-items">
+  {% for area, group in groups %}
+  <h3>{{ area }}</h3>
+  {% for item in group %}
+  <div class="cart-item {% if item.error %}cart-item-error{% endif %}" id="cart-item-{{ item.id }}">
+    <div class="cart-item-head">
+      <div><strong>{{ item.label }}</strong> <span class="muted small">{{ item.section }}{% if item.file == 'config.local.toml' %} · {{ T.SETTINGS_FILE_NOTE.format(file=item.file) }}{% endif %}</span></div>
+      <button type="button" class="icon-btn" title="{{ T.REMOVE_FROM_CHANGES }}" aria-label="{{ T.REMOVE_FROM_CHANGES }}"
+              hx-post="/cart/remove" hx-vals='{"id": "{{ item.id }}"}' hx-target="#drawer-body" hx-swap="innerHTML">{{ icon('x') }}</button>
+    </div>
+    {% if item.is_text %}
+    <pre class="diff">{% for kind, line in item.diff() %}<span class="diff-{{ kind }}">{{ '+' if kind == 'add' else '-' if kind == 'del' else ' ' }} {{ line }}</span>
+{% endfor %}</pre>
+    {% elif item.kind == 'memory_add' %}
+    <pre class="diff"><span class="diff-add">+ {{ item.new_text }}</span></pre>
+    {% elif item.kind == 'memory_delete' %}
+    <pre class="diff"><span class="diff-del">- {{ item.old_text }}</span></pre>
+    {% else %}
+    <div class="cart-values"><code class="value-old">{{ item.old_text or '∅' }}</code> <span class="muted">{{ T.ARROW }}</span> <code class="value-new">{{ item.new_text or '∅' }}</code></div>
+    {% endif %}
+    <div class="cart-effect muted small">{{ item.effect }}</div>
+    {% if item.error %}
+    <div class="cart-error">{{ item.error }}{% if item.conflict %} <a class="btn btn-small" href="{{ item.page }}">{{ T.BTN_REVIEW }}</a>{% endif %}</div>
+    {% endif %}
+  </div>
+  {% endfor %}
+  {% endfor %}
+  {% if general %}<div class="cart-error">{% for g in general %}<div>{{ g }}</div>{% endfor %}</div>{% endif %}
+</div>
+<div class="drawer-foot">
+  <div class="muted small">{% if restarts %}{{ T.SERVICES_TO_RESTART.format(list=restarts | join(', ')) }}{% else %}{{ T.NO_SERVICE_RESTART }}{% endif %}</div>
+  {% if has_errors %}<div class="cart-error">{{ T.FIX_HIGHLIGHTED }}</div>{% endif %}
+  <div class="drawer-actions">
+    <button type="button" class="btn btn-danger" hx-post="/cart/discard" hx-confirm="{{ T.DISCARD_CONFIRM }}" hx-target="#drawer-body" hx-swap="innerHTML">{{ T.BTN_DISCARD_ALL }}</button>
+    <button type="button" class="btn btn-primary" hx-post="/cart/apply" hx-target="#drawer-body" hx-swap="innerHTML" {% if has_errors %}disabled{% endif %}>{{ T.BTN_SAVE }}</button>
+  </div>
+</div>
+{% endif %}

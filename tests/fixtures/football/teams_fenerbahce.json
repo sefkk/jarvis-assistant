@@ -1,0 +1,17 @@
+{
+  "get": "teams",
+  "parameters": {"search": "fenerbahce"},
+  "errors": [],
+  "results": 2,
+  "paging": {"current": 1, "total": 1},
+  "response": [
+    {
+      "team": {"id": 6110, "name": "Fenerbahce U19", "code": null, "country": "Turkey", "founded": null, "national": false, "logo": "https://media.api-sports.io/football/teams/6110.png"},
+      "venue": {"id": null, "name": null, "address": null, "city": null, "capacity": null, "surface": null, "image": null}
+    },
+    {
+      "team": {"id": 611, "name": "Fenerbahce", "code": "FEN", "country": "Turkey", "founded": 1907, "national": false, "logo": "https://media.api-sports.io/football/teams/611.png"},
+      "venue": {"id": 1546, "name": "Ülker Stadyumu Fenerbahçe Şükrü Saracoğlu Spor Kompleksi", "address": "Kadıköy", "city": "Istanbul", "capacity": 50530, "surface": "grass", "image": "https://media.api-sports.io/football/venues/1546.png"}
+    }
+  ]
+}

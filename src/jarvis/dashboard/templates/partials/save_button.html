@@ -1,0 +1,4 @@
+<button id="save-btn" class="save-btn" type="button" data-count="{{ cart_count }}" hx-swap-oob="true"
+        hx-get="/cart" hx-target="#drawer-body" hx-swap="innerHTML" x-on:click="show" {% if not cart_count %}disabled{% endif %}>
+  {% if cart_count %}{{ T.BTN_SAVE_N.format(n=cart_count) }}{% else %}{{ T.BTN_SAVE }}{% endif %}
+</button>

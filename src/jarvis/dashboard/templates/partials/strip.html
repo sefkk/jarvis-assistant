@@ -1,0 +1,14 @@
+<header class="strip" id="strip" hx-get="/partials/strip" hx-trigger="every {{ refresh_s }}s" hx-swap="outerHTML">
+  <div class="strip-group">
+    {% for s in strip.services %}
+    <span class="strip-item" title="{{ s.detail }}"><span class="dot dot-{{ s.state | lower }}"></span>{{ s.label }}<span class="muted"> · {{ s.state }}</span></span>
+    {% endfor %}
+  </div>
+  <div class="strip-group">
+    <span class="strip-item" title="{{ strip.voice.detail }}"><span class="dot {% if strip.voice.off %}dot-stopped{% elif strip.voice.paused %}dot-paused{% else %}dot-running{% endif %}"></span>{{ T.SERVICE_VOICE }}<span class="muted"> · {{ strip.voice.state }}</span></span>
+    {% if strip.location and strip.location.has_location %}<a class="strip-item strip-link" href="/#location" title="{{ T.LOCATION_CURRENT }}">{{ icon('map-pin') }}{{ strip.location.strip_text }}{% if strip.location.stale %}<span class="muted"> · {{ T.LOCATION_STALE }}</span>{% endif %}</a>{% endif %}
+    <span class="strip-item{% if strip.budget_usd > 0 and strip.spent_usd >= strip.budget_usd %} over-budget{% endif %}">
+      {{ icon('wallet') }}{{ T.COST_TODAY.format(cost=strip.spent_usd | money, budget=(strip.budget_usd | money) if strip.budget_usd > 0 else T.NO_BUDGET) }}
+    </span>
+  </div>
+</header>

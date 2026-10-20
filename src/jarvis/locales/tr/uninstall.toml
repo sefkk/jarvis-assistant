@@ -1,0 +1,13 @@
+# `jarvis uninstall`.
+
+title = "Jarvis bu Mac'ten kaldırılıyor"
+agents_removed = "Arka plan servisleri kaldırıldı: {names}."
+no_agents = "Kurulu bir arka plan servisi yoktu."
+secrets_found = "Anahtar Zinciri'nde: {names}."
+secrets_ask = "Bu Anahtar Zinciri kayıtları silinsin mi"
+secrets_removed = "Anahtar Zinciri'nden silindi: {names}."
+data_found = "Yerel verilerin: {paths} (profil, hafıza, konuşma kayıtları, loglar, ayarlar)."
+data_ask = "Kalıcı olarak silinsin mi"
+data_removed = "Yerel veriler silindi."
+kept = "Korundu."
+finish = "Bitirmek için: `uv tool uninstall jarvis` komutu kaldırır, ardından {home} klasörünü sil."

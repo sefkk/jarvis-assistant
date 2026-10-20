@@ -1,0 +1,92 @@
+# `jarvis setup`, the first-run wizard.
+
+title = "Jarvis setup"
+intro = "A few questions, then Jarvis is ready. Press Enter to keep the value shown in brackets. You can run `jarvis setup` again any time; it never overwrites your files."
+done = "Setup finished. Start the chat with `jarvis`."
+doctor = "Health check (`jarvis doctor`):"
+
+[language]
+saved = "Language set to {language}."
+
+[files]
+heading = "Files"
+created = "created"
+updated = "added missing settings (backup in data/backups/)"
+kept = "kept"
+
+[profile]
+heading = "About you"
+name = "Your name"
+address_as = "How should Jarvis address you"
+location = "Where do you live (city, country)"
+kept = "Your profile ({path}) already exists and stays as it is; edit it any time."
+
+[key]
+heading = "Anthropic API key"
+present = "An Anthropic API key is already in the Keychain."
+replace = "Replace it"
+where = "Create a key at https://platform.claude.com/settings/keys and paste it here. Nothing shows while you paste; that is normal."
+prompt = "Anthropic API key (Enter to skip)"
+skipped = "No key stored. Store it later with `jarvis key set anthropic_api_key`; Jarvis cannot answer without it."
+stored = "Stored in the macOS Keychain."
+
+[budget]
+question = "Daily API budget in USD (only for your information: Jarvis tells you when today's cost reaches it and keeps answering; 0 = none)"
+not_a_number = "Enter a number, for example 3 or 1.5."
+negative = "The budget cannot be negative; 0 turns the limit off."
+
+[integrations]
+heading = "Optional features"
+intro = "Each one is independent and off until you set it up. Press Enter to skip; `jarvis setup` asks again next time, and MANUAL_STEPS.md has the details."
+ask = "Set it up now"
+nothing_stored = "Nothing stored."
+stored = "Stored {name} in the macOS Keychain."
+failed = "That did not work: {error}. Skipped; you can try again later."
+
+[integrations.google]
+title = "Google (Calendar, Gmail drafts, Sheets)"
+what = "Needs your own OAuth client file from Google Cloud Console (docs/integrations/google.md)."
+client_secret = "Path to the downloaded client_secret_….json (Enter to skip)"
+done = "Google login complete; the token is in the Keychain."
+next = "Check it with: what's on my Google calendar today."
+
+[integrations.apple]
+title = "Apple Calendar and Reminders"
+what = "Nothing to install: macOS asks for permission the first time Jarvis reads them."
+next = "Ask in the chat: what's on my calendar today. Click Allow Full Access when macOS asks."
+
+[integrations.spotify]
+title = "Spotify"
+what = "Needs a free app at https://developer.spotify.com/dashboard (Client ID and Client Secret)."
+client_id = "Spotify Client ID"
+client_secret = "Spotify Client Secret"
+next = "Ask in the chat: play some jazz. Click Allow when macOS asks whether the terminal may control Spotify."
+
+[integrations.telegram]
+title = "Telegram (Jarvis on your phone)"
+what = "Needs a bot from @BotFather in Telegram (docs/integrations/telegram.md)."
+token = "Bot token from BotFather"
+next = "Next: `jarvis telegram whoami`, put both ids and `enabled = true` under [telegram] in config.toml, then `jarvis telegram install`."
+
+[integrations.elevenlabs]
+title = "ElevenLabs (natural voice)"
+what = "Without it Jarvis speaks with the Mac's own voice. Needs an API key from https://elevenlabs.io."
+key = "ElevenLabs API key"
+next = "Pick a voice with `jarvis voice list-voices` and put its id into voice.elevenlabs_voice_id in config.toml."
+
+[integrations.maps]
+title = "Google Maps (places and travel times)"
+what = "Needs a Google Maps Platform key with billing enabled (docs/integrations/maps.md)."
+key = "Google Maps API key"
+next = "Ask in the chat: is there a pharmacy open nearby."
+
+[integrations.voice]
+title = "Voice (\"Hey Jarvis\")"
+what = "Listens for the wake word on the Mac and answers out loud. Needs the voice extra of the installation."
+missing = "The voice packages are not installed: reinstall with the voice extra (README, Quick start) and run `jarvis setup` again."
+next = "Voice is on. Start it with `jarvis voice run`, or in the background with `jarvis voice install`."
+
+[integrations.shortcuts]
+title = "Apple Shortcuts"
+what = "Jarvis can run Shortcuts you list in config.toml under [[shortcuts.allowed]] (docs/integrations/shortcuts.md)."
+next = "`jarvis shortcuts list` shows the Shortcuts on this Mac; copy a name into config.toml."

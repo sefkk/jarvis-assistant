@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ T.NAV_PERSONA }} · {{ T.APP_TITLE }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ T.PERSONA_TITLE }}</h1>
+<div class="tabs">
+  <a class="tab {% if area == 'persona' %}active{% endif %}" href="/persona">{{ T.PERSONA_TAB }}</a>
+  <a class="tab {% if area == 'profile' %}active{% endif %}" href="/persona?tab=profile">{{ T.PROFILE_TAB }}</a>
+</div>
+<div class="grid grid-editor">
+  <div class="card">
+    <div class="card-head"><h2>{{ T.PERSONA_TAB if area == 'persona' else T.PROFILE_TAB }}</h2><span class="muted small">{{ file_name }} · {% if restarts %}{{ T.REQUIRES_RESTART.format(services=restarts | join(', ')) }}{% else %}{{ T.APPLIES_IMMEDIATELY }}{% endif %}</span></div>
+    {% if area == 'profile' %}<p class="muted small">{{ T.PROFILE_AUTO_NOTE }}</p>{% endif %}
+    {% include "partials/persona_editor.html" %}
+  </div>
+  <div class="card">
+    <div class="card-head"><h2>{{ T.PREVIEW }}</h2></div>
+    <div id="persona-preview-{{ area }}" class="preview prose-html">{{ preview }}</div>
+  </div>
+</div>
+{% endblock %}

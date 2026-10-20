@@ -1,0 +1,113 @@
+# Telegram botu: telefona giden mesajlar, düğmeler ve `jarvis telegram` komut satırı metinleri.
+
+[bot]
+greeting = "Merhaba, Jarvis burada. Yaz ya da sesli mesaj gönder; /help ile neler yapabildiğimi görürsün."
+unsupported = "Şimdilik sadece metin ve sesli mesajları anlıyorum."
+new_session = "Yeni oturum başladı."
+turn_error = "ℹ️ Bu turda bir hata oldu ({error}). Ayrıntılar Mac'teki logda."
+stopped = "Durduruldu. Yeniden açmak için /start ve Mac'te `jarvis telegram enable`."
+reenable_requested = "Yeniden açma isteği alındı. Mac'te `jarvis telegram enable` çalıştırılınca devam ederim."
+
+# {team}: config'teki football.team.
+[help]
+text = """Telefondan yapabildiklerim:
+• Takvim (ajanda, etkinlik oluşturma - onaylı)
+• Hatırlatıcılar
+• Gmail: arama, okuma, taslak (onaylı)
+• Hava durumu, web araması ve sayfa okuma
+• {team}: maçlar, puan durumu
+• Günlük özet, zamanlayıcılar, pomodoro
+• Antrenman günlüğü, hafıza
+• Sesli mesaj: önce ne anladığımı yazarım, sonra cevaplarım
+• Konum: telefondan konumunu paylaşırsan (/location) hava durumu ve yol süresi oradan hesaplanır; Mac'in konumu telefondan sorulduğunda kullanılmaz
+• Mac açık kaldıysa: /status (pil, boşta süresi, ekran kilidi), /lock (ekranı kilitle), /sleep (onaylı; uyumadan önce "iptal" ile vazgeçersin), "saat 23:00'de uyut" (1 dk önce haber verir). Kapatma ve yeniden başlatma yok.
+• Alarm: "yarın sabah 7'de alarm kur" Mac'te çalar, telefona hatırlatıcı + Telegram mesajı gelir; /stop_alarm çalan alarmı durdurur, /snooze [dk] erteler ("tamam", "kapat", "ertele" yazmak da olur)
+• Sabah özeti: her sabah kendiliğinden gelir (Mac'teyken sesli, değilken buraya); /brief şimdi gönderir; "sabah özetini 7:30'a al", "hafta sonu özet gönderme", "özeti kapat" ayarı değiştirir
+
+Komutlar: /start, /help, /new (yeni oturum), /location (konum paylaş düğmesi), /mute [60m] ve /unmute (Mac'teki sesli dinlemeyi durdur / aç), /status, /lock, /sleep [saniye], /stop_alarm, /snooze [dk], /brief (günün özeti), /stop (acil kapatma)
+Telefondan kabuk, dosya, uygulama, ekran ve pano araçları kapalıdır."""
+
+[confirm]
+title = "⚠️ Onay gerekiyor"
+tool = "Araç: {tool} (risk: {risk})"
+untrusted = "Bu işlem, güvenilmeyen bir içerik okunduktan sonra istendi."
+command = "Komut:\n{command}"
+args = "Argümanlar:\n{args}"
+args_above = "Argümanlar: yukarıdaki mesaj(lar)da, tam hali."
+args_full = "Argümanlar (tam hali):\n{args}"
+approve = "Onayla"
+decline = "Reddet"
+forbidden = "Bu araç telefondan çalıştırılamaz; sadece Mac'te."
+timeout = "Süre doldu, telefondaki Onayla butonuna basılmadı; işlemi yapmadım."
+declined = "Telefonda Reddet'e bastın; işlemi yapmadım."
+outcome_timeout = "⏱️ Süre doldu; reddedildi."
+outcome_stopped = "⛔ Durduruldu; reddedildi."
+outcome_approved = "✅ Onaylandı"
+outcome_declined = "❌ Reddedildi"
+outcome_chosen = "✅ Seçildi: {label}"
+callback_invalid = "Bu onay geçersiz ya da süresi dolmuş."
+callback_ok = "Tamam"
+
+[location]
+request = "📍 Konumunu paylaşmak için aşağıdaki düğmeye bas (ya da ataç > Konum). Telefondan sorduğunda hava durumu ve yol süresi için Mac'in konumu değil, paylaştığın konum kullanılır."
+button = "📍 Konumumu paylaş"
+saved = "📍 Konum alındı ({when}). Bir süre uzak turlarda bu konum kullanılır; eskiyince yeniden paylaş."
+invalid = "Konum okunamadı (geçersiz koordinat)."
+forwarded = "İletilen bir konum başkasının konumu olabilir; kendi konumunu paylaş (/location)."
+
+[mute]
+usage = "Süreyi anlayamadım. Örnek: /mute, /mute 60m, /mute 1h30m"
+paused_for = "🔇 Mac'teki dinleme {duration} durduruldu; {until} itibarıyla kendiliğinden açılır. /unmute ile daha erken."
+paused = "🔇 Mac'teki dinleme durduruldu. /unmute, `jarvis voice resume` ya da kısayol tuşu tekrar açar."
+resumed = "🎙️ Mac'teki dinleme tekrar açık."
+already_on = "Dinleme zaten açıktı."
+minutes = "{minutes} dk"
+hours = "{hours} sa"
+hours_minutes = "{hours} sa {minutes} dk"
+
+[power]
+sleep_usage = "Kullanım: /sleep ya da /sleep 30 (kaç saniye sonra uyusun, 3-120)."
+denied = "{command}: onay gelmediği için yapılmadı."
+not_remote = "/{command} telefondan kapalı: config.toml'da telegram.remote_allowed_tools listesine \"power.{tool}\" ekle."
+bad_arg = "/{command} çalıştırılamadı (geçersiz argüman)."
+failed = "/{command} başarısız: {error}"
+crashed = "/{command} sırasında bir hata oldu ({error}). Ayrıntılar Mac'teki logda."
+
+[alarm]
+snooze_usage = "Kullanım: /snooze ya da /snooze 15 (kaç dakika ertelensin, 1-60)."
+stop_no_answer = "Alarm durdurma isteği gönderildi ama zamanlayıcı cevap vermedi."
+snooze_no_answer = "Erteleme isteği gönderildi ama zamanlayıcı cevap vermedi."
+
+[voice]
+too_long = "Sesli mesaj çok uzun ({seconds} sn). En fazla {limit} dakika."
+too_big = "Sesli mesaj çok büyük (en fazla 20 MB)."
+download_failed = "Sesli mesajı indiremedim."
+failed = "Sesli mesajı çözemedim ({error})."
+empty = "Sesli mesajı anlayamadım."
+heard = "🎙️ Anladığım: {text}"
+
+# `jarvis telegram run | whoami | set-token`.
+[cli]
+enable_not_stopped = "Telegram botu durdurulmamış; yapılacak bir şey yok."
+enable_needs_start = "Bot durdurulmuş ama izinli Telegram hesabından henüz /start gönderilmemiş. Önce bota /start gönder, sonra `jarvis telegram enable` komutunu yeniden çalıştır."
+enabled = "Telegram botu yeniden açıldı. Çalışan bot bunu bir sonraki mesajda fark eder."
+disabled = "Telegram kapalı: önce config.toml'da [telegram] altına `enabled = true` yaz."
+no_ids = "telegram.allowed_user_id / allowed_chat_id ayarlı değil; `jarvis telegram whoami` çalıştır ve id'leri config.toml'a yaz."
+no_token = "Anahtar Zinciri'nde Telegram bot belirteci yok; `jarvis telegram set-token` çalıştır."
+running = "Jarvis Telegram botu çalışıyor (durdurmak için Ctrl-C)."
+running_stopped = "Jarvis Telegram botu çalışıyor (durdurmak için Ctrl-C). Acil kapatma devrede: mesajlar yok sayılıyor."
+whoami_no_token = "Anahtar Zinciri'nde Telegram bot belirteci yok; önce `jarvis telegram set-token` çalıştır."
+get_me_failed = "getMe başarısız: {error}"
+bot = "Bot: @{username} (id {id}, ad {name})"
+waiting = "Şimdi telefondan bota herhangi bir mesaj gönder; en fazla {seconds} sn bekliyorum..."
+get_updates_failed = "getUpdates başarısız: {error}"
+first_message = "İlk mesaj: kullanıcı id {user_id} (@{username}), sohbet {chat_id} ({chat_type})."
+setup_reply = "Jarvis kurulumu: kullanıcı id {user_id}, sohbet id {chat_id}"
+reply_failed = "(cevap verilemedi: {error})"
+not_private = "(özel sohbet değil, cevap verilmiyor; bot özel sohbetten kullanılmalı)"
+put_ids = "Bunları config.toml'a yaz: telegram.allowed_user_id ve telegram.allowed_chat_id; sonra enabled = true yap."
+no_message = "Zamanında mesaj gelmedi."
+token_prompt = "Telegram bot belirteci (BotFather'dan): "
+no_token_entered = "Belirteç girilmedi; hiçbir şey kaydedilmedi."
+token_odd = "Uyarı: bu bir bot belirtecine benzemiyor (beklenen: <rakamlar>:<35 karakter>); yine de kaydediliyor."
+token_stored = "Anahtar Zinciri'ne {name} adıyla kaydedildi. Sıradaki adım: `jarvis telegram whoami`."

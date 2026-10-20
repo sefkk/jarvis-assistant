@@ -1,0 +1,57 @@
+# Mac gücü: uyku geri sayımı ve uyarısı, zamanlanmış uykunun bildirimleri, durum satırları (`mac_status`,
+# Telegram'daki /status).
+
+[sleep]
+warning = "Mac'i {seconds} saniye içinde uyutuyorum. Uyuduktan sonra beni Telegram'dan uyandıramazsın."
+cancel_hint = "İptal için \"iptal\" ya da \"dur\" de."
+cancelled = "Tamam, uyutmayı iptal ettim; Mac açık kalıyor."
+scheduled_cancelled = "Tamam, {at} için zamanlanmış uykuyu iptal ettim; Mac açık kalıyor."
+notice = "Mac 1 dakika içinde uyuyacak ({at}). Vazgeçmek için \"iptal\" yaz ya da söyle."
+now = "Mac şimdi uyuyor. Uyandırana kadar Telegram'dan ulaşamazsın."
+skipped = "Zamanlanmış uyku ({at}) kaçırıldı: zamanlayıcı geç kaldı, Mac uyutulmadı."
+label = "Mac uyku"
+notice_label = "Mac uyku uyarısı"
+confirm_now = "pmset sleepnow ({seconds} saniye sonra; 'iptal' ile vazgeçilebilir)"
+confirm_scheduled = "Mac {at} uyuyacak; 1 dakika önce Mac + Telegram'dan haber verilir"
+
+# lock_screen'in sonucu; Telegram'daki /lock da bunu gösterir.
+[lock]
+already = "Ekran zaten kilitli."
+display_sleep = "Ekran kapatıldı (parola istenen uyku); kilit çerçevesi bulunamadığı için ekran uykusu kullanıldı."
+unverified = "Kilit komutu gönderildi; kilit durumu doğrulanamadı."
+locked = "Ekran kilitlendi."
+
+# Bekleyen uykuyu iptal eden tek sözcüklük mesajlar. Her dilin sözleri her zaman geçer.
+[words]
+cancel = ["iptal", "iptal et", "dur", "vazgeç", "vazgec", "uyutma", "uyuma", "hayır"]
+
+[status]
+power = "Güç: {power}{battery}"
+ac = "adaptöre takılı"
+battery_power = "pilde"
+unknown = "bilinmiyor"
+battery = ", pil %{percent}"
+battery_state = " ({state})"
+until_full = ", dolmasına {time}"
+until_empty = ", bitmesine {time}"
+on_battery = "Pilde geçen süre: {duration} ({since}'ten beri)"
+on_battery_unknown = "Pilde geçen süre: bilinmiyor"
+idle = "Son kullanım: {duration} önce (klavye/fare)"
+locked = "Ekran: kilitli"
+unlocked = "Ekran: kilitli değil"
+uptime = "Açık kalma süresi: {duration}"
+blockers = "Uykuyu engelleyen: {blockers}"
+errors = "Okunamayan: {errors}"
+
+[status.state]
+charging = "şarj oluyor"
+discharging = "boşalıyor"
+charged = "dolu"
+not_charging = "şarj olmuyor"
+finishing = "şarj bitmek üzere"
+
+[duration]
+days = "{days} gün {hours} sa"
+hours = "{hours} sa {minutes} dk"
+minutes = "{minutes} dk {seconds} sn"
+seconds = "{seconds} sn"

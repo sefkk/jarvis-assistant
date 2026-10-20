@@ -1,0 +1,12 @@
+<div class="filter-field">
+  <span class="filter-label" id="range-label">{{ T.FILTER_DATE_RANGE }}</span>
+  <div class="segmented" role="radiogroup" aria-labelledby="range-label">
+    {% for key, label in [('today', T.RANGE_TODAY), ('7d', T.RANGE_7D), ('30d', T.RANGE_30D), ('custom', T.RANGE_CUSTOM)] %}
+    <label class="seg-btn seg-radio"><input type="radio" name="range" value="{{ key }}" {% if f.range_key == key %}checked{% endif %}><span>{{ label }}</span></label>
+    {% endfor %}
+  </div>
+</div>
+<span class="custom-range" {% if f.range_key != 'custom' %}hidden{% endif %}>
+  <label>{{ T.FROM }} <input type="date" name="start" value="{{ f.start_day }}"></label>
+  <label>{{ T.TO }} <input type="date" name="end" value="{{ f.end_day }}"></label>
+</span>

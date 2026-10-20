@@ -1,0 +1,22 @@
+# Anthropic API çağrısı tüm denemelerden sonra başarısız olduğunda kullanıcıya söylenenler.
+
+# Ekranda bir iki cümle (terminal, Telegram).
+[api]
+timeout_connect = "Hata (zaman aşımı): Anthropic API'ye bağlanılamadı; {attempts} denemede bağlantı {connect} s içinde kurulamadı. Ağ bağlantınızı kontrol edin."
+timeout_first_token = "Hata (zaman aşımı): bağlantı kuruldu ama API {read} s boyunca yanıt vermedi ({attempts} deneme)."
+timeout_stall = "Hata (zaman aşımı): API yanıtı yarıda kesildi, {read} s boyunca veri gelmedi ({attempts} deneme)."
+timeout = "Hata (zaman aşımı): API isteği zaman aşımına uğradı ({attempts} deneme)."
+network = "Hata (ağ): Anthropic API'ye ulaşılamadı ({attempts} deneme). İnternet bağlantınızı kontrol edin."
+overload = "Hata (API yoğun): Anthropic API şu an aşırı yüklü (durum {status}); {attempts} denemede yanıt alınamadı. Biraz sonra tekrar deneyin."
+auth = "Hata (yetki): API anahtarı reddedildi (durum {status}). `jarvis key set anthropic_api_key` ile yenileyin."
+api = "Hata (API): istek başarısız oldu ({detail}; {attempts} deneme)."
+unknown = "bilinmeyen hata"
+request_id = "İstek kimliği: {request_id}."
+
+# Ses servisi için kısa bir cümle.
+[spoken]
+timeout = "Sunucuya bağlanamadım, biraz sonra tekrar dener misin?"
+network = "İnternet bağlantısı yok gibi görünüyor."
+overload = "Anthropic sunucuları şu an çok yoğun, biraz sonra tekrar dene."
+auth = "API anahtarı reddedildi, ayrıntılar logda."
+api = "Bir hata oldu, ayrıntılar logda."

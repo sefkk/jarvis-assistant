@@ -1,0 +1,86 @@
+[project]
+name = "jarvis"
+dynamic = ["version"]
+description = "Jarvis: a personal AI assistant for Apple Silicon Macs, with Claude on the Anthropic API and everything else local."
+readme = "README.md"
+requires-python = ">=3.12"  # developed and tested on 3.12 (see .python-version)
+dependencies = [
+    "anthropic>=1,<2",
+    "pydantic>=2,<3",
+    "keyring>=25",
+    "rich>=13",
+    "httpx>=0.28.1",
+    "pyobjc-framework-eventkit>=12.2.2",
+    "google-api-python-client>=2.201.0",
+    "google-auth-oauthlib>=1.5.0",
+    "pyobjc-framework-quartz>=12.2.2",
+    "pyobjc-framework-corewlan>=12.2.2",
+    "num2words>=0.5.14",
+    "fastapi>=0.146.0",
+    "uvicorn[standard]>=0.54.0",
+    "jinja2>=3.1.6",
+    "tomlkit>=0.15.2",
+    "python-multipart>=0.0.32",
+    "pyobjc-framework-localauthentication>=12.2.2",
+]
+
+[project.optional-dependencies]
+# Voice (the hands-free "Hey Jarvis" service and Telegram voice notes): `uv sync --extra voice`, plus ffmpeg
+# (`brew install ffmpeg`). mlx-whisper: local speech to text; openwakeword + onnxruntime: the wake word;
+# silero-vad: end of speech; sounddevice: the microphone; pynput: the push-to-talk hotkey; AVFoundation: the
+# microphone permission check in `jarvis doctor`. Speech output needs no package (ElevenLabs over HTTP, macOS `say`).
+voice = [
+    "mlx-whisper>=0.4",
+    "openwakeword>=0.6",
+    "onnxruntime>=1.17",
+    "silero-vad>=5",
+    "sounddevice>=0.5",
+    "pynput>=1.7",
+    "pyobjc-framework-avfoundation>=12.2.2",
+]
+
+[project.scripts]
+jarvis = "jarvis.main:main"
+
+[dependency-groups]
+dev = [
+    "playwright>=1.64.0",
+    "pytest>=8",
+    "pyyaml>=6",      # eval/cases.yaml
+    "ruff>=0.14",
+]
+
+[tool.uv]
+# Jarvis runs on macOS only. Resolving for Linux too would fail: openwakeword pulls a Linux-only
+# tflite-runtime wheel that does not exist for Python 3.12.
+environments = ["sys_platform == 'darwin'"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/jarvis/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jarvis"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 140
+target-version = "py312"
+extend-exclude = ["src/jarvis/dashboard/static"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "W", "I"]
+ignore = ["E741"]  # short names such as `l` for a line read fine in this code
+
+[tool.ruff.lint.per-file-ignores]
+# pytest fixtures imported from another test module reappear as test parameters
+"tests/**" = ["F811"]
+# these modules export their user-facing texts through a module __getattr__ (in the main language)
+"src/jarvis/scheduler/{alarm,brief,config_watch}.py" = ["F822"]
+"src/jarvis/tools/power.py" = ["F822"]

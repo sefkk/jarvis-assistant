@@ -1,0 +1,55 @@
+# Confirmations: the voice dialog and its spoken sentences, the deny reasons, and the terminal prompt.
+# The word lists parse what the user says or types; parsers accept every language at once.
+
+[dialog]
+confirm = "Confirm"
+deny = "Reject"
+tool = "Tool: {tool} (risk: {risk})"
+untrusted = "This action was triggered after reading untrusted content."
+command = "Command:"
+arguments = "Arguments:"
+voice_hint = "Voice approval: say \"confirm\" (a plain \"yes\" is not enough; \"no\" / \"cancel\" deny). Anything else counts as a no."
+button_only = "Voice approval does not count for this action: the Confirm button is required."
+truncated = "[... shortened; the full text is in the log]"
+
+[spoken]
+question = "Confirmation needed: {what}. Say 'confirm' to approve."
+question_button = "Confirmation needed: {what}. This action needs the Confirm button on the screen."
+reask = "A plain \"yes\" is not enough; say \"confirm\"."
+confirmed = "Confirmed."
+
+# One short sentence per deny reason, spoken right after the decision and quoted to the model.
+[deny]
+timeout = "Time ran out with no answer; I did not do it."
+phrase_mismatch = "I heard \"{heard}\"; to approve you need to say \"confirm\". I did not do it."
+vague = "A plain \"yes\" is not enough; you did not say \"confirm\", so I did not do it."
+negation = "Okay, you declined; I did not do it."
+voice_not_allowed_tainted = "This action came after untrusted content, so it needed the Confirm button on the screen; it was not pressed."
+voice_not_allowed_high_risk = "This action needed the Confirm button on the screen; it was not pressed, so I did not do it."
+dialog_reject = "You pressed Reject; I did not do it."
+dialog_cancel = "You closed the confirmation dialog; I did not do it."
+dialog_parse_error = "The confirmation dialog returned an unreadable answer; I did not do it."
+superseded = "This confirmation was interrupted; I did not do it."
+error = "Something went wrong during the confirmation; I did not do it."
+
+# Spoken answers to a confirmation question (whole words, case-insensitive).
+[words]
+# Any of these makes the answer a refusal, whatever else it contains.
+negation = ["no", "nope", "cancel", "stop", "dont", "don't", "never", "reject", "deny", "abort"]
+# A bare acknowledgement: not enough on its own, the user is asked once more.
+vague = ["yes", "yeah", "yep", "sure", "fine", "right", "ok", "okay", "please", "jarvis"]
+# Hedges: "confirm, I guess" is not an approval.
+hedge = ["maybe", "perhaps", "probably", "guess", "think", "unsure", "not"]
+
+# The terminal chat.
+[terminal]
+heading = "[bold yellow]Confirm[/] tool [bold]{tool}[/] (risk: {risk})"
+warning = "Warning: "
+command = "Command:"
+ask = "Run it? [y/yes or n/no]"
+declined = "You did not confirm in the terminal; I did not do it."
+choice = "Choice"
+thinking = "Thinking…"
+# Answers that approve; Enter and anything else deny.
+yes = ["y", "yes", "confirm", "ok", "okay"]
+no = ["n", "no", "cancel"]

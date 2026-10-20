@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block title %}{{ T.NAV_ANALYTICS }} · {{ T.APP_TITLE }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ T.NAV_ANALYTICS }}</h1>
+
+<form class="filters card" method="get" action="/analytics">
+  {% include "partials/range_filter.html" %}
+  <label>{{ T.FILTER_CHANNEL }}
+    <select name="channel">
+      <option value="">{{ T.ALL_CHANNELS }}</option>
+      {% for ch in channels %}<option value="{{ ch }}" {% if f.channel == ch %}selected{% endif %}>{{ ch | channel }}</option>{% endfor %}
+    </select>
+  </label>
+  <label>{{ T.FILTER_MODEL }}
+    <select name="model">
+      <option value="">{{ T.ALL_MODELS }}</option>
+      {% for m in models %}<option value="{{ m }}" {% if f.model == m %}selected{% endif %}>{{ m }}</option>{% endfor %}
+    </select>
+  </label>
+  <button type="submit" class="btn btn-primary">{{ T.BTN_APPLY }}</button>
+</form>
+
+<div id="analytics" class="stack" data-src="/analytics/data?{{ qs }}" data-no-data="{{ T.NO_DATA }}">
+  <div class="tiles tiles-wide">
+    <div class="tile"><span class="tile-label">{{ T.LABEL_MONTHLY_TOTAL }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_MONTHLY }}" data-tip="{{ T.INFO_MONTHLY }}">{{ icon('info') }}</span></span><span class="tile-value">{{ monthly.total | money }}</span><span class="tile-note">{{ monthly.month }}</span></div>
+    <div class="tile"><span class="tile-label">{{ T.LABEL_PROJECTED }}</span><span class="tile-value">{{ monthly.projected | money }}</span></div>
+    <div class="tile"><span class="tile-label">{{ T.LABEL_OVERALL_CACHE }}</span><span class="tile-value">{% if cache and cache.overall_hit_rate is not none %}{{ cache.overall_hit_rate }} %{% else %}–{% endif %}</span></div>
+    <div class="tile"><span class="tile-label">{{ T.LABEL_P50_P90 }}</span><span class="tile-value">{% if latency and latency.overall_p50 is not none %}{{ latency.overall_p50 | ms }} / {{ latency.overall_p90 | ms }} / {{ latency.overall_p95 | ms }}{% else %}–{% endif %}</span></div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="card chart-card chart-wide">
+      <div class="card-head"><h2>{{ T.CHART_DAILY_COST }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_DAILY_COST }}" data-tip="{{ T.INFO_DAILY_COST }}">{{ icon('info') }}</span></h2><span class="muted small">{{ T.LABEL_DAILY_BUDGET }}: <span data-budget></span></span></div>
+      <div class="chart-box"><canvas data-chart="daily_cost"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+    <div class="card chart-card">
+      <div class="card-head"><h2>{{ T.CHART_COST_BY_PROVIDER }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_COST_BY_PROVIDER }}" data-tip="{{ T.INFO_COST_BY_PROVIDER }}">{{ icon('info') }}</span></h2></div>
+      <div class="chart-box chart-small"><canvas data-chart="cost_by_provider"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+    <div class="card chart-card">
+      <div class="card-head"><h2>{{ T.CHART_MODEL_USAGE }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_MODEL_USAGE }}" data-tip="{{ T.INFO_MODEL_USAGE }}">{{ icon('info') }}</span></h2>
+        <div class="segmented" data-toggle="model_metric">
+          <button type="button" class="seg-btn active" data-metric="tokens">{{ T.TOGGLE_TOKENS }}</button>
+          <button type="button" class="seg-btn" data-metric="cost">{{ T.TOGGLE_COST }}</button>
+          <button type="button" class="seg-btn" data-metric="calls">{{ T.TOGGLE_CALLS }}</button>
+        </div>
+      </div>
+      <div class="chart-box chart-small"><canvas data-chart="model_usage"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+    <div class="card chart-card chart-wide">
+      <div class="card-head"><h2>{{ T.CHART_COMPOSITION }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_COMPOSITION }}" data-tip="{{ T.INFO_COMPOSITION }}">{{ icon('info') }}</span></h2></div>
+      <div class="chart-box chart-small"><canvas data-chart="composition"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+    <div class="card chart-card chart-wide">
+      <div class="card-head"><h2>{{ T.CHART_COMPOSITION_TIME }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_COMPOSITION_TIME }}" data-tip="{{ T.INFO_COMPOSITION_TIME }}">{{ icon('info') }}</span></h2></div>
+      <div class="chart-box"><canvas data-chart="composition_time"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+    <div class="card chart-card">
+      <div class="card-head"><h2>{{ T.CHART_CACHE_HIT }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_CACHE_HIT }}" data-tip="{{ T.INFO_CACHE_HIT }}">{{ icon('info') }}</span></h2></div>
+      <div class="chart-box"><canvas data-chart="cache_hit"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+    <div class="card chart-card">
+      <div class="card-head"><h2>{{ T.CHART_CACHE_SAVED }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_CACHE_SAVED }}" data-tip="{{ T.INFO_CACHE_SAVED }}">{{ icon('info') }}</span></h2></div>
+      <div class="chart-box"><canvas data-chart="cache_saved"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+    <div class="card chart-card">
+      <div class="card-head"><h2>{{ T.CHART_LATENCY }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_LATENCY }}" data-tip="{{ T.INFO_LATENCY }}">{{ icon('info') }}</span></h2></div>
+      <div class="chart-box"><canvas data-chart="latency"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+    <div class="card chart-card">
+      <div class="card-head"><h2>{{ T.CHART_LATENCY_STAGE }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_LATENCY_STAGE }}" data-tip="{{ T.INFO_LATENCY_STAGE }}">{{ icon('info') }}</span></h2></div>
+      <div class="chart-box"><canvas data-chart="latency_stage"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>{{ T.CHART_REQUESTS }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_REQUESTS }}" data-tip="{{ T.INFO_REQUESTS }}">{{ icon('info') }}</span></h2><span class="muted">{{ T.REQUESTS_COUNT.format(n=requests.total) }}</span></div>
+    {% include "partials/requests.html" %}
+  </div>
+
+  <div class="chart-grid">
+    <div class="card chart-card chart-wide">
+      <div class="card-head"><h2>{{ T.CHART_TOP_ERRORS }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_TOP_ERRORS }}" data-tip="{{ T.INFO_TOP_ERRORS }}">{{ icon('info') }}</span></h2></div>
+      {% if errors.top %}
+      <table class="table table-head">
+        <thead><tr><th>{{ T.ERR_ERROR }}</th><th>{{ T.ERR_PROVIDER }}</th><th>{{ T.ERR_TYPE }}</th><th class="num">{{ T.ERR_COUNT }}</th><th>{{ T.ERR_LAST_SEEN }}</th><th>{{ T.ERR_EXAMPLE }}</th></tr></thead>
+        <tbody>
+        {% for e in errors.top %}
+        <tr><td><code>{{ e.error }}</code></td><td>{{ e.provider }} <span class="muted small">{{ e.endpoint }}</span></td><td><span class="badge badge-failed">{{ e.type }}</span></td>
+          <td class="num">{{ e.count }}</td><td>{{ e.last_seen | local_time("%Y-%m-%d %H:%M") }}</td>
+          <td>{% if e.example_turn %}<a href="/logs/turns/{{ e.example_turn }}">{{ e.example_turn }}</a>{% else %}–{% endif %}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% else %}<p class="empty">{{ T.NO_DATA }}</p>{% endif %}
+      {% if errors.failing_tools %}
+      <h3>{{ T.LABEL_FAILING_TOOLS }}</h3>
+      <table class="table table-head">
+        <thead><tr><th>{{ T.TOOL_COL_TOOL }}</th><th class="num">{{ T.TOOL_COL_CALLS }}</th><th class="num">{{ T.ERR_COUNT }}</th><th class="num">{{ T.TOOL_COL_ERROR_RATE }}</th><th>{{ T.ERR_ERROR }}</th></tr></thead>
+        <tbody>
+        {% for t in errors.failing_tools %}
+        <tr><td><code>{{ t.tool }}</code></td><td class="num">{{ t.calls }}</td><td class="num">{{ t.errors }}</td><td class="num">{{ t.rate }} %</td><td class="cell-text muted small">{{ t.last_error | preview(120) }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+    <div class="card chart-card chart-wide">
+      <div class="card-head"><h2>{{ T.CHART_TOOL_USAGE }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_TOOL_USAGE }}" data-tip="{{ T.INFO_TOOL_USAGE }}">{{ icon('info') }}</span></h2></div>
+      {% if tools %}
+      <table class="table table-head">
+        <thead><tr><th>{{ T.TOOL_COL_TOOL }}</th><th class="num">{{ T.TOOL_COL_CALLS }}</th><th class="num">{{ T.TOOL_COL_AVG }}</th><th class="num">{{ T.TOOL_COL_ERROR_RATE }}</th><th class="num">{{ T.TOOL_COL_DENIED }}</th></tr></thead>
+        <tbody>
+        {% for t in tools %}
+        <tr><td><code>{{ t.tool }}</code></td><td class="num">{{ t.calls }}</td><td class="num">{{ t.avg_ms | ms }}</td>
+          <td class="num {% if t.errors %}text-bad{% endif %}">{{ t.error_rate }} %</td><td class="num">{{ t.denied }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% else %}<p class="empty">{{ T.NO_DATA }}</p>{% endif %}
+    </div>
+    <div class="card chart-card">
+      <div class="card-head"><h2>{{ T.CHART_FAILED_BY_TYPE }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_FAILED_BY_TYPE }}" data-tip="{{ T.INFO_FAILED_BY_TYPE }}">{{ icon('info') }}</span></h2>
+        <span class="muted small">{{ T.LABEL_RETRIES }}: {{ errors.retries }} · {{ T.LABEL_FINAL_FAILURES }}: {{ errors.final }}</span></div>
+      <div class="chart-box chart-small"><canvas data-chart="failed_by_type"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+    <div class="card chart-card">
+      <div class="card-head"><h2>{{ T.CHART_CHANNELS }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_CHANNELS }}" data-tip="{{ T.INFO_CHANNELS }}">{{ icon('info') }}</span></h2></div>
+      <div class="chart-box chart-small"><canvas data-chart="channels"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+    <div class="card chart-card">
+      <div class="card-head"><h2>{{ T.CHART_VOICE }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_VOICE }}" data-tip="{{ T.INFO_VOICE }}">{{ icon('info') }}</span></h2></div>
+      {% if voice %}
+      <div class="tiles tiles-voice">
+        <div class="tile"><span class="tile-label">{{ T.VOICE_TRIGGERS }}</span><span class="tile-value">{{ voice.triggers }}</span>
+          <span class="tile-note">{% for kind, n in voice.triggers_by_kind.items() %}{{ kind }} {{ n }}{% if not loop.last %} · {% endif %}{% endfor %}</span></div>
+        <div class="tile"><span class="tile-label">{{ T.VOICE_DROPPED }}</span><span class="tile-value">{{ voice.dropped }}</span>
+          <span class="tile-note">{% if voice.dropped_rate is not none %}{{ voice.dropped_rate }} %{% endif %}</span></div>
+        <div class="tile"><span class="tile-label">{{ T.VOICE_FOLLOW_UPS }}</span><span class="tile-value">{{ voice.follow_ups_used }}</span>
+          <span class="tile-note">{{ T.VOICE_OF.format(n=voice.follow_ups_opened) }}{% if voice.follow_up_rate is not none %} · {{ voice.follow_up_rate }} %{% endif %}</span></div>
+        <div class="tile"><span class="tile-label">{{ T.VOICE_REPEATS }}</span><span class="tile-value">{{ voice.repeats }}</span>
+          <span class="tile-note">{% if voice.repeat_rate is not none %}{{ voice.repeat_rate }} % {{ T.VOICE_OF.format(n=voice.voice_turns) }}{% endif %}</span></div>
+        <div class="tile"><span class="tile-label">{{ T.VOICE_CORRECTIONS }}</span><span class="tile-value">{{ voice.corrections }}</span>
+          <span class="tile-note">{% if voice.correction_rate is not none %}{{ voice.correction_rate }} %{% endif %}</span></div>
+        <div class="tile"><span class="tile-label">{{ T.VOICE_FIRST_AUDIO }}</span>
+          <span class="tile-value">{% if voice.first_audio_p50 is not none %}{{ voice.first_audio_p50 | ms }} / {{ voice.first_audio_p90 | ms }}{% else %}–{% endif %}</span>
+          <span class="tile-note">{{ T.VOICE_OF.format(n=voice.spoken_turns) }}</span></div>
+      </div>
+      {% else %}<p class="empty">{{ T.NO_DATA }}</p>{% endif %}
+    </div>
+    <div class="card chart-card">
+      <div class="card-head"><h2>{{ T.CHART_CONFIRMATIONS }} <span class="info" tabindex="0" role="img" aria-label="{{ T.INFO_CONFIRMATIONS }}" data-tip="{{ T.INFO_CONFIRMATIONS }}">{{ icon('info') }}</span></h2></div>
+      {% if confirmations %}
+      <table class="table table-head">
+        <thead><tr><th>{{ T.CONFIRM_REASON }}</th><th class="num">{{ T.CONFIRM_APPROVED }}</th><th class="num">{{ T.CONFIRM_DENIED }}</th></tr></thead>
+        <tbody>{% for c in confirmations %}<tr><td>{{ c.reason }}</td><td class="num">{{ c.approved }}</td><td class="num">{{ c.denied }}</td></tr>{% endfor %}</tbody>
+      </table>
+      {% endif %}
+      <div class="chart-box chart-small"><canvas data-chart="confirmations"></canvas><p class="empty chart-empty" hidden>{{ T.NO_DATA }}</p><p class="chart-loading"><span class="sr-only">{{ T.LOADING }}</span></p></div>
+    </div>
+  </div>
+</div>
+<script src="{{ asset('vendor/chart.umd.js') }}" defer></script>
+<script src="{{ asset('analytics.js') }}" defer></script>
+{% endblock %}

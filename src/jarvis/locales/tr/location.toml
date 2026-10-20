@@ -1,0 +1,35 @@
+# `jarvis location`: terminalde Current Location.
+
+[age]
+just_now = "az önce"
+minutes = "{n} dakika önce"
+hours = "{n} saat önce"
+days = "{n} gün önce"
+
+[last_known]
+text = "{label} (son bilinen konum, {age}, kaynak: {source})"
+address_unknown = "adres bilinmiyor"
+
+[status]
+disabled = "Konum tespiti kapalı (location.enabled = false)."
+mac_unknown = "Mac konumu: bilinmiyor (henüz tespit edilmedi; `jarvis location refresh`)."
+mac = "Mac konumu: {label}{extra}"
+mac_stale = "Mac konumu (eski): {label}{extra}"
+approximate = " (yaklaşık, IP tabanlı; VPN varsa yanlış olabilir)"
+details = "  koordinat: {coordinates}  kaynak: {source}  güncelleme: {updated} ({age})"
+profile_line = "  profile.md satırı ({precision}): {line}"
+telegram = "Telegram'dan paylaşılan konum: {coordinates} ({age}); uzak turlarda bu kullanılır"
+telegram_none = "Telegram'dan paylaşılan konum: yok (uzak turlarda Mac'in konumu kullanılmaz)"
+last_error = "Son hata{when}: {error}"
+settings = "Ayarlar: en fazla {max_age} dk eski, zaman aşımı {timeout} s, hassasiyet {precision}, geçmiş {history}, kaynak sırası: Shortcut \"{shortcut}\" > CoreLocationCLI > IP{ip_off}"
+on = "açık"
+off = "kapalı"
+ip_off = " (kapalı)"
+
+[refresh]
+skipped = "Güncellenmedi: {reason}"
+done = "Konum güncellendi, kaynak: {source}"
+tried = "; önce denenen: {tried}"
+no_profile = "profile.md yok ya da yazılamadı; Current Location bloğu eklenemedi (`jarvis setup`)."
+failed = "Konum alınamadı: {error}"
+kept = "Son bilinen konum korunuyor: {place}"

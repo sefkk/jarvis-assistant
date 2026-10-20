@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>{{ T.APP_TITLE }}</title>
+  <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ asset('tokens.css') }}">
+  <link rel="stylesheet" href="{{ asset('app.css') }}">
+  <script src="{{ asset('theme.js') }}"></script>
+</head>
+<body class="centered">
+  <div class="card notice">
+    <h1>{{ T.APP_TITLE }}</h1>
+    <p>{{ T.SESSION_EXPIRED }}</p>
+  </div>
+</body>
+</html>

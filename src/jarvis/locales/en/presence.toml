@@ -1,0 +1,57 @@
+# Presence: notifications, `jarvis presence setup` and `jarvis presence status`.
+
+[notify]
+arrived = "{name} arrived home"
+left = "{name} left home"
+
+[setup]
+title = "Jarvis presence setup"
+title_hint = "(run this at home, on the home Wi-Fi)"
+no_gateway = "No default gateway found. Connect to your home network first, then run `jarvis presence setup` again."
+gateway = "Gateway: {ip} on {interface}, MAC {mac} ({vendor})"
+is_home_network = "Is this your home network?"
+no_home = "No home network saved; nothing written. Run the setup again at home."
+scanning = "Looking for devices (this takes a few seconds)..."
+no_devices = "No devices found on this network. Make sure the phones are awake and on the Wi-Fi, then try again."
+saved_home = "Saved the home network to {path}."
+table_title = "Devices on this network"
+columns = ["#", "IP", "MAC", "Vendor", "Hostname", "Person"]
+iphone_hint = "Hint: an iPhone shows up as Apple, or as 'Private/randomized address' when its private Wi-Fi address is on."
+ask_phone = "Which number is your phone? (Enter to skip)"
+ask_name = "Your name"
+ask_more = "Add another person's device?"
+ask_their_name = "Their name"
+ask_numbers = "Device number(s), e.g. 2 or 2,5"
+skipped = "Skipped (a name and at least one device number are needed)."
+iphone_reminder = "Reminder: an iPhone uses a private Wi-Fi address per network. Jarvis can only recognize it when that address is stable: on the phone open Settings > Wi-Fi > (i) next to this network > Private Wi-Fi Address and choose Fixed (not Rotating; Off also works). With Rotating the address changes and the phone is never recognized. Household members should know their phone presence is detected (MANUAL_STEPS.md)."
+wrote = "Wrote {path}."
+wrote_backup = "Wrote {path} (backup: {backup})."
+summary = "Home network: {count} gateway MAC(s); people: {people}."
+nobody = "none"
+scans = "Scans run inside the scheduler agent (`jarvis scheduler install`); `jarvis presence status` shows the result."
+
+[status]
+home_network = "Home network: {count} gateway MAC(s)"
+home_network_missing = "Home network: not configured, run `jarvis presence setup`"
+last_scan = "Last scan: {when} (scan #{number}); Mac on the home network: {at_home}"
+last_scan_never = "Last scan: none yet; the scheduler agent runs the scans (`jarvis scheduler install`), or run `jarvis presence scan` once"
+remote_allowed = "Remote: allowed from Telegram (allow_remote = true)"
+remote_self = "Remote: only am_i_home from Telegram (allow_remote_self = true)"
+remote_blocked = "Remote: blocked from Telegram (allow_remote = false)"
+automations = "Automations: {names}"
+automations_none = "Automations: none enabled"
+people_none = "People: none configured (run `jarvis presence setup`)"
+me = " (me)"
+no_history = " [no history]"
+person = "- {name}: {state}{since}; last seen {last_seen}"
+person_unknown = "- {name}: unknown (not scanned yet)"
+since = ", since {when}"
+never = "never"
+yes = "yes"
+no = "no"
+scan_done = "Scan done: {count} event(s)"
+
+[status.state]
+home = "home"
+away = "away"
+unknown = "unknown"

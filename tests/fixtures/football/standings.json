@@ -1,0 +1,22 @@
+{
+  "get": "standings",
+  "parameters": {"league": "203", "season": "2026"},
+  "errors": [],
+  "results": 1,
+  "paging": {"current": 1, "total": 1},
+  "response": [
+    {
+      "league": {
+        "id": 203, "name": "Süper Lig", "country": "Turkey", "logo": "https://media.api-sports.io/football/leagues/203.png", "flag": "https://media.api-sports.io/flags/tr.svg", "season": 2026,
+        "standings": [
+          [
+            {"rank": 1, "team": {"id": 645, "name": "Galatasaray", "logo": "https://media.api-sports.io/football/teams/645.png"}, "points": 22, "goalsDiff": 15, "group": "Süper Lig", "form": "WWWDW", "status": "same", "description": "Promotion - Champions League (Group Stage: )", "all": {"played": 8, "win": 7, "draw": 1, "lose": 0, "goals": {"for": 21, "against": 6}}, "home": {"played": 4, "win": 4, "draw": 0, "lose": 0, "goals": {"for": 12, "against": 2}}, "away": {"played": 4, "win": 3, "draw": 1, "lose": 0, "goals": {"for": 9, "against": 4}}, "update": "2026-10-12T00:00:00+00:00"},
+            {"rank": 2, "team": {"id": 611, "name": "Fenerbahce", "logo": "https://media.api-sports.io/football/teams/611.png"}, "points": 19, "goalsDiff": 11, "group": "Süper Lig", "form": "WDWLW", "status": "same", "description": "Promotion - Champions League (Qualification: )", "all": {"played": 8, "win": 6, "draw": 1, "lose": 1, "goals": {"for": 18, "against": 7}}, "home": {"played": 4, "win": 4, "draw": 0, "lose": 0, "goals": {"for": 11, "against": 2}}, "away": {"played": 4, "win": 2, "draw": 1, "lose": 1, "goals": {"for": 7, "against": 5}}, "update": "2026-10-12T00:00:00+00:00"},
+            {"rank": 3, "team": {"id": 998, "name": "Trabzonspor", "logo": "https://media.api-sports.io/football/teams/998.png"}, "points": 16, "goalsDiff": 5, "group": "Süper Lig", "form": "WWDLD", "status": "same", "description": "Promotion - Europa League (Group Stage: )", "all": {"played": 8, "win": 5, "draw": 1, "lose": 2, "goals": {"for": 13, "against": 8}}, "home": {"played": 4, "win": 3, "draw": 0, "lose": 1, "goals": {"for": 8, "against": 3}}, "away": {"played": 4, "win": 2, "draw": 1, "lose": 1, "goals": {"for": 5, "against": 5}}, "update": "2026-10-12T00:00:00+00:00"},
+            {"rank": 4, "team": {"id": 549, "name": "Besiktas", "logo": "https://media.api-sports.io/football/teams/549.png"}, "points": 13, "goalsDiff": 2, "group": "Süper Lig", "form": "LWDWL", "status": "same", "description": null, "all": {"played": 8, "win": 4, "draw": 1, "lose": 3, "goals": {"for": 11, "against": 9}}, "home": {"played": 4, "win": 3, "draw": 0, "lose": 1, "goals": {"for": 7, "against": 3}}, "away": {"played": 4, "win": 1, "draw": 1, "lose": 2, "goals": {"for": 4, "against": 6}}, "update": "2026-10-12T00:00:00+00:00"}
+          ]
+        ]
+      }
+    }
+  ]
+}

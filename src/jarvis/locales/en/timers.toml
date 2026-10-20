@@ -1,0 +1,14 @@
+# The scheduler: timer and pomodoro notifications, the missing-scheduler warning, the config reload notice.
+
+late = " (late)"
+scheduler_missing = "Warning: the background scheduler is not installed, so this timer will not fire on its own. Run `jarvis scheduler install` once (it survives reboots)."
+
+[pomodoro]
+break = "Break time"
+long_break = "Long break"
+focus = "Focus time, {cycle}/{cycles}"
+done = "Pomodoro done"
+
+[config]
+title = "Jarvis settings"
+invalid = "config.toml changed but is not valid; I'm carrying on with the last valid settings.\n{reason}"

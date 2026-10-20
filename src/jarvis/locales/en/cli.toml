@@ -1,0 +1,141 @@
+# The terminal chat and the general CLI.
+
+[greeting]
+morning = "Good morning{name}, I'm listening."
+day = "Good afternoon{name}, I'm listening."
+evening = "Good evening{name}, I'm listening."
+
+[goodbye]
+text = "Bye{name}."
+
+[first_run]
+missing = "Jarvis is not set up yet: {what} is missing."
+hint = "Run `jarvis setup` to create it."
+ask = "Start `jarvis setup` now?"
+
+[notice]
+# Short lines next to a reply (terminal, Telegram).
+reply_restarted = "(the reply was restarted)"
+retry_timeout = "API timeout: {phase} limit of {limit} s hit, retrying in {delay}s ({attempt}/{max})..."
+retry_error = "API error ({detail}), retrying in {delay}s ({attempt}/{max})..."
+refusal = "The model declined this request (safety refusal)."
+cut_off = "The reply was cut off at max_output_tokens."
+cut_off_tool = "The reply was cut off at max_output_tokens before a tool call could complete."
+iteration_cap = "Stopped: reached the limit of {max} tool calls for this turn."
+compacting = "Compacting earlier conversation..."
+turn_crashed = "Error: something went wrong in this turn ({error}). Details are in the log."
+
+[common]
+error = "Error:"
+config_error = "Config error:"
+warning = "warning:"
+interrupted = "interrupted"
+yes = "yes"
+no = "no"
+agent_status = "agent installed: {installed}, running: {running}"
+scheduler_status = "installed: {installed}, running: {running}"
+
+[chat]
+no_api_key = "Cannot start without an API key."
+no_profile = "No profile yet."
+no_profile_hint = "Run `jarvis setup` so Jarvis knows your name and preferences."
+warmup_failed = "warm-up failed: {error}"
+
+[key]
+prompt = "Value for {name}: "
+empty = "Nothing stored (empty value)."
+stored = "Stored {name} in the macOS Keychain (service '{service}')."
+removed = "Removed {name} from the Keychain (if it existed)."
+
+[google]
+login_done = "Google login complete. Token stored in the macOS Keychain."
+missing_scopes = "these permissions were not granted: {scopes}. Run the login again and tick every box."
+scopes = "Scopes: calendar events, Gmail read, Gmail drafts (no send), Sheets, Drive metadata (to find sheets by name)."
+logout = "Google token removed from the Keychain."
+
+[report]
+session = "{id}  {started}  {model}  {turns} turn(s)"
+no_sessions = "No sessions."
+wrote = "Wrote {path}"
+
+[memory]
+removed = "Removed {count} note(s)."
+no_match = "No note contains that text."
+empty = "Memory is empty ({path})."
+summary = "{count} note(s), {size} of {max} bytes, in {path}"
+
+[health]
+sync = "Health sync: {result}"
+sync_skipped = "Health sync skipped: {error}"
+not_found = "not found: {path}"
+importing = "Importing {path} (streaming; a large export takes a while)..."
+input = "input"
+file_failed = "{name}: failed ({error})"
+file_ok = "{name}: {format}, {new} new, {dup} duplicate"
+file_skipped = ", {count} skipped"
+unknown_error = "unknown error"
+synced = "{processed} file(s) imported, {failed} failed, {new} new workout(s), {dup} duplicate(s)"
+inbox_bad = "bad health_inbox setting: {error}"
+inbox_missing = "health inbox not found: {path}"
+inbox_unreadable = "cannot list inbox: {error}"
+
+[scheduler]
+fired = "Fired {count} timer(s)."
+running = "Jarvis scheduler running (Ctrl-C to stop)."
+installed = "Installed {path}. Timers now fire even when the CLI is closed."
+removed = "Scheduler agent removed."
+
+[brief]
+not_spoken = "not spoken: {reason}. Try --send telegram, or `jarvis voice resume` / turn Do Not Disturb off."
+voice_requested = "spoken brief requested: the voice service speaks it as soon as it is idle (within five minutes)."
+sent_telegram = "sent to Telegram"
+schedule_written = "brief.schedule.enabled = {value} written to {file}; the running scheduler applies it on its next check."
+schedule = "morning brief: {text}"
+scheduler_down = "warning: the scheduler agent is not running ({detail}); nothing is delivered until `jarvis scheduler install`."
+
+[telegram]
+installed = "Installed {path}. The bot now runs in the background."
+removed = "Telegram agent removed."
+token_stored = "Bot token stored in the macOS Keychain."
+kill_stopped = "kill switch: STOPPED"
+kill_reenable_requested = " (re-enable requested from the phone; run `jarvis telegram enable`)"
+kill_send_start = " (send /start from the phone, then run `jarvis telegram enable`)"
+kill_active = "kill switch: active (bot handles messages)"
+
+[voice]
+needs_use_voice = "set `use_voice = true` under [general] in config.toml first; the agent would exit immediately otherwise"
+installed = "Installed {path}. The voice service now starts at login."
+permissions = "Under launchd the Microphone and Input Monitoring permissions belong to {python} (docs/integrations/voice.md)."
+removed = "Voice agent removed."
+bad_duration = "cannot read the duration {value}; use 60m, 1h, 1h30m or a number of minutes"
+paused_for = "Voice listening paused for {duration}, until {until}."
+paused = "Voice listening paused until resumed."
+paused_detail = "The service keeps running, releases the microphone and ignores the wake word. Back on with `jarvis voice resume`, /unmute on Telegram, or hold the hotkey and answer the dialog."
+not_running = "Note: the voice agent is not running right now; it will start paused."
+resumed = "Voice listening resumed."
+not_paused = "Voice listening was not paused."
+listening = "listening: {state}"
+
+[alarms]
+no_answer = "the ringing alarm did not answer; is `jarvis scheduler run` alive?"
+already_ringing = "an alarm is already ringing"
+sound = "sound: {sound}"
+test_info = "system volume -> {volume} while it rings (restored afterwards); max {seconds} s; {stop} / {snooze} on screen, or `jarvis alarms stop` / `jarvis alarms snooze` from another terminal"
+result = "result: {outcome} by {by}, {loops} loop(s), volume restored: {restored}"
+
+[dashboard]
+stopped = "Dashboard stopped."
+
+[network]
+running = "Running the diagnostics and the networkQuality speed test (about 20 s, uses data)..."
+
+[calendar]
+no_filters = "No calendar filters configured. Add a [[calendar.filters]] block to config.toml."
+counts = "  next {days} days: {shown} shown, {hidden} hidden"
+shown = "    shown: {event}"
+hidden = "    hidden: {event}"
+not_counted = "{name} calendar not counted: {reason}"
+
+[budget]
+warning = "Budget warning: ${spent} of ${budget} used today ({percent})."
+exceeded = "Daily budget reached: ${spent} of ${budget} used today ({percent}). Jarvis keeps answering; this is only so you know."

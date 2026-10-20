@@ -1,0 +1,27 @@
+{
+  "data": {
+    "workouts": [
+      {
+        "name": "Running",
+        "start": "2026-10-09 18:30:00 +0300",
+        "end": "2026-10-09 19:00:00 +0300",
+        "totalEnergy": {"qty": 450, "units": "kcal"},
+        "activeEnergy": {"qty": 400, "units": "kcal"},
+        "distance": {"qty": 3.1, "units": "mi"},
+        "heartRateData": [
+          {"date": "2026-10-09 18:31:00 +0300", "qty": 140},
+          {"date": "2026-10-09 18:40:00 +0300", "qty": 160},
+          {"date": "2026-10-09 18:55:00 +0300", "qty": 180}
+        ]
+      },
+      {
+        "name": "Walking",
+        "start": "2026-10-09 21:00:00 +0300",
+        "end": "2026-10-09 21:20:00 +0300",
+        "totalEnergy": {"qty": 80, "units": "kcal"},
+        "distance": {"qty": 0.9, "units": "mi"},
+        "heartRateData": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+<div id="editor-{{ area }}" class="editor">
+  <textarea class="editor-text" name="text" rows="28" spellcheck="false"
+            hx-post="/cart/text" hx-trigger="input changed delay:700ms" hx-vals='{"area": "{{ area }}"}' hx-target="#persona-status-{{ area }}" hx-swap="outerHTML">{{ text }}</textarea>
+  {% include "partials/persona_status.html" %}
+</div>

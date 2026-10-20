@@ -1,0 +1,7 @@
+<div id="persona-status-{{ area }}" class="editor-status">
+  {% if staged %}<span class="badge badge-changed">{{ T.CHANGED }}</span>{% endif %}
+  <span class="muted small">{{ T.CHARACTERS.format(n=chars) }} · {{ T.ESTIMATED_TOKENS.format(n=tokens) }}</span>
+  {% if staged %}<button type="button" class="btn btn-small" hx-post="/cart/remove-key" hx-vals='{"key": "text:{{ area }}"}' hx-target="#editor-{{ area }}" hx-swap="outerHTML">{{ T.RESET_TO_CURRENT }}</button>{% endif %}
+  {% if error %}<span class="text-bad">{{ error }}</span>{% endif %}
+</div>
+<div id="persona-preview-{{ area }}" class="preview prose-html" hx-swap-oob="true">{{ preview }}</div>

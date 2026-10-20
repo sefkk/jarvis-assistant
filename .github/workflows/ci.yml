@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    # Jarvis runs on Apple Silicon Macs only; macos-latest is an arm64 runner.
+    runs-on: macos-latest
+    timeout-minutes: 45
+    env:
+      # the runner may be older than macOS 26; the platform check has its own tests
+      JARVIS_ALLOW_UNSUPPORTED_PLATFORM: "1"
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # gitleaks scans the whole history
+
+      - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          version: "0.11.2"  # the uv that generated the requirements files (export output is version-sensitive)
+          python-version: "3.12"
+          enable-cache: true
+
+      - name: Install
+        run: uv sync --frozen --extra voice
+
+      - name: Lint
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Generated files are up to date
+        run: |
+          scripts/update_requirements.sh --check
+          uv run python scripts/gen_helpfile.py --check
+          uv run python scripts/gen_config_doc.py --check
+
+      - name: Tests
+        run: uv run pytest tests -q -rfE
+
+      - name: Secret scan
+        run: |
+          brew install gitleaks
+          gitleaks git --redact --verbose .

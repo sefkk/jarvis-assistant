@@ -1,0 +1,61 @@
+# Onaylar: sesli moddaki onay penceresi ve konuşulan cümleleri, ret gerekçeleri ve terminaldeki soru.
+# Kelime listeleri kullanıcının söylediğini ya da yazdığını ayrıştırır; ayrıştırıcılar her dili birden kabul eder.
+
+[dialog]
+confirm = "Onayla"
+deny = "Reddet"
+tool = "Araç: {tool} (risk: {risk})"
+untrusted = "Bu işlem güvenilmeyen bir içerik okunduktan sonra istendi."
+command = "Komut:"
+arguments = "Argümanlar:"
+voice_hint = "Sesle onay: \"onaylıyorum\" de (sadece \"evet\" yetmez; \"hayır\" / \"iptal\" reddeder). Başka her şey ret sayılır."
+button_only = "Bu işlem için sesli onay geçerli değil: Onayla düğmesi gerekir."
+truncated = "[... kısaltıldı; tam hali logda]"
+
+[spoken]
+question = "Onay gerekiyor: {what}. Onaylıyor musun? Onaylamak için \"onaylıyorum\" de."
+question_button = "Onay gerekiyor: {what}. Bu işlem için ekrandaki Onayla düğmesine basman gerekiyor."
+reask = "Sadece \"evet\" yetmiyor, \"onaylıyorum\" de."
+confirmed = "Onaylandı."
+
+# Her ret gerekçesi için kısa bir cümle: karardan hemen sonra söylenir ve modele aktarılır.
+[deny]
+timeout = "Süre doldu, onay gelmedi; işlemi yapmadım."
+phrase_mismatch = "\"{heard}\" duydum; onay için \"onaylıyorum\" demen gerekiyor. İşlemi yapmadım."
+vague = "Sadece \"evet\" yetmiyor; \"onaylıyorum\" demediğin için işlemi yapmadım."
+negation = "Tamam, reddettin; işlemi yapmadım."
+voice_not_allowed_tainted = "Bu işlem güvenilmeyen içerikten sonra geldiği için ekrandaki Onayla düğmesi gerekiyordu; basılmadı, yapmadım."
+voice_not_allowed_high_risk = "Bu işlem için ekrandaki Onayla düğmesi gerekiyordu; basılmadı, yapmadım."
+dialog_reject = "Reddet'e bastın; işlemi yapmadım."
+dialog_cancel = "Onay penceresini kapattın; işlemi yapmadım."
+dialog_parse_error = "Onay penceresinden okunamayan bir cevap geldi; işlemi yapmadım."
+superseded = "Bu onay yarıda kesildi; işlemi yapmadım."
+error = "Onay sırasında bir hata oldu; işlemi yapmadım."
+
+# Bir onay sorusuna sesli cevaplar (bütün kelime olarak, büyük/küçük harf fark etmez).
+[words]
+# Bunlardan biri cevabı, başka ne içerirse içersin, ret yapar.
+negation = [
+    "hayır", "hayir", "yok", "iptal", "vazgeç", "vazgec", "vazgeçtim", "vazgectim", "reddet", "reddediyorum",
+    "onaylamıyorum", "onaylamiyorum", "onaylama", "istemiyorum", "yapma", "dur", "durdur", "olmaz",
+]
+# Tek başına bir onaylama sesi: yetmez, kullanıcıya bir kez daha sorulur.
+vague = [
+    "evet", "tamam", "olur", "peki", "he", "hıhı", "hihi", "hı", "aynen", "okey", "tabii", "tabi", "hadi", "yap",
+    "ekle", "onayla", "onay", "lütfen", "jarvis", "evet evet",
+]
+# Çekinceler: "onaylıyorum galiba" onay değildir.
+hedge = ["galiba", "sanırım", "sanirim", "herhalde", "belki", "sanki", "bilmiyorum", "emin", "değilim", "degilim"]
+
+# Terminal sohbeti.
+[terminal]
+heading = "[bold yellow]Onay[/]: araç [bold]{tool}[/] (risk: {risk})"
+warning = "Uyarı: "
+command = "Komut:"
+ask = "Çalıştırayım mı? [e/evet ya da h/hayır]"
+declined = "Terminalde onay vermedin; işlemi yapmadım."
+choice = "Seçim"
+thinking = "Düşünüyorum…"
+# Onaylayan cevaplar; Enter ve diğer her şey reddeder.
+yes = ["e", "evet", "onaylıyorum", "onayliyorum", "onayla", "tamam"]
+no = ["h", "hayır", "hayir", "iptal", "reddet", "vazgeç", "vazgec"]

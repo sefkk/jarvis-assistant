@@ -1,0 +1,62 @@
+# Alarmlar: çalma penceresi, bildirimler ve Telegram mesajları, telefon yedeği hatırlatıcısı, `jarvis alarms`.
+
+default_label = "Alarm"
+test_label = "Deneme alarmı"
+
+[dialog]
+text = "⏰ {label}\n{at}"
+stop = "Durdur"
+snooze = "Ertele ({minutes} dk)"
+
+[notify]
+ring = "⏰ Alarm: {label} ({at})"
+missed = "Kaçırılan alarm: {label} ({at}). Mac o sırada uykudaydı, alarm çalmadı."
+timeout = "Alarm ({label}, {at}) {minutes} dakika çaldı, kimse durdurmadı; sustu."
+snoozed = "Alarm ertelendi: {minutes} dakika sonra ({at}) yeniden çalar."
+stopped = "Alarm durduruldu."
+not_ringing = "Şu anda çalan bir alarm yok."
+
+[reminder]
+title = "⏰ {label}"
+notes = "Jarvis alarmı ({at}). Mac'te durdurulunca silinir."
+
+# Çalan alarmı uyandırma sözcüğü olmadan durduran ya da erteleyen sözler. Her dilin sözleri her zaman geçer.
+[words]
+stop = [
+    "tamam", "tamam tamam", "kapat", "kapa", "durdur", "dur", "sus", "yeter", "kalktım", "uyandım",
+    "alarmı kapat", "alarmı durdur", "alarm kapat", "alarmı sustur", "sustur",
+]
+snooze = ["ertele", "biraz daha"]
+
+[repeat]
+daily = "her gün"
+weekdays = "hafta içi"
+weekends = "hafta sonu"
+days = "her {days}"
+weekday_short = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"]
+
+# `jarvis alarms` ve iptal sonuçlarında her alarm için bir satır.
+[row]
+in_hours = "{hours} sa {minutes} dk sonra"
+in_minutes = "{minutes} dk sonra"
+today = "bugün"
+tomorrow = "yarın"
+snoozed = "[ertelendi, #{id}]"
+phone = "tel: {channels}"
+reminder = "hatırlatıcı"
+no_reminder = "hatırlatıcı yok"
+telegram = "telegram"
+phone_off = "kapalı"
+
+[cancel]
+already = "Alarm #{id} ({label}) zaten {status}."
+none_at = "{at} için kurulu alarm yok."
+none_labelled = "'{label}' etiketli kurulu alarm yok."
+none = "Kurulu alarm yok."
+nothing = "İptal edilecek alarm bulunamadı."
+done = "{count} alarm iptal edildi: {alarms}. Telefon yedeği de kaldırıldı."
+
+[cli]
+ringing = "ÇALIYOR: #{id} {label} (jarvis alarms stop | snooze)"
+none = "kurulu alarm yok"
+count = "{count} kurulu alarm:"

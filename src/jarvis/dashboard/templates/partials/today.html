@@ -1,0 +1,7 @@
+<div class="kpi-row" id="today" hx-get="/partials/today" hx-trigger="every {{ refresh_s }}s" hx-swap="outerHTML">
+  <div class="kpi"><span class="kpi-label">{{ icon('message-square') }}{{ T.TODAY_TURNS }}</span><span class="kpi-value">{{ today.turns }}</span></div>
+  <div class="kpi {% if today.over_budget %}kpi-bad{% endif %}"><span class="kpi-label">{{ icon('wallet') }}{{ T.TODAY_COST }}</span><span class="kpi-value">{{ today.cost_usd | money }}</span></div>
+  <div class="kpi"><span class="kpi-label">{{ icon('timer') }}{{ T.TODAY_AVG_LATENCY }}</span><span class="kpi-value">{{ today.avg_latency_ms | ms }}</span></div>
+  <div class="kpi {% if today.errors %}kpi-bad{% endif %}"><span class="kpi-label">{{ icon('triangle-alert') }}{{ T.TODAY_ERRORS }}</span><span class="kpi-value">{{ today.errors }}</span></div>
+</div>
+{% if refresh_recent is defined %}{% include "partials/today_recent.html" %}{% endif %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ T.NAV_HISTORY }} · {{ T.APP_TITLE }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ T.HISTORY_TITLE }}</h1>
+{% if flash %}<p class="flash {% if flash_error %}flash-error{% endif %}">{{ flash }}</p>{% endif %}
+<div class="card">
+  {% if backups %}
+  <ul class="history">
+    {% for b in backups %}
+    <li class="history-item">
+      <div class="history-head">
+        <div><strong>{{ T.SAVED_ON.format(time=b.at | local_time('%Y-%m-%d %H:%M:%S')) }}</strong> <span class="muted">· {{ T.N_CHANGES.format(n=b['items'] | length) }}</span>
+          <div class="muted small">{{ T.HISTORY_FILES }}: {% for f in b.files %}<code>{{ f }}</code> {% endfor %}</div></div>
+        <form method="post" action="/history/restore">
+          <input type="hidden" name="csrf_token" value="{{ csrf }}"><input type="hidden" name="id" value="{{ b.id }}">
+          <button type="submit" class="btn btn-small" hx-post="/history/restore" hx-vals='{"id": "{{ b.id }}"}' hx-target="body" hx-swap="none">{{ T.RESTORE_VERSION }}</button>
+        </form>
+      </div>
+      <ul class="history-changes">
+        {% for it in b['items'] %}<li><span class="muted">{{ it.area | capitalize }} · {{ it.section }}</span> {{ it.label }}{% if it.old or it.new %}: <code>{{ it.old or '∅' }}</code> {{ T.ARROW }} <code>{{ it.new or '∅' }}</code>{% endif %}</li>{% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}<p class="empty">{{ T.EMPTY }}</p>{% endif %}
+</div>
+{% endblock %}

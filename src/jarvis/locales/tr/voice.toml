@@ -1,0 +1,133 @@
+# Ses servisi: konuşulan sistem cümleleri, bildirimler, dinlemeye devam penceresi ve `jarvis voice` komutları.
+
+# Kısa sistem cümleleri, turun dilinde söylenir (bulut ses bunları önbellekten çalabilir).
+[speech]
+table = "Tabloyu bildirime bıraktım."
+list = "Listeyi bildirime bıraktım."
+details = "Detayları bildirime bıraktım."
+error = "Bir hata oldu, ayrıntılar logda."
+choice = "Ekranda bir seçim penceresi var."
+elevenlabs_budget = "ElevenLabs aylık limiti doldu, sistem sesine geçiyorum."
+
+# Servisin duyduğu: ön plandaki terminalde ve isteğe bağlı bildirimde.
+[transcript]
+heard = "🎙️ Anladığım: {text}"
+alarm = "🎙️ Alarm çalarken duyduğum: {text}  -> {action}"
+confirm_stopped = "🎙️ Onay dinlemesi kesildi (karar başka yoldan geldi)"
+confirm_answer = "🎙️ Onay cevabı: {cleaned} (ham: {raw})"
+
+# Mikrofonu duraklatma ve yeniden açma.
+[pause]
+notification = "🔇 Jarvis dinlemiyor"
+notification_for = "🔇 Jarvis dinlemiyor ({label})"
+resumed = "🎙️ Jarvis tekrar dinliyor"
+ack = "Tamam, dinlemeyi durduruyorum."
+ack_for = "Tamam, {label} dinlemiyorum."
+resume_question = "Dinleme duraklatılmış. Dinlemeye devam edeyim mi?"
+resume_yes = "Evet"
+resume_no = "Hayır"
+# Bildirimlerde ve cevaplarda süreler.
+minutes_short = "{minutes} dk"
+hours_short = "{hours} sa"
+hours_minutes_short = "{hours} sa {minutes} dk"
+# Sesli okunan süreler.
+hour_one = "{count} saat"
+hours = "{count} saat"
+minute_one = "{count} dakika"
+minutes = "{count} dakika"
+
+# `jarvis voice run` ve `jarvis voice calibrate`.
+[service]
+use_voice_off = "Önce config.toml içinde [general] altında `use_voice = true` ayarla."
+missing_packages = "Eksik ses paketleri ({packages}): ses eklentisiyle yeniden kur: `uv tool install --editable '.[voice]' --python 3.12` (geliştirme kopyasında `uv sync --extra voice`)."
+needs_macos = "`{tool}` bulunamadı; ses servisi macOS gerektirir."
+mic_denied = "Bu işlemin mikrofon erişimi reddedilmiş; bkz. docs/troubleshooting.md (ses)."
+input_monitoring = "Girdi İzleme izni verilmemiş: uyandırma kelimesi çalışır, kısayol tuşu çalışmaz (bkz. docs/integrations/voice.md)."
+already_running = "Başka bir `jarvis voice` zaten çalışıyor (bkz. {lock}). İki servis de seni duyar ve iki ayrı sohbet yürütür; önce diğerini durdur (`jarvis voice uninstall` ya da Ctrl-C)."
+starting = "Jarvis ses servisi başlıyor."
+starting_foreground = "Jarvis ses servisi başlıyor (ön planda: her durum değişikliği yazılır; durdurmak için Ctrl-C)."
+calibrate_intro = "{seconds} s dinliyorum. Normal uzaklığından birkaç kez \"Hey Jarvis\" de; eşik {threshold}."
+calibrate_detection = "  <-- algılandı"
+calibrate_peak = "En yüksek skor {peak}. İyi bir eşik, tipik zirvelerinin altında ve ortam gürültüsünün üstünde olur."
+cancelled = "İptal edildi."
+
+# `jarvis voice say`.
+[say]
+usage = "kullanım: jarvis voice say \"<metin>\" [--dry-run] [--language tr|en]"
+nothing = "Temizlendikten sonra söylenecek bir şey kalmadı (yalnızca markdown, kod ya da semboller)."
+timeout = "Konuşmanın bitmesi beklenirken süre doldu."
+spoken_by = "  seslendiren: {voice}"
+
+# `jarvis voice debug-record`.
+[debug]
+input_device = "Giriş aygıtı: {device}"
+stream = "Akış: {rate} Hz, mono, int16, {frame} örneklik çerçeveler (PortAudio aygıtın hızından dönüştürür)"
+vad = "VAD: eşik {threshold}, {silence} ms sessizlikten sonra biter, en fazla {max} s, konuşma yoksa {timeout} s sonra zaman aşımı"
+stt = "Konuşmadan metne: {engine}"
+stt_ready = "Konuşmadan metne {ms} ms içinde hazır"
+stt_not_ready = " (seçili motor hazır değil: {error})"
+speak_now = "Şimdi konuş (kayıt sessizlikten sonra kendiliğinden biter)."
+saved = "Kaydedildi: {path}"
+recording = "Kayıt: {ms} ms, {rate} Hz'de {samples} örnek, bitiş nedeni {reason}"
+speech = "Konuşma (VAD): {start} ms ile {end} arası; öncesinde {start} ms giriş, sonrasında {tail} ms kuyruk korundu"
+speech_end = "{ms} ms"
+speech_to_end = "son"
+speech_never = "Konuşma (VAD): hiç başlamadı"
+levels_file = "Seviyeler (tüm dosya): tepe {peak} dBFS, RMS {rms} dBFS, kırpılan örnek {clipped} (%{pct})"
+levels_speech = "Seviyeler (konuşma kısmı): tepe {peak} dBFS, RMS {rms} dBFS"
+verdict_silence = "Sonuç: konuşma algılanmadı (yukarıdaki seviyeler odanın gürültü tabanı)"
+verdict = "Sonuç: {verdicts}"
+transcript = "Metin [{detail}]: {text}"
+confidence = "güven {value}"
+fallback = "Seçili motor başarısız oldu, Whisper cevap verdi: {error}"
+filtered = "Elendi: servis bu metni atardı (boş ya da halüsinasyon listesinde)."
+skipped = "Metin: atlandı, VAD konuşma görmedi."
+listen_with = "Dinlemek için: afplay {path}"
+
+# `jarvis voice test-stt`.
+[stt_test]
+intro = "{count} cümle. Her biri için: Enter'a bas, sesi bekle, cümleyi oku, sus; kayıt {silence} ms sessizlikten sonra biter. Ctrl-C ile çıkılır."
+enter = "Kaydetmek için Enter: "
+nothing_heard = "  bir şey duyulmadı, tekrar"
+recorded = "  {seconds} s kaydedildi"
+session_saved = "Oturum kaydedildi: {path}"
+downloading = "{model} indiriliyor ..."
+downloaded = "  {seconds} s içinde bitti"
+sentence_failed = "  cümle {index}: {error}"
+skipped = "{label}: atlandı, {reason}"
+running = "{label} ..."
+failed = "  başarısız: {error}"
+scores = "  kelimeler %{words}, isimler %{names}, cümle başına {ms} ms"
+no_key = "Anahtar Zinciri'nde ElevenLabs anahtarı yok (`jarvis voice set-elevenlabs-key`): bulut seçenekleri atlanıyor."
+cloud_warning = "--cloud: kayıtlar ElevenLabs'e gönderilecek (ücretli, ses Mac'ten çıkar)."
+results_saved = "Sonuçlar kaydedildi: {path}"
+
+# `jarvis voice set-elevenlabs-key` ve `jarvis voice list-voices`.
+[elevenlabs]
+no_key = "Anahtar Zinciri'nde ElevenLabs API anahtarı yok. Önce `jarvis voice set-elevenlabs-key` çalıştır."
+list_failed = "Sesler listelenemedi: {error}"
+no_voices = "Hesapta hiç ses yok. ElevenLabs ses kütüphanesinden bir ses ekle, sonra bunu yeniden çalıştır."
+voices = "{count} ses. voice_id'yi config.toml'a kopyala: [voice] elevenlabs_voice_id = \"<voice_id>\""
+key_prompt = "ElevenLabs API anahtarı: "
+key_empty = "Anahtar girilmedi; hiçbir şey kaydedilmedi."
+key_prefix = "Uyarı: ElevenLabs anahtarları genelde sk_ ile başlar; yine de kaydediyorum."
+key_stored = "Anahtar Zinciri'ne {name} olarak kaydedildi. Sıradaki: `jarvis voice list-voices`, sonra config.toml'da elevenlabs_voice_id'yi ayarla ve `jarvis doctor` çalıştır."
+
+# Kullanıcının data/ altında düzenleyebileceği dosyaların başlıkları.
+[files]
+corrections = """# Konuşma düzeltmeleri
+#
+# "hayır, X dedim" / "no, I said X" cümlelerinden öğrenildi: sol taraf tanıyıcının duyduğu, sağ taraf
+# kastettiğin. Jarvis sonraki her metinde sol tarafı sağdakiyle değiştirir. Satırları dilediğin gibi düzenle
+# ya da sil; her satırda bir tane, "- duyulan {arrow} kastedilen" biçiminde. # ile başlayan satırlar yok sayılır.
+
+"""
+vocabulary = """# Konuşma sözlüğü
+#
+# Konuşurken Jarvis'in beklemesi gereken isimler, yerler, sanatçılar ve kelimeler: her satırda bir tane, en
+# fazla beş kelime, örneğin "- Sezen Aksu". Konuşma tanıyıcıya ipucu olarak verilir. # ile başlayan satırlar
+# yok sayılır. Otomatik toplanan terimler (Spotify, Haritalar, takvim, profil, Kestirmeler)
+# vocabulary.auto.md içinde; onları buraya yalnızca öne almak için ekle.
+
+"""
+vocabulary_auto = "# Jarvis'in topladığı konuşma sözlüğü (otomatik yeniden yazılır; bunun yerine vocabulary.md'yi düzenle)"

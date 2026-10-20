@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ T.NAV_MEMORY }} · {{ T.APP_TITLE }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ T.MEMORY_TITLE }}</h1>
+<form class="filters card" method="get" action="/memory">
+  <label class="grow">{{ T.BTN_SEARCH }}<input type="search" name="q" value="{{ query }}" placeholder="{{ T.MEMORY_SEARCH }}" maxlength="200"></label>
+  <button type="submit" class="btn btn-primary">{{ T.BTN_APPLY }}</button>
+  {% if query %}<a class="btn" href="/memory">{{ T.BTN_CLEAR }}</a>{% endif %}
+</form>
+<div class="card">
+  {% include "partials/memory_list.html" %}
+</div>
+{% endblock %}

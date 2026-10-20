@@ -1,0 +1,7 @@
+{% if pages > 1 %}
+<div class="pager">
+  {% if page > 1 %}<a class="btn btn-small" href="{{ base }}&page={{ page - 1 }}">{{ T.PAGE_PREVIOUS }}</a>{% endif %}
+  <span class="muted">{{ T.PAGE_OF.format(page=page, pages=pages) }}</span>
+  {% if page < pages %}<a class="btn btn-small" href="{{ base }}&page={{ page + 1 }}">{{ T.PAGE_NEXT }}</a>{% endif %}
+</div>
+{% endif %}

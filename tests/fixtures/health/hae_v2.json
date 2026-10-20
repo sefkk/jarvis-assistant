@@ -1,0 +1,32 @@
+{
+  "data": {
+    "workouts": [
+      {
+        "id": "8F1C2D3E-1111-4222-8333-444444444444",
+        "name": "Outdoor Run",
+        "start": "2026-10-10 18:30:00 +0300",
+        "end": "2026-10-10 19:00:00 +0300",
+        "duration": 1800,
+        "distance": {"qty": 3.107, "units": "mi"},
+        "activeEnergyBurned": {"qty": 410, "units": "kcal"},
+        "heartRate": {
+          "min": {"qty": 98, "units": "count/min"},
+          "avg": {"qty": 152, "units": "count/min"},
+          "max": {"qty": 178, "units": "count/min"}
+        },
+        "humidity": {"qty": 60, "units": "%"},
+        "temperature": {"qty": 21, "units": "degC"}
+      },
+      {
+        "id": "8F1C2D3E-2222-4222-8333-444444444444",
+        "name": "High Intensity Interval Training",
+        "start": "2026-10-11 07:00:00 +0300",
+        "end": "2026-10-11 07:30:00 +0300",
+        "duration": 1800,
+        "totalEnergy": {"qty": 1255.2, "units": "kJ"},
+        "avgHeartRate": {"qty": 160, "units": "count/min"},
+        "maxHeartRate": {"qty": 185, "units": "count/min"}
+      }
+    ]
+  }
+}

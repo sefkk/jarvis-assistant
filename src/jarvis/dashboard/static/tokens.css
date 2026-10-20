@@ -1,0 +1,134 @@
+/* Jarvis Dashboard design tokens: the one place for color, type, spacing, radius, elevation and motion.
+   Every color is a light-dark() pair, so a single definition serves both themes. The theme follows the system;
+   html[data-theme="light" | "dark"] (set by theme.js from the sidebar toggle) pins one. app.css uses only these. */
+
+:root {
+  color-scheme: light dark;
+
+  /* canvas: a soft gradient mesh, static, drawn once behind everything (app.css body::before) */
+  --bg: light-dark(#eef1f6, #0a0b0e);
+  --bg-2: light-dark(#e6ebf3, #0f1115);
+  --blob-1: light-dark(rgba(150, 186, 255, 0.50), rgba(66, 86, 124, 0.30));    /* blue */
+  --blob-2: light-dark(rgba(142, 222, 206, 0.42), rgba(46, 94, 96, 0.20));     /* teal */
+  --blob-3: light-dark(rgba(200, 184, 255, 0.40), rgba(84, 76, 112, 0.20));    /* lavender */
+
+  /* glass: elevated surfaces only (cards, sidebar, strip, drawer, dialogs, toasts) */
+  --glass: light-dark(rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.055));
+  --glass-strong: light-dark(rgba(248, 250, 253, 0.80), rgba(22, 24, 29, 0.80));
+  --glass-blur: blur(20px) saturate(160%);
+  --glass-blur-strong: blur(28px) saturate(180%);
+  --hairline: light-dark(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.09));
+  --edge: light-dark(rgba(15, 23, 42, 0.07), rgba(0, 0, 0, 0.0));
+  --sheen: inset 0 1px 0 light-dark(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.06));
+
+  /* fills inside a surface (tiles, inputs, code, hover rows) and the lines between rows */
+  --fill-1: light-dark(rgba(15, 23, 42, 0.04), rgba(255, 255, 255, 0.05));
+  --fill-2: light-dark(rgba(15, 23, 42, 0.07), rgba(255, 255, 255, 0.09));
+  --fill-3: light-dark(rgba(15, 23, 42, 0.11), rgba(255, 255, 255, 0.14));
+  --field: light-dark(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.06));
+  --field-hover: light-dark(rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.10));
+  --field-raised: light-dark(#ffffff, rgba(255, 255, 255, 0.13));    /* the selected segment, the active nav pill */
+  --separator: light-dark(rgba(15, 23, 42, 0.08), rgba(255, 255, 255, 0.07));
+  --control-border: light-dark(rgba(15, 23, 42, 0.14), rgba(255, 255, 255, 0.13));
+
+  /* text */
+  --text: light-dark(#121826, #ececf0);
+  --text-2: light-dark(#566074, #a0a5b0);
+  --text-3: light-dark(#6b7487, #7f848f);
+
+  /* accent: one cool blue to teal family */
+  --accent: light-dark(#1f6feb, #5aa5ff);
+  --accent-2: light-dark(#0e9384, #3fcfbf);
+  --accent-ink: light-dark(#1556c2, #93c5ff);          /* accent as text: links, active labels */
+  --accent-fill: light-dark(#1f6feb, #2a6fd4);         /* button fill; white text stays AA on both */
+  --accent-fill-hover: light-dark(#1a62d4, #2f7ae6);
+  --on-accent: #ffffff;
+  --accent-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 1px 2px rgba(10, 30, 70, 0.20);
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--accent) 38%, transparent);
+
+  /* semantic: a solid (dots, icons, bars) and an ink (text on a tinted pill), both muted */
+  --success: light-dark(#1f8a5c, #5cc99a);
+  --success-ink: light-dark(#0f5e3b, #8ae0b8);
+  --warning: light-dark(#b07a12, #e6b75c);
+  --warning-ink: light-dark(#734600, #f2cf86);
+  --danger: light-dark(#d14b4b, #f08484);
+  --danger-ink: light-dark(#9e2424, #ffadad);
+  --info: light-dark(#2f6fd6, #78b4ff);
+  --info-ink: light-dark(#1a4ea6, #a9ceff);
+  --neutral: light-dark(#8a93a5, #737884);
+  --neutral-ink: light-dark(#454e60, #c6c9d1);
+  --pill-tint: 14%;
+
+  /* charts (analytics.js reads these): series in a fixed order, then the frame */
+  /* chart series: the original Apple system colors, the same in both themes */
+  --chart-1: #0071e3;         /* blue */
+  --chart-2: #34c759;         /* green */
+  --chart-3: #ff9f0a;         /* orange */
+  --chart-4: #af52de;         /* purple */
+  --chart-5: #ff3b30;         /* red */
+  --chart-6: #5ac8fa;         /* light blue */
+  --chart-7: #ffd60a;         /* yellow */
+  --chart-8: #8e8e93;         /* gray */
+  --chart-9: #30d158;         /* mint green */
+  --chart-10: #bf5af2;        /* violet */
+  --chart-grid: light-dark(rgba(15, 23, 42, 0.06), rgba(255, 255, 255, 0.06));
+  --chart-text: var(--text-2);
+  --chart-tooltip: light-dark(rgba(255, 255, 255, 0.94), rgba(26, 28, 34, 0.94));
+
+  /* elevation */
+  --shadow-sm: 0 1px 2px light-dark(rgba(16, 24, 40, 0.06), rgba(0, 0, 0, 0.30));
+  --shadow-md: 0 1px 2px light-dark(rgba(16, 24, 40, 0.05), rgba(0, 0, 0, 0.25)), 0 12px 32px -14px light-dark(rgba(30, 41, 59, 0.20), rgba(0, 0, 0, 0.55));
+  --shadow-lg: 0 2px 6px light-dark(rgba(16, 24, 40, 0.06), rgba(0, 0, 0, 0.30)), 0 28px 64px -18px light-dark(rgba(30, 41, 59, 0.30), rgba(0, 0, 0, 0.70));
+  --knob: #ffffff;                                      /* switch and slider thumbs */
+  --knob-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 5px rgba(0, 0, 0, 0.25);
+  --scrim: light-dark(rgba(30, 38, 56, 0.22), rgba(0, 0, 0, 0.50));
+
+  /* type: the system stack (SF Pro on the Mac); numbers are tabular wherever they are metrics */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --fs-kpi: 34px;
+  --fs-title: 28px;
+  --fs-section: 15px;
+  --fs-body: 14px;
+  --fs-small: 13px;
+  --fs-caption: 12px;
+  --fs-micro: 11px;
+  --lh-body: 1.55;
+  --lh-tight: 1.2;
+
+  /* spacing: an 8 px grid (4 px only as a half step inside small controls) */
+  --s-half: 4px;
+  --s-1: 8px;
+  --s-2: 16px;
+  --s-3: 24px;
+  --s-4: 32px;
+  --s-5: 40px;
+  --s-6: 48px;
+
+  /* shape */
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 18px;
+  --r-xl: 22px;
+  --r-pill: 999px;
+
+  /* motion */
+  --dur-fast: 150ms;
+  --dur: 200ms;
+  --dur-slow: 250ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* layout */
+  --sidebar-w: 236px;
+  --strip-h: 56px;
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0ms; --dur: 0ms; --dur-slow: 0ms; }
+}

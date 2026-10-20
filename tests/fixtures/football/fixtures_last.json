@@ -1,0 +1,30 @@
+{
+  "get": "fixtures",
+  "parameters": {"team": "611", "last": "5"},
+  "errors": [],
+  "results": 3,
+  "paging": {"current": 1, "total": 1},
+  "response": [
+    {
+      "fixture": {"id": 1300092, "referee": "A. Referee", "timezone": "UTC", "date": "2026-10-11T17:00:00+00:00", "timestamp": 1791651600, "periods": {"first": 1791651600, "second": 1791655200}, "venue": {"id": 1546, "name": "Ülker Stadyumu", "city": "Istanbul"}, "status": {"long": "Match Finished", "short": "FT", "elapsed": 90, "extra": 4}},
+      "league": {"id": 203, "name": "Süper Lig", "country": "Turkey", "logo": "https://media.api-sports.io/football/leagues/203.png", "flag": "https://media.api-sports.io/flags/tr.svg", "season": 2026, "round": "Regular Season - 8", "standings": true},
+      "teams": {"home": {"id": 611, "name": "Fenerbahce", "logo": "https://media.api-sports.io/football/teams/611.png", "winner": true}, "away": {"id": 549, "name": "Besiktas", "logo": "https://media.api-sports.io/football/teams/549.png", "winner": false}},
+      "goals": {"home": 3, "away": 1},
+      "score": {"halftime": {"home": 1, "away": 0}, "fulltime": {"home": 3, "away": 1}, "extratime": {"home": null, "away": null}, "penalty": {"home": null, "away": null}}
+    },
+    {
+      "fixture": {"id": 1400231, "referee": null, "timezone": "UTC", "date": "2026-10-01T19:00:00+00:00", "timestamp": 1790794800, "periods": {"first": 1790794800, "second": 1790798400}, "venue": {"id": 1546, "name": "Ülker Stadyumu", "city": "Istanbul"}, "status": {"long": "Match Finished", "short": "FT", "elapsed": 90, "extra": null}},
+      "league": {"id": 2, "name": "UEFA Champions League", "country": "World", "logo": "https://media.api-sports.io/football/leagues/2.png", "flag": null, "season": 2026, "round": "League Stage - 2", "standings": true},
+      "teams": {"home": {"id": 611, "name": "Fenerbahce", "logo": "https://media.api-sports.io/football/teams/611.png", "winner": null}, "away": {"id": 165, "name": "Borussia Dortmund", "logo": "https://media.api-sports.io/football/teams/165.png", "winner": null}},
+      "goals": {"home": 1, "away": 1},
+      "score": {"halftime": {"home": 0, "away": 1}, "fulltime": {"home": 1, "away": 1}, "extratime": {"home": null, "away": null}, "penalty": {"home": null, "away": null}}
+    },
+    {
+      "fixture": {"id": 1300080, "referee": null, "timezone": "UTC", "date": "2026-09-27T16:00:00+00:00", "timestamp": 1790438400, "periods": {"first": 1790438400, "second": 1790442000}, "venue": {"id": 1550, "name": "RAMS Park", "city": "Istanbul"}, "status": {"long": "Match Finished", "short": "FT", "elapsed": 90, "extra": null}},
+      "league": {"id": 203, "name": "Süper Lig", "country": "Turkey", "logo": "https://media.api-sports.io/football/leagues/203.png", "flag": "https://media.api-sports.io/flags/tr.svg", "season": 2026, "round": "Regular Season - 7", "standings": true},
+      "teams": {"home": {"id": 645, "name": "Galatasaray", "logo": "https://media.api-sports.io/football/teams/645.png", "winner": true}, "away": {"id": 611, "name": "Fenerbahce", "logo": "https://media.api-sports.io/football/teams/611.png", "winner": false}},
+      "goals": {"home": 2, "away": 0},
+      "score": {"halftime": {"home": 1, "away": 0}, "fulltime": {"home": 2, "away": 0}, "extratime": {"home": null, "away": null}, "penalty": {"home": null, "away": null}}
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ T.NAV_AUDIT }} · {{ T.APP_TITLE }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ T.NAV_AUDIT }}</h1>
+<form class="filters card" method="get" action="/audit">
+  {% include "partials/range_filter.html" %}
+  <label>{{ T.AUDIT_TOOL }}
+    <select name="tool"><option value="">{{ T.AUDIT_ALL_TOOLS }}</option>{% for t in tools %}<option value="{{ t }}" {% if tool == t %}selected{% endif %}>{{ t }}</option>{% endfor %}</select>
+  </label>
+  <label>{{ T.AUDIT_DECISION }}
+    <select name="decision"><option value="">{{ T.AUDIT_ALL_DECISIONS }}</option>{% for d in decisions %}<option value="{{ d }}" {% if decision == d %}selected{% endif %}>{{ d }}</option>{% endfor %}</select>
+  </label>
+  <label>{{ T.AUDIT_TAINTED }}
+    <select name="tainted"><option value="">{{ T.AUDIT_TAINTED_ANY }}</option><option value="yes" {% if tainted == 'yes' %}selected{% endif %}>{{ T.AUDIT_TAINTED_YES }}</option><option value="no" {% if tainted == 'no' %}selected{% endif %}>{{ T.AUDIT_TAINTED_NO }}</option></select>
+  </label>
+  <label>{{ T.FILTER_CHANNEL }}
+    <select name="channel"><option value="">{{ T.ALL_CHANNELS }}</option>{% for ch in channels %}<option value="{{ ch }}" {% if f.channel == ch %}selected{% endif %}>{{ ch | channel }}</option>{% endfor %}</select>
+  </label>
+  <button type="submit" class="btn btn-primary">{{ T.BTN_APPLY }}</button>
+</form>
+<div class="card">
+  <div class="card-head"><h2>{{ T.AUDIT_TITLE }}</h2><span class="muted">{{ T.AUDIT_ENTRIES.format(n=table.total) }}</span></div>
+  {% if not exists %}<p class="empty">{{ T.AUDIT_FILE_MISSING }}</p>
+  {% elif table.rows %}
+  <table class="table table-head audit">
+    <thead><tr><th>{{ T.AUDIT_TIME }}</th><th>{{ T.AUDIT_TOOL }}</th><th>{{ T.AUDIT_DECISION }}</th><th>{{ T.AUDIT_TAINTED }}</th><th>{{ T.AUDIT_CHANNEL }}</th><th>{{ T.AUDIT_DETAILS }}</th></tr></thead>
+    <tbody>
+    {% for e in table.rows %}
+    <tr>
+      <td class="cell-time">{% if e.turn_id %}<a href="/logs/turns/{{ e.turn_id }}" title="{{ e.ts }}">{{ e.ts | local_time('%m-%d %H:%M:%S') }}</a>{% else %}<span title="{{ e.ts }}">{{ e.ts | local_time('%m-%d %H:%M:%S') }}</span>{% endif %}</td>
+      <td><code>{{ e.tool }}</code></td>
+      <td><span class="badge badge-{{ e.decision_class }}">{{ e.decision_label }}</span></td>
+      <td>{% if e.tainted %}<span class="badge badge-warning">{{ T.YES }}</span>{% else %}<span class="muted">{{ T.NO }}</span>{% endif %}</td>
+      <td class="cell-channel">{{ e.channel_label }}</td>
+      <td class="cell-text small">{% if e.details %}<details class="inline-details"><summary><code class="details-line">{{ e.details_text }}</code></summary><pre class="code">{{ e.details_full }}</pre></details>{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% with page=table.page, pages=table.pages, base='/audit?' ~ qs %}{% include "partials/pager.html" %}{% endwith %}
+  {% else %}<p class="empty">{{ T.NO_DATA }}</p>{% endif %}
+</div>
+<script src="{{ asset('analytics.js') }}" defer></script>
+{% endblock %}

@@ -1,0 +1,62 @@
+# Alarms: the ringing dialog, notifications and Telegram messages, the phone-backup reminder, `jarvis alarms`.
+
+default_label = "Alarm"
+test_label = "Test alarm"
+
+[dialog]
+text = "⏰ {label}\n{at}"
+stop = "Stop"
+snooze = "Snooze ({minutes} min)"
+
+[notify]
+ring = "⏰ Alarm: {label} ({at})"
+missed = "Missed alarm: {label} ({at}). The Mac was asleep, so it did not ring."
+timeout = "The alarm ({label}, {at}) rang for {minutes} minutes and nobody stopped it; it has gone quiet."
+snoozed = "Alarm snoozed: it rings again in {minutes} minutes ({at})."
+stopped = "Alarm stopped."
+not_ringing = "No alarm is ringing right now."
+
+[reminder]
+title = "⏰ {label}"
+notes = "Jarvis alarm ({at}). Deleted when the alarm is stopped on the Mac."
+
+# What stops or snoozes a ringing alarm without the wake word. Every language's words work at any time.
+[words]
+stop = [
+    "ok", "okay", "stop", "stop alarm", "stop the alarm", "turn it off", "turn off", "off", "enough", "dismiss",
+    "i'm up", "im up", "i'm awake", "im awake",
+]
+snooze = ["snooze", "later"]
+
+[repeat]
+daily = "daily"
+weekdays = "weekdays"
+weekends = "weekends"
+days = "every {days}"
+weekday_short = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+# One alarm per line in `jarvis alarms` and the cancel results.
+[row]
+in_hours = "in {hours} h {minutes} min"
+in_minutes = "in {minutes} min"
+today = "today"
+tomorrow = "tomorrow"
+snoozed = "[snoozed, #{id}]"
+phone = "phone: {channels}"
+reminder = "reminder"
+no_reminder = "no reminder"
+telegram = "telegram"
+phone_off = "off"
+
+[cancel]
+already = "Alarm #{id} ({label}) is already {status}."
+none_at = "No alarm set for {at}."
+none_labelled = "No alarm labelled '{label}'."
+none = "No alarms set."
+nothing = "Found no alarm to cancel."
+done = "{count} alarm(s) cancelled: {alarms}. The phone backup was removed too."
+
+[cli]
+ringing = "RINGING: #{id} {label} (jarvis alarms stop | snooze)"
+none = "no pending alarms"
+count = "{count} pending alarm(s):"

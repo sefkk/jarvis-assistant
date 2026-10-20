@@ -1,0 +1,47 @@
+<div class="field {% if f.has_staged %}field-changed{% endif %} {% if f.error %}field-error{% endif %}" id="field-{{ f.slug }}">
+  <div class="field-label">
+    <label for="input-{{ f.slug }}">{{ f.label }}</label>
+    {% if f.read_only %}<span class="badge badge-readonly">{{ T.READ_ONLY }}</span>{% endif %}
+    {% if f.has_staged %}<span class="badge badge-changed">{{ T.CHANGED }}</span>{% endif %}
+  </div>
+  <div class="field-control">
+    {% if f.read_only %}
+      <code class="readonly-value">{{ f.shown_text or '∅' }}</code>
+    {% elif f.widget == 'switch' %}
+      <label class="switch">
+        <input type="checkbox" id="input-{{ f.slug }}" name="value" value="on" {% if f.shown %}checked{% endif %}
+               hx-post="/cart/settings" hx-trigger="change" hx-vals='{"path": "{{ f.path }}"}' hx-target="#field-{{ f.slug }}" hx-swap="outerHTML">
+        <span class="slider-knob"></span>
+      </label>
+    {% elif f.widget == 'slider' %}
+      <input type="range" id="input-{{ f.slug }}" name="value" value="{{ f.shown }}" min="{{ f.minimum }}" max="{{ f.maximum }}" step="{{ f.step }}" list="ticks-{{ f.slug }}"
+             hx-post="/cart/settings" hx-trigger="change" hx-vals='{"path": "{{ f.path }}"}' hx-target="#field-{{ f.slug }}" hx-swap="outerHTML">
+      <output class="range-value">{{ f.shown }}</output>
+    {% elif f.widget == 'select' %}
+      <select id="input-{{ f.slug }}" name="value" hx-post="/cart/settings" hx-trigger="change" hx-vals='{"path": "{{ f.path }}"}' hx-target="#field-{{ f.slug }}" hx-swap="outerHTML">
+        {% for choice in f.choices %}<option value="{{ choice }}" {% if choice == f.shown %}selected{% endif %}>{{ choice }}</option>{% endfor %}
+      </select>
+    {% elif f.widget == 'number' %}
+      <input type="number" id="input-{{ f.slug }}" name="value" value="{{ f.shown_text }}" {% if f.minimum is not none %}min="{{ f.minimum }}"{% endif %} {% if f.maximum is not none %}max="{{ f.maximum }}"{% endif %} step="{{ f.step }}"
+             hx-post="/cart/settings" hx-trigger="change" hx-vals='{"path": "{{ f.path }}"}' hx-target="#field-{{ f.slug }}" hx-swap="outerHTML">
+    {% elif f.widget == 'time' %}
+      <input type="time" id="input-{{ f.slug }}" name="value" value="{{ f.shown_text }}"
+             hx-post="/cart/settings" hx-trigger="change" hx-vals='{"path": "{{ f.path }}"}' hx-target="#field-{{ f.slug }}" hx-swap="outerHTML">
+    {% elif f.widget == 'list' %}
+      <input type="text" id="input-{{ f.slug }}" name="value" value="{{ f.shown_text }}" {% if f.choices %}placeholder="{{ f.choices | join(', ') }}"{% endif %}
+             hx-post="/cart/settings" hx-trigger="change" hx-vals='{"path": "{{ f.path }}"}' hx-target="#field-{{ f.slug }}" hx-swap="outerHTML">
+    {% else %}
+      <input type="text" id="input-{{ f.slug }}" name="value" value="{{ f.shown_text }}" {% if f.path in ('models.main_model', 'models.delegate_model') %}list="model-choices"{% endif %}
+             hx-post="/cart/settings" hx-trigger="change" hx-vals='{"path": "{{ f.path }}"}' hx-target="#field-{{ f.slug }}" hx-swap="outerHTML">
+    {% endif %}
+    {% if f.has_staged %}
+      <button type="button" class="btn btn-small" hx-post="/cart/remove-key" hx-vals='{"key": "setting:{{ f.path }}"}' hx-target="#field-{{ f.slug }}" hx-swap="outerHTML">{{ T.RESET_TO_CURRENT }}</button>
+    {% endif %}
+  </div>
+  <div class="field-help muted small">
+    {% if f.help %}{{ f.help }} {% endif %}
+    {% if f.has_staged %}<span>{{ T.CURRENT.format(value=settings_display(f.value) or '∅') }}</span> · {% endif %}
+    {% if not f.read_only %}{% if f.restarts %}{{ T.REQUIRES_RESTART.format(services=f.restarts | join(', ')) }}{% else %}{{ T.APPLIES_IMMEDIATELY }}{% endif %}{% endif %}
+    {% if f.error %}<span class="text-bad">{{ f.error }}</span>{% endif %}
+  </div>
+</div>

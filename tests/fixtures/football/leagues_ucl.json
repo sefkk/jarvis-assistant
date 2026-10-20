@@ -1,0 +1,17 @@
+{
+  "get": "leagues",
+  "parameters": {"search": "uefa champions league"},
+  "errors": [],
+  "results": 1,
+  "paging": {"current": 1, "total": 1},
+  "response": [
+    {
+      "league": {"id": 2, "name": "UEFA Champions League", "type": "Cup", "logo": "https://media.api-sports.io/football/leagues/2.png"},
+      "country": {"name": "World", "code": null, "flag": null},
+      "seasons": [
+        {"year": 2025, "start": "2025-07-08", "end": "2026-05-30", "current": false, "coverage": {"standings": true}},
+        {"year": 2026, "start": "2026-07-07", "end": "2027-05-29", "current": true, "coverage": {"standings": true}}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+<div class="card" id="actions" {% if actions_running %}hx-get="/partials/actions" hx-trigger="every 3s" hx-swap="outerHTML"{% endif %}>
+  <div class="card-head"><h2>{{ T.SECTION_QUICK_ACTIONS }}</h2></div>
+  <div class="action-list">
+    {% for key, label, path in [("brief", T.BTN_SEND_BRIEF, "/actions/brief"), ("telegram_test", T.BTN_SEND_TEST_MESSAGE, "/actions/telegram-test")] %}
+    {% set result = actions.get(key) %}
+    <div class="action-row">
+      <button type="button" class="btn" hx-post="{{ path }}" hx-target="#actions" hx-swap="outerHTML" hx-confirm="{{ T.CONFIRM_QUESTION }}" {% if result and result.state == 'running' %}disabled{% endif %}>{{ label }}</button>
+      {% if result %}
+      <span class="action-result action-{{ result.state }}">
+        <span class="badge badge-{{ result.state }}">{{ result.label }}</span>
+        {% if result.detail %}<span>{{ result.detail }}</span>{% endif %}
+        <span class="muted">{{ result.at | local_time }}</span>
+      </span>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>

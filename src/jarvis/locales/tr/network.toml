@@ -1,0 +1,13 @@
+# Periyodik internet kontrolünün bildirimleri.
+
+down = "İnternet bağlantısı kesildi: {cause}"
+up = "İnternet geri geldi"
+
+[cause]
+offline = "Wi-Fi bağlantısı veya modem sorunu"
+gateway_unreachable = "Wi-Fi bağlantısı veya modem sorunu"
+no_internet = "Modem internete bağlı değil / servis sağlayıcı sorunu"
+dns = "DNS sorunu"
+weak_wifi = "Wi-Fi sinyali zayıf, modeme yaklaş"
+slow = "Bağlantı çalışıyor ama yavaş"
+ok = "Bağlantı normal"

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ T.NAV_SETTINGS }} · {{ T.APP_TITLE }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ T.SETTINGS_TITLE }}</h1>
+<datalist id="model-choices">{% for m in model_choices %}<option value="{{ m }}"></option>{% endfor %}</datalist>
+<div class="settings-layout">
+  <nav class="section-nav">
+    {% for section in sections %}<a href="#section-{{ section.key | replace('.', '-') }}">{{ section.title }}</a>{% endfor %}
+    <a href="#section-secrets">{{ T.SECRETS_TITLE }}</a>
+  </nav>
+  <div class="settings-main">
+    {% for section in sections %}
+    <section class="card settings-section" id="section-{{ section.key | replace('.', '-') }}">
+      <div class="card-head"><h2>{{ section.title }}{% if section.read_only %} <span class="badge badge-readonly">{{ T.READ_ONLY }}</span>{% endif %}</h2>
+        <span class="muted small">{% if section.key.startswith('security') %}{{ T.SECURITY_HELP }}{% elif section.restarts %}{{ T.REQUIRES_RESTART.format(services=section.restarts | join(', ')) }}{% else %}{{ T.APPLIES_IMMEDIATELY }}{% endif %}</span></div>
+      {% for f in section.fields %}{% include "partials/setting_field.html" %}{% endfor %}
+    </section>
+    {% endfor %}
+    <section class="card settings-section" id="section-secrets">
+      <div class="card-head"><h2>{{ T.SECRETS_TITLE }} <span class="badge badge-readonly">{{ T.READ_ONLY }}</span></h2><span class="muted small">{{ T.SECRETS_HELP }}</span></div>
+      {% for s in secrets %}
+      <div class="field"><div class="field-label"><label>{{ s.label }}</label></div>
+        <div class="field-control"><span class="badge {% if s.present %}badge-ok{% else %}badge-failed{% endif %}">{{ s.status }}</span> <code class="muted small">{{ s.name }}</code></div></div>
+      {% endfor %}
+    </section>
+  </div>
+</div>
+{% endblock %}

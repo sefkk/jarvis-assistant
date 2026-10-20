@@ -1,0 +1,38 @@
+<div class="card" id="location">
+  <div class="card-head"><h2>{{ T.LOCATION_TITLE }}</h2>
+    <div class="card-tools">
+      <span class="htmx-indicator muted small">{{ T.LOCATION_REFRESHING }}</span>
+      <button type="button" class="btn btn-small" hx-post="/location/refresh" hx-target="#location" hx-swap="outerHTML" hx-indicator="#location" hx-disabled-elt="this" {% if not loc.enabled %}disabled{% endif %}>{{ T.LOCATION_REFRESH }}</button>
+    </div>
+  </div>
+  {% if flash_error %}<p class="flash flash-error">{{ flash_error }}</p>{% endif %}
+  {% if not loc.enabled %}<p class="muted small">{{ T.LOCATION_DISABLED }}</p>{% endif %}
+  <div class="meta-col location-meta">
+    <div><span class="muted">{{ T.LOCATION_CURRENT }}:</span>
+      {% if loc.has_location %}<strong>{{ loc.label }}</strong>{% if loc.stale %} <span class="badge badge-stale">{{ T.LOCATION_STALE }}</span>{% endif %}{% if loc.approximate %} <span class="badge badge-stopped">{{ T.LOCATION_APPROXIMATE }}</span>{% endif %}
+      {% else %}<span class="muted">{{ T.LOCATION_NONE }}</span>{% endif %}</div>
+    {% if loc.has_location %}
+    <div><span class="muted">{{ T.LOCATION_SOURCE }}:</span> {{ loc.source_label }}</div>
+    <div><span class="muted">{{ T.LOCATION_UPDATED }}:</span> {{ loc.updated_at | local_time('%Y-%m-%d %H:%M') }} <span class="muted">({{ loc.age_text }})</span></div>
+    <div class="actions">
+      <a class="btn btn-small" href="{{ loc.maps_url }}" target="_blank" rel="noopener noreferrer">{{ T.LOCATION_OPEN_MAPS }}</a>
+      <details class="menu coords">
+        <summary class="btn btn-small"><span class="when-closed">{{ T.LOCATION_SHOW_COORDS }}</span><span class="when-open">{{ T.LOCATION_HIDE_COORDS }}</span></summary>
+        <code class="coords-value">{{ loc.coordinates }}</code>
+      </details>
+    </div>
+    {% endif %}
+    {% if loc.error and not loc.has_location %}<div class="muted small">{{ loc.error }}</div>{% endif %}
+    <div><span class="muted">{{ T.LOCATION_HOME }}:</span> {% if loc.home %}{{ loc.home }}{% else %}<span class="muted">{{ T.LOCATION_NOT_SET }}</span>{% endif %}</div>
+    {% if loc.telegram_coordinates %}
+    <div><span class="muted">{{ T.LOCATION_TELEGRAM }}:</span> <strong>{{ loc.telegram_label }}</strong>
+      <span class="muted">· {{ loc.telegram_updated_at | local_time('%Y-%m-%d %H:%M') }} ({{ loc.telegram_age_text }})</span>
+      <a class="btn btn-small" href="{{ loc.telegram_maps_url }}" target="_blank" rel="noopener noreferrer">{{ T.LOCATION_OPEN_MAPS }}</a>
+      <details class="menu coords">
+        <summary class="btn btn-small"><span class="when-closed">{{ T.LOCATION_SHOW_COORDS }}</span><span class="when-open">{{ T.LOCATION_HIDE_COORDS }}</span></summary>
+        <code class="coords-value">{{ loc.telegram_coordinates }}</code>
+      </details>
+    </div>
+    {% endif %}
+  </div>
+</div>

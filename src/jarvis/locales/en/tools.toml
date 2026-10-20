@@ -1,0 +1,44 @@
+# Lines the tools show the user next to the reply (terminal, Telegram), and their word lists.
+
+# The question for a possibly misheard spoken name (Maps, Spotify).
+did_you_mean = "Did you mean '{term}'?"
+
+[memory]
+noted = "📝 Noted: {fact}"
+updated = "📝 Updated a note: {fact}"
+# The user asked for the note themselves ("remember this"): no extra line.
+explicit_words = ["remember", "note this", "keep in mind", "don't forget", "dont forget"]
+
+[clipboard]
+copied = "📋 Copied to the clipboard: {text}"
+
+[screen]
+captured = "📸 Screenshot taken ({width}x{height})"
+
+[maps]
+opening = "🗺️ Opening in {app}: {target}"
+directions = "directions from {origin} -> {destination} ({mode})"
+live_location = "your live location"
+
+[maps.mode]
+transit = "public transport"
+driving = "driving"
+walking = "walking"
+bicycling = "cycling"
+
+[shortcuts]
+heading = "Shortcuts on this Mac ({count}); ✓ = allowlisted in config.toml:"
+missing = "Allowlisted but not in the Shortcuts app (renamed or deleted?):"
+hint = "To allow a Shortcut, copy its exact name into a [[shortcuts.allowed]] entry in config.toml (docs/integrations/shortcuts.md)."
+
+[delegate]
+ask = "The delegate (sub-agent) wants to use {tool} for the first time, with arguments {args}. Allow it?"
+always = "allow the delegate to use it from now on"
+once = "allow it this time only; ask again next time"
+never = "never allow it (saved; edit data/delegate_permissions.json to change)"
+
+[sheets]
+which = "Which spreadsheet is {name}?"
+option = "{title} (modified {modified})"
+unknown = "unknown"
+none = "none of these"

@@ -1,0 +1,44 @@
+# Araçların cevabın yanında kullanıcıya gösterdiği satırlar (terminal, Telegram) ve kelime listeleri.
+
+# Yanlış duyulmuş olabilecek bir isim için soru (Maps, Spotify).
+did_you_mean = "'{term}' mi demek istedin?"
+
+[memory]
+noted = "📝 Not aldım: {fact}"
+updated = "📝 Notu güncelledim: {fact}"
+# Kullanıcı notu kendisi istedi ("hatırla"): ek satır yok.
+explicit_words = ["hatırla", "hatirla", "not al", "unutma", "aklında tut", "aklinda tut", "kaydet"]
+
+[clipboard]
+copied = "📋 Panoya kopyalandı: {text}"
+
+[screen]
+captured = "📸 Ekran görüntüsü alındı ({width}x{height})"
+
+[maps]
+opening = "🗺️ {app} açılıyor: {target}"
+directions = "{origin} -> {destination} yol tarifi ({mode})"
+live_location = "anlık konumun"
+
+[maps.mode]
+transit = "toplu taşıma"
+driving = "araba"
+walking = "yürüyüş"
+bicycling = "bisiklet"
+
+[shortcuts]
+heading = "Bu Mac'teki Kestirmeler ({count}); ✓ = config.toml'da izinli:"
+missing = "İzinli ama Kestirmeler uygulamasında yok (adı değişti ya da silindi mi?):"
+hint = "Bir Kestirmeye izin vermek için tam adını config.toml'daki bir [[shortcuts.allowed]] girdisine kopyala (docs/integrations/shortcuts.md)."
+
+[delegate]
+ask = "Yardımcı ajan {tool} aracını ilk kez kullanmak istiyor, argümanlar: {args}. İzin verilsin mi?"
+always = "bundan sonra hep izin ver"
+once = "yalnızca bu sefer izin ver; bir dahaki sefere yine sor"
+never = "asla izin verme (kaydedilir; değiştirmek için data/delegate_permissions.json dosyasını düzenle)"
+
+[sheets]
+which = "{name} hangi tablo?"
+option = "{title} (değiştirilme: {modified})"
+unknown = "bilinmiyor"
+none = "hiçbiri"

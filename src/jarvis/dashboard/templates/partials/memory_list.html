@@ -1,0 +1,39 @@
+<div id="memory-list">
+  <form class="memory-add" hx-post="/cart/memory/add" hx-target="#memory-list" hx-swap="outerHTML">
+    <input type="text" name="text" maxlength="300" placeholder="{{ T.MEMORY_LINE_PLACEHOLDER }}" required>
+    <button type="submit" class="btn btn-primary btn-small">{{ T.MEMORY_ADD }}</button>
+  </form>
+  <p class="muted small">{{ T.MEMORY_LINES.format(n=rows | length) }}</p>
+  {% if rows %}
+  <ul class="memory">
+    {% for row in rows %}
+    <li class="memory-line {% if row.state == 'deleted' %}is-deleted{% elif row.state == 'edited' %}is-edited{% elif row.state == 'added' %}is-added{% endif %}">
+      <div class="memory-main">
+        <span class="memory-date muted small">{{ row.date or '—' }}</span>
+        <span class="memory-text">{{ row.text }}</span>
+        <span class="badge {% if row.source == 'jarvis' %}badge-ok{% else %}badge-stopped{% endif %}">{{ T.MEMORY_SAVED_BY_JARVIS if row.source == 'jarvis' else T.MEMORY_ADDED_MANUALLY }}</span>
+        {% if row.state == 'deleted' %}<span class="badge badge-failed">{{ T.MEMORY_DELETED }}</span>
+        {% elif row.state == 'edited' %}<span class="badge badge-changed">{{ T.CHANGED }}</span>
+        {% elif row.state == 'added' %}<span class="badge badge-changed">{{ T.MEMORY_NEW }}</span>{% endif %}
+      </div>
+      <div class="memory-actions">
+        {% if row.state in ('deleted', 'edited', 'added') %}
+        <button type="button" class="btn btn-small" hx-post="/cart/remove-key" hx-vals='{"key": "{{ row.key }}"}' hx-target="#memory-list" hx-swap="outerHTML">{{ T.MEMORY_UNDO }}</button>
+        {% else %}
+        <details class="menu">
+          <summary class="btn btn-small">{{ T.MEMORY_EDIT }}</summary>
+          <form class="memory-edit" hx-post="/cart/memory/edit" hx-target="#memory-list" hx-swap="outerHTML">
+            <input type="hidden" name="line" value="{{ row.line }}">
+            <input type="text" name="text" value="{{ row.text }}" maxlength="300" required>
+            <button type="submit" class="btn btn-primary btn-small">{{ T.BTN_STAGE }}</button>
+          </form>
+        </details>
+        <button type="button" class="btn btn-small" hx-post="/cart/memory/delete" hx-vals='{"line": {{ row.line | tojson }}}' hx-target="#memory-list" hx-swap="outerHTML" hx-confirm="{{ T.CONFIRM_QUESTION }}">{{ T.MEMORY_DELETE }}</button>
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}<p class="empty">{{ T.EMPTY }}</p>{% endif %}
+  {% if error %}<p class="flash flash-error">{{ error }}</p>{% endif %}
+</div>

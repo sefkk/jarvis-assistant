@@ -1,0 +1,422 @@
+# The configuration the test suite and the eval runner load: a complete, Turkish-speaking setup with every
+# feature switched on, so the tests exercise everything. It is not the file new users start from; that is
+# config.example.toml in the repository root.
+
+[general]
+language = "tr"                  # the main language; replies follow the language of the latest message
+log_level = "DEBUG"              # verbose at the start on purpose
+save_transcripts = true          # full transcripts into SQLite
+use_voice = true                # true lets `jarvis voice` (the hands-free service) start
+exit_words = ["exit", "quit", "bye"]  # the chat exits when the whole input is exactly one of these (Ctrl-D too)
+
+[persona]
+# How much Jarvis jokes (the persona, src/jarvis/prompts/persona.<language>.md or data/persona.md): 0 = none, 1 = light (a friendly remark now and
+# then), 2 = playful (a short quip or tease after the answer in most casual replies), 3 = very playful
+# (every casual reply, bolder teasing). The answer always comes first and correct; failures, serious
+# topics, confirmations of risky actions and "acelem var" get no joke at any level.
+humor_level = 2
+
+[memory]
+# data/memory.md is written on an explicit "hatırla" and, with auto = true, also when you state something durable
+# about yourself (a preference, a routine, a person, a place you go often, a project, a plan with a date). Never
+# from emails, web pages or sheets unless you ask. A fact that updates an old one replaces the old line.
+auto = true
+auto_notify = true           # "📝 Not aldım: …" in the terminal and on Telegram when something is saved on its own (voice: only logged)
+end_of_session_pass = true   # when a session ends (exit, the daily rollover, a quiet gap) one cheap call proposes facts the conversation missed
+idle_pass_min = 30           # the pass also runs for the turns before a gap of this many quiet minutes (0 = never)
+max_facts_per_pass = 5
+# `jarvis memory` lists the notes with their dates; `jarvis memory forget <text>` or "bunu unut" removes one.
+
+[models]
+# main_model = "claude-haiku-5-5"
+main_model = "claude-sonnet-5-5"
+
+delegate_model = "claude-sonnet-5-5"
+# delegate_model = "claude-opus-5-5"
+
+# Current models use adaptive thinking: there is no token budget, only an effort level
+# (low | medium | high | xhigh | max). With thinking off, effort must be high or lower.
+main_thinking = false
+main_effort = "medium"
+delegate_thinking = true
+delegate_effort = "high"
+# Thinking tokens count against max_output_tokens. When thinking is on, Jarvis raises the
+# effective cap to at least 4096 so that reasoning cannot swallow the whole reply.
+max_output_tokens = 1024
+delegate_max_output_tokens = 4096
+
+[loop]
+max_tool_iterations = 10         # per turn, hard cap
+api_max_attempts = 3             # retries for API errors, then raise JarvisAPIError
+api_backoff_base_seconds = 1.0
+# Granular API timeouts (no short total limit). connect = TCP + TLS handshake: the SDK default of 5 s
+# produced every "APITimeoutError" seen so far (each one at exactly 5.0 s, before a single byte came
+# back). read = the longest silence allowed between two chunks of the streamed reply (a stalled
+# stream), not the length of the whole answer. write = sending the request body.
+api_connect_timeout_s = 10.0
+api_read_timeout_s = 60.0
+api_write_timeout_s = 60.0
+
+[context]
+compact_after_tokens = 30000     # when the conversation (not the system prompt and tool schemas, ~28k tokens on their own) exceeds this, summarize older turns
+keep_recent_turns = 6            # always keep the last N turns verbatim (at least 1; a reply that asked a question is never summarized away from its answer)
+tool_result_max_chars = 12000    # truncate any single tool result above this
+resume_after_min = 15            # a new session (restart, midnight rollover, another interface) replays the last turns of these minutes as text; 0 = off
+
+[budget]
+daily_budget_usd = 3.00
+warn_at_fraction = 0.8           # warn at 80%
+cache_read_multiplier = 0.1      # cache reads cost this fraction of the input price
+cache_write_multiplier = 1.25    # 5-minute cache writes cost this multiple of the input price
+# Estimated prices of the other paid services, only for the dashboard's cost charts. VERIFY against your plans:
+# ElevenLabs charges per character of a monthly quota, Google Maps per request.
+elevenlabs_usd_per_1k_chars = 0.22   # Creator plan: $22 per 100k characters
+maps_usd_per_call = 0.005            # about $5 per 1000 Places / Directions requests
+# Prices are per million tokens. VERIFY against current Anthropic pricing before use.
+[budget.prices]
+"claude-haiku-5-5"  = { input = 0.10, output = 0.50 }
+"claude-sonnet-5-5" = { input = 2.0, output = 10.0 }
+"claude-opus-5-5"   = { input = 4.0, output = 20.0 }
+
+[calendar]
+default_write_calendar = "google"      # "google" or "apple"
+apple_calendar_exclude = []            # names of Apple calendars to skip on read (e.g. a Google account already synced into macOS Calendar)
+
+# Per-calendar filters: in the named calendar, show only the events whose title contains one of the keywords
+# (case-insensitive, Turkish/diacritic-insensitive; a keyword of up to 3 characters such as "FB" only as a
+# whole word). Hidden events stay out of `agenda`, `daily_brief`, the list tools and the match-day detection;
+# the model gets them back with include_filtered = true when you ask about another team's match.
+# only_matches = true (default): the filter applies only to fixture-shaped titles ("A - B", "A vs B"), so a
+# flight or a note in that calendar stays visible. `jarvis calendar filters` shows what is hidden this week.
+[[calendar.filters]]
+calendar = "Futbol"
+mode = "include_only"
+keywords = ["Fenerbahçe", "Fenerbahce", "Fener", "FB"]
+
+[weather]
+# Where "what's the weather" is for when no place is named:
+#   "current" = the Current Location detected at session start (Shortcut > CoreLocationCLI > IP), then the home
+#               `Location` line of data/profile.md, then fixed_location
+#   "home"    = always the profile's Location;   "fixed" = always fixed_location
+# `default_location` was the key before this release; it is still read (as fixed_location) and `jarvis doctor` warns.
+location_source = "current"
+fixed_location = "Istanbul"
+
+[location]
+# Current Location (where I am now; the home `Location` in profile.md never changes). Looked up in the
+# background at the start of every CLI and voice session and again when a weather/maps tool finds it older
+# than max_age_min; `jarvis location` shows it, `jarvis location refresh` forces a lookup.
+# Sources in order: the Shortcut below (must exist in the Shortcuts app and be allowlisted under
+# [[shortcuts.allowed]]), CoreLocationCLI if installed (`brew install --cask corelocationcli`), IP geolocation
+# (city level, marked approximate, wrong behind a VPN). Exact coordinates stay in data/location_state.json;
+# profile.md (sent to the API on every request) gets only the label at profile_precision.
+enabled = true
+refresh_on_start = true
+shortcut_name = "Jarvis Location"
+timeout_s = 5                        # per source
+max_age_min = 60                     # older than this: refresh before a weather/maps tool runs
+profile_precision = "neighborhood"   # "city" | "neighborhood" | "street": what enters profile.md
+keep_history = false                 # true appends every new location to data/location_history.jsonl
+ip_fallback = true
+ip_lookup_url = "https://ipinfo.io/json"
+
+[security]
+allowed_file_roots = ["~/Documents", "~/Desktop", "~/Downloads", "~/Developer"]
+denied_paths = ["~/.ssh", "~/.gnupg", "~/.aws", "~/Library/Keychains", "~/.config/gcloud"]
+# Matched (with * as a wildcard) against the command text and the parsed argv. Confirmation is the
+# real control; this list only refuses the obviously destructive. Including
+# the rm/curl variants and `security` reads of the Keychain (which holds the API key).
+shell_denylist = [
+    "sudo", "rm -rf /", "rm -fr /", "rm -r -f /", "rm -f -r /", "mkfs", "dd if=", ":(){", "chmod -R 777 /",
+    "curl * | sh", "wget * | sh", "curl * | bash", "wget * | bash", "curl * | zsh", "wget * | zsh",
+    "security find-generic-password", "security find-internet-password", "security dump-keychain",
+]
+shell_timeout_seconds = 60
+
+[logging]
+app_log_retention_days = 14
+audit_log_retention_days = 90
+
+[screen]
+max_image_side_px = 1568         # screenshots are downscaled to this longest side before the model sees them
+store_images = false             # true keeps screenshot bytes in the SQLite transcript; false stores only a reference
+
+[training]
+health_inbox = "~/Library/Mobile Documents/com~apple~CloudDocs/Jarvis/health_inbox"
+sync_on_startup = true           # import new Health files from the inbox when Jarvis starts
+
+[timers]
+notification_sound = "Glass"
+notify_channels = ["mac"]        # add "telegram" once the bot is set up
+pomodoro_work_min = 25
+pomodoro_break_min = 5
+pomodoro_long_break_min = 15
+pomodoro_cycles = 4
+
+[alarm]
+# Alarms ("sabah 7'de alarm kur"): a loud looping sound on the Mac with a Durdur / Ertele dialog; "N dakika sonra
+# haber ver" stays a timer ([timers] above). sounds/alarm.m4a (or .mp3/.wav/.aiff) is the sound; without it a
+# macOS system sound loops. The system volume is raised to `volume` while it rings and restored afterwards.
+sound = "alarm"
+sound_volume = 1.0
+volume = 70
+max_ring_min = 10
+snooze_min = 9
+keep_awake_hours = 12          # caffeinate keeps the Mac from idle sleep while an alarm is due within this window
+low_battery_percent = 20       # on battery below this (or with the lid closed) setting an alarm warns that it may not ring
+# Phone backup so a wake-up alarm also reaches the iPhone: "reminder" (an Apple Reminder in the list below, synced
+# through iCloud; a normal timed reminder, not an alarm-style one), "telegram" (a message at the alarm time), "both", "off".
+phone_backup = "both"
+reminder_list = "Jarvis Alarm"
+
+[football]
+team = "Fenerbahçe"
+league = "Süper Lig"
+# The API key is OPTIONAL: football questions are answered by web_search first. Without a key the
+# football.* tools are not offered to the model at all (`jarvis key set football_api_key` enables them).
+provider = "api-football"          # API-Football (api-sports.io)
+cache_ttl_fixtures_min = 360
+cache_ttl_standings_min = 60
+cache_ttl_live_min = 1
+
+[telegram]
+enabled = false
+allowed_user_id = 0                # `jarvis telegram whoami`
+allowed_chat_id = 0                # `jarvis telegram whoami`
+confirm_timeout_min = 5
+max_messages_per_minute = 20
+poll_timeout_s = 30
+# Tools a remote (Telegram) turn may use: "module.tool" or "module.*". Everything else is removed
+# from the model's tool list and refused in code. No shell, files, apps, screen, clipboard, Spotify, dev.
+remote_allowed_tools = [
+  "calendar_merged.agenda", "google_calendar.google_list_events", "google_calendar.google_create_event",
+  "apple_calendar.apple_list_events", "apple_reminders.list_reminders", "apple_reminders.create_reminder",
+  "gmail.gmail_search_threads", "gmail.gmail_read_thread", "gmail.gmail_create_draft",
+  "weather.get_weather", "web.web_search", "web.fetch_page",
+  "football.*", "brief.daily_brief", "timers.*", "training.*",
+  "memory_tools.*", "delegate.delegate", "system.get_time",
+  # Maps (everything except open_in_maps, which only makes sense at the Mac) and Sheets
+  # (reads directly; append_rows, update_range and create_spreadsheet ask for confirmation as usual).
+  "maps.search_places", "maps.place_details", "maps.travel_time", "maps.geocode",
+  "google_sheets.find_spreadsheet", "google_sheets.list_sheets", "google_sheets.read_range", "google_sheets.query_sheet",
+  "google_sheets.append_rows", "google_sheets.update_range", "google_sheets.create_spreadsheet",
+  # Shortcuts. The tools are offered, but only entries with `remote = true` under
+  # [[shortcuts.allowed]] can run from Telegram (the tool refuses the others in code).
+  "shortcuts.*",
+  # Pause the Mac's voice listening from the phone in words ("sesi kapat"); /mute and /unmute do the same.
+  "listening.pause_listening",
+  # Mac power from the phone (the Mac left on): status and lock run directly, sleep_mac and
+  # schedule_sleep ask with Onayla / Reddet. /status, /lock and /sleep are shortcuts to the same tools.
+  "power.mac_status", "power.lock_screen", "power.sleep_mac", "power.schedule_sleep", "power.cancel_scheduled_sleep",
+  # Alarms from the phone: set, list, cancel, and stop / snooze the one ringing on the Mac (/stop_alarm does the same).
+  "alarms.*",
+  # The automatic morning brief's schedule ("sabah özetini 7:30'a al"); /brief sends today's brief on demand.
+  "brief.set_brief_schedule",
+]
+
+[voice]
+# `use_voice` in [general] must be true for `jarvis voice` to start. Everything runs on the Mac;
+# nothing reaches the API before the wake word or the hotkey triggers.
+wake_word_model = "hey_jarvis"        # openWakeWord pretrained model (hey_jarvis_v0.1.onnx)
+wake_word_threshold = 0.5             # tune with `jarvis voice calibrate`
+wake_word_cooldown_s = 2.0            # no second trigger this soon after a detection
+wake_word_barge_in = false            # true (headphones): "Hey Jarvis" also interrupts Jarvis while it speaks
+post_speech_cooldown_s = 1.0          # ignore the wake word this long after Jarvis finishes speaking
+hotkey = "<alt>+<space>"              # hold to talk; press while Jarvis speaks to interrupt
+listen_sound = "/System/Library/Sounds/Tink.aiff"
+no_speech_sound = "/System/Library/Sounds/Pop.aiff"
+vad_silence_ms = 700                  # silence that ends the recording
+vad_threshold = 0.5
+max_record_s = 30
+no_speech_timeout_s = 5               # nothing said after the wake word: back to idle, no API call
+stt_model = "mlx-community/whisper-small-mlx"
+# Whisper decodes in this language and skips its per-utterance detection, which mistook one short Turkish
+# request in four for English or another language (`jarvis voice debug-record` shows what it hears).
+# "en" to speak English for a while; "auto" brings the detection back, limited to `stt_languages`.
+stt_language = "tr"
+# A different model when `stt_language` is one of these (English-only Whisper is smaller and better at English).
+stt_model_by_language = { en = "mlx-community/whisper-small.en-mlx" }
+stt_languages = ["tr", "en"]          # auto mode: anything else detected falls back to the first entry
+# The recognizer, chosen with `jarvis voice test-stt` on the user's own recordings: Apple's on-device Speech
+# framework (free, nothing leaves the Mac, ~0.3 s, every name right). "whisper" (stt_model above, also the
+# automatic fallback when Apple fails), "elevenlabs" (Scribe v2: cloud, paid, the audio leaves the Mac) or
+# "hybrid" (Apple, then Scribe when Apple's confidence is below stt_hybrid_threshold).
+stt_engine = "apple"
+stt_hybrid_threshold = 0.6
+preroll_ms = 1000                     # audio kept from before the recording starts, so the first word is not cut
+stt_hallucination_blocklist = ["Altyazı M.K.", "Thanks for watching!", "Thank you.", "İzlediğiniz için teşekkür ederim.", "Abone ol"]
+tts_engine = "elevenlabs"             # "elevenlabs" | "say"; `say` is always the fallback
+tts_voice_tr = "Yelda"                # `say` voice (fallback): Enhanced/Premium is used automatically when installed
+tts_voice_en = "Samantha"             # `say` voice for English replies
+tts_rate = 190                        # words per minute for `say -r`
+# ElevenLabs. Key: `jarvis voice set-elevenlabs-key` (Keychain, never here).
+elevenlabs_voice_id = "TestVoice0000000001"  # a synthetic id (see `jarvis voice list-voices`)
+elevenlabs_model = "eleven_flash_v2_5"  # lowest latency model with Turkish + English
+elevenlabs_first_chunk_timeout_s = 3  # no audio within this many seconds: this sentence falls back to `say`
+elevenlabs_monthly_char_budget = 30000  # Starter plan: 30k characters per calendar month; above it Jarvis switches to `say`
+elevenlabs_use_for_tainted = true     # false: replies in tainted turns (email/web content) are spoken by `say`, not sent to ElevenLabs
+elevenlabs_text_normalization = "on"  # ElevenLabs' own number spelling as a safety net behind Jarvis's normalizer: "on" | "auto" | "off"
+confirm_phrases = ["onaylıyorum", "evet onaylıyorum", "confirm", "yes confirm"]  # found as whole words in a short answer; "evet" alone is asked again; "hayır"/"iptal" deny
+confirm_timeout_s = 20                # the spoken answer expires this long after the question has finished playing (the dialog stays until then)
+# Pause phrases, matched exactly in code and handled without the model (a duration may be added: "1 saat
+# sesi kapat"). Pausing releases the microphone (the orange dot disappears) while the service keeps running;
+# the same pause comes from `jarvis voice pause [--for 60m]`, Telegram /mute and the `pause_listening` tool.
+# Back on: `jarvis voice resume`, /unmute, holding the hotkey (a dialog asks), or when the duration ends.
+pause_phrases = ["sesi kapat", "dinlemeyi durdur", "stop listening"]
+# Follow-up mode: after a reply has been played to the end, Jarvis listens again for a short window
+# without "Hey Jarvis" (a soft sound marks it). Speech that starts inside the window is recorded to its
+# end and becomes the next turn; after that reply a new window opens, so a conversation flows until you
+# stay silent. Silence or noise closes the window quietly. No window while paused; "sesi kapat" in a
+# window pauses at once. The hotkey still works during the window; confirmations keep their own rules.
+follow_up_mode = "always"             # "always" | "questions_only" (only after a reply that ends with "?") | "off"
+follow_up_window_s = 6                # seconds to START talking after the reply; the speech itself may run longer
+show_transcript_notification = false  # background mode: show "Anladığım: ..." as a macOS notification
+save_audio = false                    # true keeps every recording under data/voice_audio/ (debugging only)
+
+[voice.sounds]
+# Cue sounds from <JARVIS_HOME>/sounds/ (see sounds/README.md): <name>.m4a, then .mp3, .wav, .aiff;
+# a macOS system sound plays when the file is missing (`jarvis doctor` warns). Played with `afplay`.
+heard = "voice_heard"                 # right after your request has been recorded (end of speech / hotkey release);
+                                      # non-blocking, stopped as soon as the reply's first audio starts
+ready = "voice_ready"                 # Jarvis finished speaking and listens again: the follow-up window
+                                      # (and its seconds) starts only after this cue has finished playing
+volume = 1.0                          # afplay -v (0 = silent, 1 = the file's own level)
+heard_enabled = true
+ready_enabled = true
+thinking = "thinking_sound"           # loops quietly while Jarvis works on the answer (transcription, API, tools):
+                                      # starts after the heard cue once thinking_delay_ms passed without a spoken reply,
+                                      # stops at the first audio of the reply, a confirmation, an error, a barge-in or a pause
+thinking_enabled = true
+thinking_volume = 0.8                 # its own afplay -v, lower than the cues
+thinking_delay_ms = 200               # a reply that starts within this stays clean (no thinking sound at all)
+thinking_gap_ms = 0                   # silence between two loops of the file
+
+[sheets]
+# Google Sheets. Short names for spreadsheets, so "antrenman tabloma ekle" works:
+# aliases = { "antrenman" = "<spreadsheet id from the sheet's URL>" }
+aliases = {}
+
+[maps]
+# Google Maps Platform. Key: `jarvis key set google_maps_api_key` (Keychain, never here).
+open_with = "apple"                   # "apple" | "google": which app `open_in_maps` opens
+default_mode = "transit"              # travel_time default: "transit" | "driving" | "walking" | "bicycling"
+leave_buffer_min = 10                 # "when should I leave": minutes added on top of the travel time
+daily_call_limit = 100                # Maps API calls per day (all APIs together); 0 disables the guard
+
+[brief]
+include_travel = false                # true: the daily brief adds the travel time to the first event with a location
+include_mail = true                   # the brief lists the mail that reached the inbox today and names the important ones
+
+[brief.schedule]
+# The automatic morning brief: the scheduler agent delivers today's brief once a day, at weekday_time on
+# Monday-Friday and at weekend_time on Saturday-Sunday ("off" = no brief on those days). channel: "auto"
+# speaks it on the Mac when you are there (active within active_within_min minutes, voice service running
+# and not paused, no Do Not Disturb) and sends it to Telegram otherwise; "telegram", "voice" or "both" force
+# a channel (voice still falls back to Telegram when it cannot speak). If the Mac was asleep at the time,
+# the brief comes on wake until late_until, later it is skipped. A brief you asked for yourself that morning
+# ("günün özeti", /brief) makes the automatic one skip. `jarvis brief schedule [on|off]` shows and toggles it;
+# "sabah özetini 7:30'a al", "hafta sonu özet gönderme", "özeti kapat" change it from the chat (config.local.toml).
+enabled = true
+weekday_time = "09:00"
+weekend_time = "10:30"
+channel = "auto"                      # "auto" | "telegram" | "voice" | "both"
+late_until = "12:00"
+active_within_min = 15
+
+[shortcuts]
+# Apple Shortcuts bridge. Jarvis runs only the Shortcuts listed below, through the
+# macOS `shortcuts` CLI (argv, never a shell). `jarvis shortcuts list` shows every Shortcut on this
+# Mac and marks the allowlisted ones; `jarvis doctor` reports which entries are missing.
+# With an empty list the Shortcut tools are not offered to the model at all.
+timeout_seconds = 30
+
+# Each allowed Shortcut. The name must match the Shortcuts app exactly.
+# risk: "safe" (runs directly) | "confirm" (asks first, showing the name and the exact input).
+# remote: may run from Telegram. taints: the output is untrusted (e.g. a Shortcut that reads a web page).
+# In a tainted turn every Shortcut asks for confirmation, even "safe" ones.
+[[shortcuts.allowed]]
+name = "Rahatsız Etme Aç"
+description = "Turns on Do Not Disturb focus"
+risk = "safe"
+remote = true
+taints = false
+
+[[shortcuts.allowed]]
+name = "Rahatsız Etme Kapat"
+description = "Turns off Do Not Disturb focus"
+risk = "safe"
+remote = true
+taints = false
+
+[[shortcuts.allowed]]
+name = "Google Aç"
+description = "Opens Google in Chrome"
+risk = "safe"
+remote = true
+taints = false
+
+# The Shortcut Jarvis runs itself at session start (Get Current Location -> text with
+# lat/lon/street/city/region/country). Not for the phone: remote turns never use the Mac's location.
+[[shortcuts.allowed]]
+name = "Jarvis Location"
+description = "Returns the Mac's current location (latitude, longitude, address) for Jarvis's Current Location"
+risk = "safe"
+remote = false
+taints = false
+
+
+[dashboard]
+# `jarvis dashboard`: the local monitoring and settings page in the browser. It runs only while the
+# command runs in the terminal (Ctrl-C stops it), listens on 127.0.0.1 only and opens with a one-time link.
+port = 8765                          # if the port is busy, the next free one is used
+idle_lock_min = 3                    # the page locks after this many minutes without clicks, typing or scrolling (a banner warns one minute before)
+unlock = "click"                     # "click": Continue unlocks at once; "touch_id": Continue asks for Touch ID (or the Mac password)
+doctor_refresh_s = 10                # how often the Overview re-runs the quick health checks
+backups_keep = 20                    # data/backups/<timestamp>/ folders kept by the save flow
+# Analytics "Corrections": a voice request that starts with one of these within two minutes of the previous one counts
+# as a correction of it (the "Repeats" next to it need no words: the same request said again).
+correction_words = ["hayır", "hayir", "yok", "değil", "degil", "olmadı", "olmadi", "yanlış", "yanlis", "öyle değil", "demek istediğim", "no ", "not that", "wrong", "i meant"]
+
+[network]
+# Internet test: `internet_test` runs the diagnostics (interface, router, DNS, public hosts,
+# Wi-Fi signal) and, with full = true, macOS's `networkQuality` speed test. Every result lands in the
+# `network_tests` table (`internet_history`). Full speed tests use data: they never run on their own
+# unless periodic_speedtest_hours > 0.
+periodic_check_min = 0               # 0 = off; else the scheduler runs a quick check (no speed test) every N minutes
+                                     # and notifies only when the internet goes down and when it comes back
+periodic_speedtest_hours = 0         # 0 = never run a full speed test automatically
+public_check_hosts = ["1.1.1.1", "8.8.8.8"]   # "is the internet reachable" (ping + TCP 443/53)
+dns_check_names = ["apple.com", "google.com"] # "does DNS work"
+speedtest_max_runtime_s = 30         # cap for `networkQuality -M`
+
+[presence]
+# "Am I home?" / "Who is home?". The home network is identified by the router's MAC address
+# (the ARP entry of the default gateway), not by the Wi-Fi name: `jarvis presence setup` fills it in.
+# People are detected by their phones' MAC addresses on the home Wi-Fi; scans run inside the scheduler
+# agent every scan_interval_s, only while the Mac is on the home network, and probe only the devices
+# listed below plus a light periodic ARP sweep. Presence data stays on this Mac.
+home_gateway_macs = []               # personal: `jarvis presence setup` writes it to config.local.toml
+scan_interval_s = 120
+away_after_min = 10                  # a person becomes "away" only after not being seen for this long (phones sleep their Wi-Fi)
+allow_remote = false                 # presence tools from Telegram: off, so a stolen phone cannot learn when the house is empty
+allow_remote_self = false            # exception: only `am_i_home` (about me) from Telegram
+on_arrive_greet = false              # when I arrive: Jarvis greets me by voice with a short brief (voice agent running, not paused)
+on_leave_pause_voice = false         # when the Mac leaves the home network: pause voice listening; resume when it returns
+notify_person_changes = false        # notification when a configured person arrives or leaves: on the Mac; also on
+                                     # Telegram (timers.notify_channels) only when allow_remote = true
+
+# Devices -> people. Only devices listed here are treated as people's devices. `jarvis presence setup`
+# writes these entries into config.local.toml (personal data, ignored by git, merged over this file at
+# start); `list_network_devices` shows what is on the network. An iPhone's "Private Wi-Fi Address" for
+# the home network must be set to Fixed, not Rotating, or its MAC changes (MANUAL_STEPS.md).
+# [[presence.people]]
+# name = "Alex"
+# devices = ["aa:bb:cc:dd:ee:ff"]    # my iPhone's MAC address on the home Wi-Fi
+# is_me = true
+# track_history = true
+
+# other household members (with their knowledge), e.g.
+# [[presence.people]]
+# name = "..."
+# devices = ["..."]
+# track_history = true
