@@ -41,7 +41,7 @@ evdev==2.0.0 ; sys_platform == 'darwin' and 'linux' in sys_platform
     # via pynput
 fastapi==0.146.0 ; sys_platform == 'darwin'
     # via jarvis
-filelock==4.1.1 ; sys_platform == 'darwin'
+filelock==4.2.1 ; sys_platform == 'darwin'
     # via
     #   huggingface-hub
     #   torch
