@@ -273,7 +273,7 @@ scipy==1.18.1 ; sys_platform == 'darwin'
     #   mlx-whisper
     #   openwakeword
     #   scikit-learn
-setuptools==84.0.0 ; sys_platform == 'darwin'
+setuptools==84.1.0 ; sys_platform == 'darwin'
     # via torch
 silero-vad==6.2.3 ; sys_platform == 'darwin'
     # via jarvis
