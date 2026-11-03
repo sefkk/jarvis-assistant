@@ -14,7 +14,7 @@ anyio==4.15.1 ; sys_platform == 'darwin'
     #   httpx2
     #   starlette
     #   watchfiles
-certifi==2026.7.22 ; sys_platform == 'darwin'
+certifi==2026.10.18 ; sys_platform == 'darwin'
     # via
     #   httpcore
     #   httpx
