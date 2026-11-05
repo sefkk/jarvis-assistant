@@ -111,7 +111,7 @@ protobuf==7.36.2 ; sys_platform == 'darwin'
     #   google-api-core
     #   googleapis-common-protos
     #   proto-plus
-pyasn1==0.6.4 ; sys_platform == 'darwin'
+pyasn1==0.6.5 ; sys_platform == 'darwin'
     # via pyasn1-modules
 pyasn1-modules==0.4.2 ; sys_platform == 'darwin'
     # via google-auth
