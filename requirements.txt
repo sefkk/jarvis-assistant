@@ -98,7 +98,7 @@ more-itertools==11.2.0 ; sys_platform == 'darwin'
     #   jaraco-functools
 num2words==0.5.14 ; sys_platform == 'darwin'
     # via jarvis
-oauthlib==4.0.0 ; sys_platform == 'darwin'
+oauthlib==4.0.1 ; sys_platform == 'darwin'
     # via requests-oauthlib
 opentelemetry-api==1.45.1 ; sys_platform == 'darwin'
     # via

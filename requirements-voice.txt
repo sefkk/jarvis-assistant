@@ -150,7 +150,7 @@ numpy==2.5.4 ; sys_platform == 'darwin'
     #   onnxruntime
     #   scikit-learn
     #   scipy
-oauthlib==4.0.0 ; sys_platform == 'darwin'
+oauthlib==4.0.1 ; sys_platform == 'darwin'
     # via requests-oauthlib
 onnxruntime==1.31.0 ; sys_platform == 'darwin'
     # via
