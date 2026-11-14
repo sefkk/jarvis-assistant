@@ -156,7 +156,7 @@ onnxruntime==1.31.0 ; sys_platform == 'darwin'
     # via
     #   jarvis
     #   openwakeword
-opentelemetry-api==1.45.1 ; sys_platform == 'darwin'
+opentelemetry-api==1.45.2 ; sys_platform == 'darwin'
     # via
     #   fastapi
     #   google-api-core

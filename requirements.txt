@@ -100,7 +100,7 @@ num2words==0.5.14 ; sys_platform == 'darwin'
     # via jarvis
 oauthlib==4.0.0 ; sys_platform == 'darwin'
     # via requests-oauthlib
-opentelemetry-api==1.45.1 ; sys_platform == 'darwin'
+opentelemetry-api==1.45.2 ; sys_platform == 'darwin'
     # via
     #   fastapi
     #   google-api-core
